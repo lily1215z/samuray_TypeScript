@@ -1,0 +1,36 @@
+.navbar {
+    max-width: 300px;
+    width: 100%;
+    padding-top: 50px;
+    margin-right: 20px;
+}
+
+.navbar__item {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.navbar__item+.navbar__item {
+    margin-top: 25px;
+}
+
+.active-link {
+    color: rgb(255, 31, 6);
+    position: relative;
+    transition: all 0.5s;
+}
+
+.active-link::after {
+    content: '';
+    width: 3px;
+    height: 100%;
+    background-color: rgba(240, 6, 6, 0.5);
+    position: absolute;
+    top: 0;
+    left: -8px;
+    border-radius: 5px;
+}
+
+.navbar__items {
+    margin-bottom: 100px;
+}

@@ -1,0 +1,7 @@
+.profile-info {
+    display: flex;
+}
+
+.profile-info__box {
+    margin-left: 50px;
+}
