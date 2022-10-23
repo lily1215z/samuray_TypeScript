@@ -1,17 +1,17 @@
 import logo from '../../images/logo.png';
 import logoBg from '../../images/logo-bg.png';
-import './Header.css'
+import header from './Header.module.css'
 
 export function Header() {
     return (
         <div className='container'>
-            <header className="header__inner">
+            <header className={header.inner}>
                 <div>
                     <img
                         src={logo}
                         width='130'
                         alt="logo" />
-                    <h1 className='header__title'>let's speak with everyone!!!</h1>
+                    <h1 className={header.title}>let's speak with everyone!!!</h1>
                 </div>
                 <img
                     src={logoBg}

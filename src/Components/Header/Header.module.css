@@ -1,16 +1,16 @@
-.header__inner{
+.inner{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 25px;
 }
 
-.header__title {
+.title {
     position: relative;
     padding-bottom: 10px;
 }
 
-.header__title::before {
+.title::before {
     content: '';
     position: absolute;
     bottom: 0;

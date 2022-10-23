@@ -1,23 +1,22 @@
-import './Post.css'
-import avatar from '../../../../images/avatar.jpeg'
-import {dataTypeProps} from "../../../../App";
+import post from './Post.module.css'
+import {PostsType} from '../../../../redux/store'
 
 type  postTypeProps = {
-    data: Array<dataTypeProps>
+    posts: Array<PostsType>
 }
 
-export function Post(props: postTypeProps) {
-    let resultPost = props.data.map(i => {
+export const Post:React.FC<postTypeProps> = ({posts}) => {
+    let resultPost = posts.map(i => {
         return (
-            <li className='post_item'>
+            <li className={post.item} key={i.id}>
                 <img
-                    className='post_img'
+                    className={post.img}
                     src={i.img}
-                    width='150'
+                    width='90'
                     height='90'
                     alt="avatar"/>
                 <p>{i.post}</p>
-                <span className='post_like'>like: {i.like}</span>
+                <span className={post.like}>like: {i.like}</span>
             </li>
         )
     })

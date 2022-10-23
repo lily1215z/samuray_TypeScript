@@ -1,15 +1,20 @@
-import './NavBar.css'
+import navbar from './NavBar.module.css'
+import {NavLink} from "react-router-dom";
 
 export function NavBar() {
+
     return (
-        <div className='navbar'>
-            <ul className='navbar__items'>
-                <li className='navbar__item'><a href='#'>Profile</a></li>
-                <li className='navbar__item'><a href='#'>Messages</a></li>
-                <li className='navbar__item'><a href='#'>News</a></li>
-                <li className='navbar__item'><a href='#'>Music</a></li>
-                <li className='navbar__item'><a href='#'>Settings</a></li>
+        <nav className={navbar.navbar}>
+            <ul className={navbar.items}>
+                <li className={navbar.item}><
+                    NavLink className={({ isActive }) =>(isActive ? "active_nav" : "")} to='/'>Home</NavLink>
+                </li>
+                <li className={navbar.item}><NavLink to='/profile' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Profile</NavLink></li>
+                <li className={navbar.item}><NavLink to='/dialogs' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Messages</NavLink></li>
+                <li className={navbar.item}><NavLink to='/news' className={({ isActive }) =>(isActive ? "active_nav" : "")}>News</NavLink></li>
+                <li className={navbar.item}><NavLink to='/music' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Music</NavLink></li>
+                <li className={navbar.item}><NavLink to='/settings' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Settings</NavLink></li>
             </ul>
-        </div>
+        </nav>
     )
 }

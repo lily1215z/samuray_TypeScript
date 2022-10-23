@@ -1,55 +1,58 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Routes, Route} from 'react-router-dom';
 import './App.css';
 import {Header} from "./Components/Header/Header";
 import {NavBar} from "./Components/Navbar/NavBar";
 import {Profile} from "./Components/Profile/Profile";
-// import {BrowserRouter, Route, Router} from "react-router-dom";
-// import {BrowserRouter as Router, Route} from "react-router-dom";
+import {Dialogs} from "./Components/Dialogs/Dialogs";
+import {Home} from "./Components/Home/Home";
+import {DialogsType, MessagesType, PostsType} from "./redux/store";
+import { AppRootStateType } from './redux/redux_store';
+import {useDispatch, useSelector} from "react-redux";
+import {postsReducerAC} from "./redux/posts-reducer";
 
 
-// const routes = [
-//     {
-//         path: "/profile",
-//         component: Profile
-//     },
-//     {
-//         path: "/messages",
-//         component: Messages
-//     }
-// ];
-export type dataTypeProps = {
-    id: number,
-    img: string,
-    like: number,
-    post: string
-}
+// type AppType = {
+//     state: AppRootStateType
+// }
 
 function App() {
-    const data:Array<dataTypeProps> = [
-        {id:1, post:'hello. my dear friend', img: 'https://cspromogame.ru//storage/upload_images/avatars/4202.jpg', like: 5},
-        {id:2, post:'Lets go to in skyUp.', img: 'https://cspromogame.ru//storage/upload_images/avatars/4166.jpg', like: 15},
-        {id:3, post:'True or false: hard question.', img: 'https://cspromogame.ru//storage/upload_images/avatars/4275.jpg', like: 16},
-        {id:4, post:'We go to in other country', img: 'https://cspromogame.ru//storage/upload_images/avatars/4202.jpg', like: 8}
-    ]
+    // let posts = props.state.profilePage.posts
+    // let dialogs = props.state.dialogsPage.dialogs
+    // let messages = props.state.dialogsPage.messages
+
+    const dispatch = useDispatch();
+    const posts = useSelector<AppRootStateType, Array<PostsType>>(state => state.profilePage.posts)
+    const dialogs = useSelector<AppRootStateType, Array<DialogsType>>(state => state.dialogsPage.dialogs)
+    const messages = useSelector<AppRootStateType, Array<MessagesType>>(state => state.dialogsPage.messages)
+
+    const [postsList, setPostsList] = useState<Array<PostsType>>(posts)
+
+    const addPost = (post: string) => {        //добавляем посты в профайле
+        // const newPost = {id: v1(), post: post, img: 'https://hostenko.com/wpcafe/wp-content/uploads/rndavatar.png', like: 5}
+        // const updatePosts = [newPost, ...postsList]
+        // setPostsList(updatePosts)
+        dispatch(postsReducerAC(post))
+    }
 
     return (
         <>
-            {/*<Router/>*/}
             <div className="App">
                 <Header/>
                 <div className='container'>
                     <div className="app__inner">
                         <NavBar/>
-                        {/*<Route path='/profile' />*/}
-                        {/*<Route path='/messages'/>*/}
-                        {/*<Route path='/news'/>*/}
-                        {/*<Route path='/music'/>*/}
-                        {/*<Route path='/settings'/>*/}
-                        <Profile data={data} />
+                        <Routes>
+                            <Route path='/' element={<Home />} />
+                            <Route path='profile' element={<Profile posts={postsList} addPost={addPost} />} />
+                            <Route path='dialogs/*' element={<Dialogs dialogs={dialogs} messages={messages}/>}/>
+                            <Route path='news'/>
+                            <Route path='music'/>
+                            <Route path='settings'/>
+                        </Routes>
                     </div>
                 </div>
             </div>
-            {/*<Router/>*/}
         </>
     );
 }

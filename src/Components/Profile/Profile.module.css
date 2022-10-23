@@ -1,7 +1,7 @@
-.profile_inner {
+.inner {
     width: 100%;
 }
 
-.profile_img {
+.img {
     object-fit: cover;
 }

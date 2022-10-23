@@ -1,4 +1,4 @@
-import './ProfileInfo.css'
+import profile_info from './ProfileInfo.module.css'
 import avatar from '../../../images/avatar.png'
 
 type ProfileInfoProps = {
@@ -10,17 +10,18 @@ type ProfileInfoProps = {
 }
 export function ProfileInfo(props: ProfileInfoProps) {
     return (
-        <div className='profile-info'>
+        <div className={profile_info.info}>
             <img
                 src={avatar}
                 width='150'
+                height='180'
                 alt="avatar" />
-            <div className='profile-info__box'>
-                <h3 className="profile-info__name">{props.name}</h3>
-                <div className="profile-info__date">Date of birth: {props.date}</div>
-                <div className="profile-info__city">City: {props.city}</div>
-                <div className="profile-info__education">Education: {props.educ}</div>
-                <div className="profile-info__site">Web site: {props.web}</div>
+            <div className={profile_info.box}>
+                <h3 className={profile_info.name}>{props.name}</h3>
+                <div className={profile_info.aboutinfo}>Date of birth: <span className={profile_info.about}>{props.date}</span></div>
+                <div className={profile_info.aboutinfo}>City: <span className={profile_info.about}>{props.city}</span></div>
+                <div className={profile_info.aboutinfo}>Education: <span className={profile_info.about}>{props.educ}</span></div>
+                <div className={profile_info.aboutinfo}>Web site: <span className={profile_info.about}>{props.web}</span></div>
             </div>
         </div>
     )

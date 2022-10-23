@@ -1,0 +1,32 @@
+.info {
+    display: flex;
+}
+
+.box {
+    margin-left: 50px;
+}
+.aboutinfo {
+    margin-bottom: 5px;
+    padding: 3px;
+    font-size: 14px;
+    color: #04236e;
+    display: block;
+}
+
+.about {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+.name {
+    position: relative;
+}
+.name::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    background-color: rgba(224, 77, 19, 0.7);
+    width: 250px;
+    left: 50px;
+    bottom: -5px;
+}

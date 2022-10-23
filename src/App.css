@@ -4,9 +4,40 @@
 
 .app__inner {
   display: flex;
-  justify-content: space-between;
 }
 
+.active_nav {
+  color: #e0187b;
+  position: relative;
+}
+
+.active_nav::after {
+  content: '';
+  width: 3px;
+  height: 100%;
+  background-color: #e0187b;
+  position: absolute;
+  top: 0;
+  left: -8px;
+  border-radius: 5px;
+}
+
+.active_dialog {
+  color: #04236e;
+  font-weight: 900;
+  position: relative;
+}
+
+.active_dialog:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  background-color: #04236e;
+}
 .message-textarea {
   resize: none;
   height: 100px;
@@ -28,4 +59,8 @@
   font-weight: 700;
   cursor: pointer;
   border: 1px solid red;
+}
+
+.link {
+  color: #52129f;
 }
