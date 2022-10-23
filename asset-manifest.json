@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/samuray_TypeScript/static/css/main.cd66ed10.css",
+    "main.js": "/samuray_TypeScript/static/js/main.ca105da1.js",
+    "static/js/787.a534fa47.chunk.js": "/samuray_TypeScript/static/js/787.a534fa47.chunk.js",
+    "static/media/logo.png": "/samuray_TypeScript/static/media/logo.4c8597ac3efc36296da2.png",
+    "static/media/profile.jpg": "/samuray_TypeScript/static/media/profile.dd584c751150287e1964.jpg",
+    "static/media/logo-bg.png": "/samuray_TypeScript/static/media/logo-bg.d5e1f48ecba232d8d8d1.png",
+    "static/media/dialogs.jpg": "/samuray_TypeScript/static/media/dialogs.3ddb9dd8c03a270b2e6e.jpg",
+    "static/media/avatar.png": "/samuray_TypeScript/static/media/avatar.f7dcf2bae9f017a39a5a.png",
+    "index.html": "/samuray_TypeScript/index.html",
+    "main.cd66ed10.css.map": "/samuray_TypeScript/static/css/main.cd66ed10.css.map",
+    "main.ca105da1.js.map": "/samuray_TypeScript/static/js/main.ca105da1.js.map",
+    "787.a534fa47.chunk.js.map": "/samuray_TypeScript/static/js/787.a534fa47.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cd66ed10.css",
+    "static/js/main.ca105da1.js"
+  ]
+}
