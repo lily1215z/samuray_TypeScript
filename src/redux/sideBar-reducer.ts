@@ -1,5 +1,3 @@
-import {SideBarType} from './store';
-
 export const initialState = {}
 
 export const SideBarReducer = (state: SideBarType = initialState, action: SideBarActionType): SideBarType => {
@@ -21,3 +19,6 @@ export const sideBarReducerAC = (id: string, post: string) => {
 }
 
 //thunk
+
+//type
+export type SideBarType = {}

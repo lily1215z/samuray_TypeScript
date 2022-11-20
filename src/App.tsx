@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import './App.css';
 import {Header} from "./Components/Header/Header";
@@ -6,33 +6,22 @@ import {NavBar} from "./Components/Navbar/NavBar";
 import {Profile} from "./Components/Profile/Profile";
 import {Dialogs} from "./Components/Dialogs/Dialogs";
 import {Home} from "./Components/Home/Home";
-import {DialogsType, MessagesType, PostsType} from "./redux/store";
-import { AppRootStateType } from './redux/redux_store';
+import {AppRootStateType} from './redux/redux_store';
 import {useDispatch, useSelector} from "react-redux";
-import {postsReducerAC} from "./redux/posts-reducer";
-
-
-// type AppType = {
-//     state: AppRootStateType
-// }
+import {addPostsReducerAC} from './redux/posts-reducer';
+import {DialogsType, sendDialogsReducerAC} from './redux/dialogs-reducer';
+import UsersContainer from './Components/Users/UsersContainer';
+import ProfileContainer from './Components/Profile/ProfileContainer';
 
 function App() {
-    // let posts = props.state.profilePage.posts
-    // let dialogs = props.state.dialogsPage.dialogs
-    // let messages = props.state.dialogsPage.messages
-
     const dispatch = useDispatch();
-    const posts = useSelector<AppRootStateType, Array<PostsType>>(state => state.profilePage.posts)
     const dialogs = useSelector<AppRootStateType, Array<DialogsType>>(state => state.dialogsPage.dialogs)
-    const messages = useSelector<AppRootStateType, Array<MessagesType>>(state => state.dialogsPage.messages)
-
-    const [postsList, setPostsList] = useState<Array<PostsType>>(posts)
 
     const addPost = (post: string) => {        //добавляем посты в профайле
-        // const newPost = {id: v1(), post: post, img: 'https://hostenko.com/wpcafe/wp-content/uploads/rndavatar.png', like: 5}
-        // const updatePosts = [newPost, ...postsList]
-        // setPostsList(updatePosts)
-        dispatch(postsReducerAC(post))
+        dispatch(addPostsReducerAC(post))
+    }
+    const addMessages = (message: string) => {
+        dispatch(sendDialogsReducerAC(message))
     }
 
     return (
@@ -44,11 +33,12 @@ function App() {
                         <NavBar/>
                         <Routes>
                             <Route path='/' element={<Home />} />
-                            <Route path='profile' element={<Profile posts={postsList} addPost={addPost} />} />
-                            <Route path='dialogs/*' element={<Dialogs dialogs={dialogs} messages={messages}/>}/>
-                            <Route path='news'/>
-                            <Route path='music'/>
-                            <Route path='settings'/>
+                            <Route path='profile' element={<ProfileContainer addPost={addPost} />} />
+                            <Route path='dialogs/*' element={<Dialogs addMessage={addMessages} dialogs={dialogs} />}/>
+                            <Route path='news' element={<div>news</div>}/>
+                            <Route path='music' element={<div>music</div>}/>
+                            <Route path='settings' element={<div>settings</div>}/>
+                            <Route path='users' element={<UsersContainer />}/>       //UsersContainer это контейнерная компонента и она внутри себя оборачиваает (в нее передаем) презентационную компоненту Users
                         </Routes>
                     </div>
                 </div>

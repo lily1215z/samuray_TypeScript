@@ -1,11 +1,13 @@
 import post from './Post.module.css'
-import {PostsType} from '../../../../redux/store'
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from '../../../../redux/redux_store';
+import {PostsType} from '../../../../redux/posts-reducer';
 
-type  postTypeProps = {
-    posts: Array<PostsType>
-}
+type  postTypeProps = {}
 
-export const Post:React.FC<postTypeProps> = ({posts}) => {
+export const Post:React.FC<postTypeProps> = () => {
+    const posts = useSelector<AppRootStateType, Array<PostsType>>(state => state.profilePage.posts)
+
     let resultPost = posts.map(i => {
         return (
             <li className={post.item} key={i.id}>
@@ -22,6 +24,5 @@ export const Post:React.FC<postTypeProps> = ({posts}) => {
     })
     return (
         <>{resultPost}</>
-
     )
 }

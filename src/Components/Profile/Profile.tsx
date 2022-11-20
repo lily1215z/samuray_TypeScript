@@ -1,25 +1,28 @@
-import profile from './Profile.module.css'
+import profileStyle from './Profile.module.css'
 import profile_img from '../../images/profile.jpg';
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPost} from "./MyPost/MyPost";
-import {PostsType} from '../../redux/store'
+import {Post} from './MyPost/Post/Post';
 
 type profileTypeProps = {
-    posts: Array<PostsType>
     addPost: (post: string) => void
+    profile: {}
 }
 
-export const Profile: React.FC<profileTypeProps> = ({posts, addPost}) => {
+export const Profile: React.FC<profileTypeProps> = ({addPost, profile}) => {
     return (
-        <div className={profile.inner}>
+        <div className={profileStyle.inner}>
             <img
-                className={profile.img}
+                className={profileStyle.img}
                 src={profile_img}
                 height='300'
                 width='100%'
                 alt="profile" />
-            <ProfileInfo name='SvetLana' date='12.10.1984' city='Odessa' educ='Camasutra' web='facebook.com' />
-            <MyPost posts={posts} addPost={addPost}/>
+            <ProfileInfo profile={profile} />
+            <MyPost addPost={addPost} title={'My posts'}/>
+            <ul>
+                <Post />
+            </ul>
         </div>
     )
 }

@@ -1,14 +1,13 @@
-import {Post} from "./Post/Post";
+
 import mypost from './MyPost.module.css'
-import {PostsType} from "../../../redux/store";
 import {useState} from "react";
 import {BtnUniversal} from "../../BtnUniversal";
 
 type  myPostTypeProps = {
-    posts:Array<PostsType>
     addPost: (post: string) => void
+    title: string
 }
-export const MyPost: React.FC<myPostTypeProps> = ({posts, addPost}) => {
+export const MyPost: React.FC<myPostTypeProps> = ({addPost, title}) => {
     const [messInPost, setMessInPost] = useState<string>('')
     const [error, setError] = useState('')
 
@@ -22,14 +21,10 @@ export const MyPost: React.FC<myPostTypeProps> = ({posts, addPost}) => {
         }
     }
 
-// const addMessInPost = () => {
-//     PostsReducer(posts, {type: 'ADD-MESSAGES', post: messInPost })
-// }
-
     return (
         <div>
             <div className={mypost.post}>
-                <h3 className={mypost.title}>My posts</h3>
+                <h3 className={mypost.title}>{title}</h3>
                 <textarea
                     className='message-textarea'
                     name="text"
@@ -43,9 +38,9 @@ export const MyPost: React.FC<myPostTypeProps> = ({posts, addPost}) => {
                     <BtnUniversal className={'message-btn'} onClick={addMessInPost} title={'send'} />
                 </div>
             </div>
-            <ul>
-                <Post posts={posts}/>
-            </ul>
+            {/*<ul>*/}
+            {/*    <Post />*/}
+            {/*</ul>*/}
         </div>
     )
 }
