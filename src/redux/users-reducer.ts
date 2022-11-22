@@ -1,9 +1,10 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UN-FOLLOW';
 const SET_USERS = 'SET-USERS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type UserType = {
     id: number,
@@ -21,7 +22,8 @@ const initialState = {
     pageSize: 2,
     totalUsersCount: 0,
     currentPage: 1,   //со старта будет 1 страница. всегда будем запрашивать 1 стр
-    isFetching: false
+    isFetching: false,
+    followingInProgress: false
 }
 
 export type UsersPageType = {
@@ -29,7 +31,8 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: boolean
 }
 
 export const UsersReducer = (state: UsersPageType = initialState, action: UsersActionType): UsersPageType => {
@@ -62,6 +65,9 @@ export const UsersReducer = (state: UsersPageType = initialState, action: UsersA
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.toggle}
 
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {...state, followingInProgress: action.toggle}
+
         default:
             return state
     }
@@ -73,7 +79,9 @@ export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} 
 export const setCurrentPageAC = (pageNumber: number) => ({type: SET_CURRENT_PAGE, pageNumber} as const)
 export const setUsersTotalCountAC = (totalCount: number) => ({type: SET_USERS_TOTAL_COUNT, totalCount} as const)
 export const toggleIsFetchingAC = (toggle: boolean) => ({type: TOGGLE_IS_FETCHING, toggle} as const)
+export const toggleIsFollowingProgressAC = (toggle: boolean) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, toggle} as const)
 
 export type UsersActionType = ReturnType<typeof followAC> | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC> | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setUsersTotalCountAC> | ReturnType<typeof toggleIsFetchingAC>
+    | ReturnType<typeof toggleIsFollowingProgressAC>

@@ -1,4 +1,5 @@
 import {v1} from 'uuid';
+import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -53,7 +54,7 @@ export const addPostsReducerAC = (post: string) => {
 export const updatePostsReducerAC = (text: string) => {
     return {type: UPDATE_NEW_POST_TEXT, newText: text} as const
 }
-export const setUserProfileAC = (profile: any) => {           //hacer type para profile
+export const setUserProfileAC = (profile: ProfileResponseType) => {           //hacer type para profile
     return {type: SET_USER_PROFILE, profile} as const
 }
 //thunk

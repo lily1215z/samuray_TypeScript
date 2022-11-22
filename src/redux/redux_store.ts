@@ -5,6 +5,7 @@ import {SideBarActionType, SideBarReducer} from './sideBar-reducer';
 import thunk, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import {UsersActionType, UsersReducer} from './users-reducer';
+import {AuthReducer} from './auth-reducer';
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     dialogsPage: DialogsReducer,
     sidebar: SideBarReducer,
     users: UsersReducer,
+    auth: AuthReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

@@ -1,17 +1,16 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import './App.css';
-import {Header} from "./Components/Header/Header";
-import {NavBar} from "./Components/Navbar/NavBar";
-import {Profile} from "./Components/Profile/Profile";
-import {Dialogs} from "./Components/Dialogs/Dialogs";
-import {Home} from "./Components/Home/Home";
+import {NavBar} from './Components/Navbar/NavBar';
+import {Dialogs} from './Components/Dialogs/Dialogs';
+import {Home} from './Components/Home/Home';
 import {AppRootStateType} from './redux/redux_store';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 import {addPostsReducerAC} from './redux/posts-reducer';
 import {DialogsType, sendDialogsReducerAC} from './redux/dialogs-reducer';
 import UsersContainer from './Components/Users/UsersContainer';
 import ProfileContainer from './Components/Profile/ProfileContainer';
+import HeaderContainer from './Components/Header/HeaderContainer';
 
 function App() {
     const dispatch = useDispatch();
@@ -27,18 +26,22 @@ function App() {
     return (
         <>
             <div className="App">
-                <Header/>
-                <div className='container'>
+                <HeaderContainer />
+                <div className="container">
                     <div className="app__inner">
                         <NavBar/>
                         <Routes>
-                            <Route path='/' element={<Home />} />
-                            <Route path='profile' element={<ProfileContainer addPost={addPost} />} />
-                            <Route path='dialogs/*' element={<Dialogs addMessage={addMessages} dialogs={dialogs} />}/>
-                            <Route path='news' element={<div>news</div>}/>
-                            <Route path='music' element={<div>music</div>}/>
-                            <Route path='settings' element={<div>settings</div>}/>
-                            <Route path='users' element={<UsersContainer />}/>       //UsersContainer это контейнерная компонента и она внутри себя оборачиваает (в нее передаем) презентационную компоненту Users
+                            {/*<Route path="/" element={<div>hola</div>}>*/}
+                            <Route path="/" element={<Home/>}/>
+                            <Route path="profile/:userId" element={<ProfileContainer addPost={addPost}/>}/>
+                            <Route path="profile" element={<ProfileContainer addPost={addPost}/>}/>
+                            <Route path="dialogs/*" element={<Dialogs addMessage={addMessages} dialogs={dialogs}/>} />
+                            <Route path="news" element={<div>news</div>}/>
+                            <Route path="music" element={<div>music</div>}/>
+                            <Route path="settings" element={<div>settings</div>}/>
+                            <Route path="users" element={<UsersContainer/>}/>
+                            <Route path="*" element={<div>Route not match</div>}/>
+                            {/*</Route>*/}
                         </Routes>
                     </div>
                 </div>
