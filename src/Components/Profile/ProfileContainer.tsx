@@ -1,11 +1,11 @@
 import React from 'react';
 import {Profile} from './Profile';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
-import {setUserProfileAC} from '../../redux/posts-reducer';
+import {getProfileUserTC} from '../../redux/posts-reducer';
 
 import {
+    Navigate,
     // @ts-ignore
     RouteComponentProps,
     useLocation,
@@ -40,7 +40,8 @@ export type ProfileResponseType = {
 }
 
 type MapStateToPropsType = {
-    profile: ProfileResponseType
+    profile: ProfileResponseType,
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -75,13 +76,13 @@ class ProfileContainer extends React.Component<PropsType> {
         if(!userId) {
             userId=2;
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0//profile/${userId}`)
-            .then(res => {
-                this.props.setUserProfileAC(res.data)
-            })
+        this.props.getProfileUserTC(userId)
     }
 
     render() {
+
+    if(!this.props.isAuth) return  <Navigate to={"/login"} />
+
         return (
             <Profile addPost={this.props.addPost} {...this.props} profile={this.props.profile} />
         );
@@ -90,8 +91,9 @@ class ProfileContainer extends React.Component<PropsType> {
 };
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({  // not return y because I wrote ({...})
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
-export default connect(mapStateToProps, {setUserProfileAC})(withRouter(ProfileContainer));
+export default connect(mapStateToProps, {getProfileUserTC})(withRouter(ProfileContainer));
 

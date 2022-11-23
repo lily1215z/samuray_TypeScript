@@ -1,20 +1,13 @@
 import React from 'react';
 import {Header} from './Header';
 import {connect} from 'react-redux';
-import {setAuthUserDataAC} from '../../redux/auth-reducer';
+import {getAuthMeTC} from '../../redux/auth-reducer';
 import {AppRootStateType} from '../../redux/redux_store';
-import {authAPI} from '../../api/api';
 
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        authAPI.getAuthMe()
-            .then(res => {
-                if (res.data.resultCode === 0) {
-                    let {id, email, login} = res.data.data  //деструктуризация
-                    this.props.setAuthUserDataAC(id, email, login)
-                }
-            })
+        this.props.getAuthMeTC()
     }
 //проверяем в консоли store.getState().auth
     render() {
@@ -26,8 +19,9 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
 export type HeaderContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 type MapDispatchToPropsType = {
-    setAuthUserDataAC: (id: number, email: string, login: string) => void
+    getAuthMeTC: () => void
 }
+
 type ResponsePropsType<T = {}> = {
     resultCode: number,
     messages: Array<string>
@@ -48,4 +42,4 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login
 })
-export default connect(mapStateToProps, {setAuthUserDataAC})(HeaderContainer)
+export default connect(mapStateToProps, {getAuthMeTC})(HeaderContainer)

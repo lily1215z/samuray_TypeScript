@@ -1,3 +1,5 @@
+import {Dispatch} from 'redux';
+import {authAPI} from '../api/api';
 
 
 const SET_USER_DATA = 'SET-USER-DATA';
@@ -14,7 +16,6 @@ export const AuthReducer = (state = initialState, action: any): any => {
         case SET_USER_DATA:
             return {...state, ...action.data, isAuth: true}
 
-
         default:
             return state
     }
@@ -23,4 +24,15 @@ export const AuthReducer = (state = initialState, action: any): any => {
 //action creator
 export const setAuthUserDataAC = (userId: number, email: string, login: string) => {
     return {type: SET_USER_DATA, data: {userId, email, login}} as const
+}
+
+//thunk
+export const getAuthMeTC = () => (dispatch: Dispatch) => {
+    authAPI.getAuthMe()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                let {id, email, login} = res.data.data               //деструктуризация
+                dispatch(setAuthUserDataAC(id, email, login))
+            }
+        })
 }

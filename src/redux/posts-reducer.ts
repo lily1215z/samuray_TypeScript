@@ -1,5 +1,7 @@
 import {v1} from 'uuid';
 import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
+import {Dispatch} from 'redux';
+import {profileAPI} from '../api/api';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -58,6 +60,12 @@ export const setUserProfileAC = (profile: ProfileResponseType) => {           //
     return {type: SET_USER_PROFILE, profile} as const
 }
 //thunk
+export const getProfileUserTC = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getProfileUser(userId)
+        .then(res => {
+            dispatch(setUserProfileAC(res.data))
+        })
+}
 
 //type
 export type PostsType = {
@@ -71,3 +79,4 @@ export type ProfilePageType = {
     posts: Array<PostsType>
     profile: any                          //hacer type para profile
 }
+

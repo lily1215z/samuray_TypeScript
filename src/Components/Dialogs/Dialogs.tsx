@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom'
+import {Navigate, NavLink} from 'react-router-dom'
 import dialogs from './Dialogs.module.css'
 import avatar from '../../images/avatar-dialog.css.png'
 import dialogs_bg from '../../images/dialogs.jpg'
@@ -6,6 +6,7 @@ import {MyPost} from '../Profile/MyPost/MyPost';
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
+import React from 'react';
 
 type DialogsTypeProps = {
     dialogs: Array<DialogsType>
@@ -15,6 +16,7 @@ type DialogsTypeProps = {
 
 export function Dialogs(props: DialogsTypeProps) {
     const messages = useSelector<AppRootStateType, Array<MessagesType>>(state => state.dialogsPage.messages)
+    const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
 
     // const addMessageValue = (message: string) => {
     //     props.addMessage(id, message)
@@ -36,6 +38,8 @@ export function Dialogs(props: DialogsTypeProps) {
             </li>
         )
     })
+
+    if(!isLogginIn) return <Navigate to={"/login"} />
 
     return (
         <div className={dialogs.dialogs_inner}>

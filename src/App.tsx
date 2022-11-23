@@ -11,6 +11,7 @@ import {DialogsType, sendDialogsReducerAC} from './redux/dialogs-reducer';
 import UsersContainer from './Components/Users/UsersContainer';
 import ProfileContainer from './Components/Profile/ProfileContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
+import {Login} from './Components/Login/Login';
 
 function App() {
     const dispatch = useDispatch();
@@ -31,7 +32,6 @@ function App() {
                     <div className="app__inner">
                         <NavBar/>
                         <Routes>
-                            {/*<Route path="/" element={<div>hola</div>}>*/}
                             <Route path="/" element={<Home/>}/>
                             <Route path="profile/:userId" element={<ProfileContainer addPost={addPost}/>}/>
                             <Route path="profile" element={<ProfileContainer addPost={addPost}/>}/>
@@ -41,7 +41,7 @@ function App() {
                             <Route path="settings" element={<div>settings</div>}/>
                             <Route path="users" element={<UsersContainer/>}/>
                             <Route path="*" element={<div>Route not match</div>}/>
-                            {/*</Route>*/}
+                            <Route path="login" element={<Login />}/>
                         </Routes>
                     </div>
                 </div>
