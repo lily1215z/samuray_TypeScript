@@ -8,6 +8,8 @@ import React from 'react';
 import {Users} from './Users';
 import {AppRootStateType} from '../../redux/redux_store';
 import {Preloader} from '../common/Preloader/Preloader';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type MapStateToPropsType = UsersPageType
 
@@ -71,37 +73,14 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     }
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-//     return {
-//         follow: (userId: number) => {
-//             dispatch(followAC(userId))
-//         },
-//         unfollow: (userId: number) => {
-//             dispatch(unFollowAC(userId))
-//         },
-//         setUsers: (users: UserType[]) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (pageNumber: number) => {
-//             dispatch(setCurrentPageAC(pageNumber))
-//         },
-//         setTotalUsersCount: (totalCount: number) => {
-//             dispatch(setUsersTotalCountAC(totalCount))
-//         },
-//         toggleIsFetching: (toggle: boolean) => {
-//             dispatch(toggleIsFetchingAC(toggle))
-//         },
-//     }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
-
-// or second variant это все попадает в пропсы - в компоненту
-export default connect(mapStateToProps, {
-    follow: followAC,
-    unfollow: unFollowAC,
-    setCurrentPage: setCurrentPageAC,
-    toggleIsFollowingProgress: toggleIsFollowingProgressAC,
-    getUsersTC, unFollowTC, followTC,
-})(UsersContainer)
-
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {
+        follow: followAC,
+        unfollow: unFollowAC,
+        setCurrentPage: setCurrentPageAC,
+        toggleIsFollowingProgress: toggleIsFollowingProgressAC,
+        getUsersTC, unFollowTC, followTC,
+    })
+)(UsersContainer)
 

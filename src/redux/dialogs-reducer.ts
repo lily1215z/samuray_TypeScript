@@ -1,22 +1,23 @@
-import {v1} from 'uuid';
+// import {v1} from 'uuid';
 
 const initialState = {
-    dialogs: [{id: v1(), name: 'Svitlana'}, {id: v1(), name: 'Alberto'}],
-    messages: [{id: v1(), message: 'Hi'}, {id: v1(), message: 'Hola'}]
+    dialogs: [{id: 1, name: 'Svitlana'}, {id: 11, name: 'Alberto'}],
+    messages: [{id: 2, message: 'Hi'}, {id: 22, message: 'Hola'}]
 }
 
 export const DialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionType): DialogsPageType => {
     switch (action.type) {
         case 'SEND-MESSAGE':
             const newMessage = {
-                id: v1(),
+                id: 3,
                 message: action.messages
             }
             return {...state, messages: [...state.messages, newMessage]}
 
         case 'UPDATE-NEW-MESSAGE-BODY':
             // return {...state, messages: action.body}
-            return {...state, messages: [...state.messages, {message: action.body}]}
+            // return {...state, messages: [...state.messages, {message: action.body}]}
+            return <DialogsPageType>{...state, messages: [...state.messages, {message: action.body}]}  //добавила id в сообщения и оно ругается. Добавила таким образом типизацию и перестало
 //lesson 48 - 27:00
         default:
             return state
@@ -31,20 +32,20 @@ export const sendDialogsReducerAC = (messages: string) => {
     return {type: 'SEND-MESSAGE', messages: messages} as const
 }
 
-export const updateDialogsReducerAC = (body: string) => {   //я убрала id от сюда и закоментила в типах. потом он понадобится
-    return {type: 'UPDATE-NEW-MESSAGE-BODY', body: body} as const
+export const updateDialogsReducerAC = (body: string, id: number) => {
+    return {type: 'UPDATE-NEW-MESSAGE-BODY', body: body, id} as const
 }
 
 //thunk
 
 // type
 export type DialogsType = {
-    id: string,
+    id: number,
     name: string
 }
 
 export type MessagesType = {
-    // id: string,
+    id: number, //было закоменчено id и оно не ругалось.
     message: string
 }
 

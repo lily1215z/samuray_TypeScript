@@ -7,11 +7,11 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
 import React from 'react';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type DialogsTypeProps = {
-    dialogs: Array<DialogsType>
-    // messages: Array<MessagesType>
-    addMessage: (message: string) => void
+    dialogsPage: Array<DialogsType>
+    sendMessage: (message: string) => void
 }
 
 export function Dialogs(props: DialogsTypeProps) {
@@ -22,24 +22,28 @@ export function Dialogs(props: DialogsTypeProps) {
     //     props.addMessage(id, message)
     // }
 
-    let dialogsData = props.dialogs.map(i => {
+    let dialogsData = props.dialogsPage.map(i => {
         return (
-            <li className={dialogs.dialog}>
-                <NavLink to={i.id} className={({ isActive }) =>(isActive ? "active_dialog" : "link")}>{i.name}</NavLink>
+            <li key={i.id} className={dialogs.dialog}>
+                <NavLink to={`${i.id}`}
+                         className={({isActive}) => (isActive ? 'active_dialog' : 'link')}>{i.name}</NavLink>
             </li>
         )
     })
 
     let messagesData = messages.map(i => {
         return (
-            <li className={dialogs.message}>
+            <li key={i.id} className={dialogs.message}>
                 <img className={dialogs.avatar} src={avatar} alt={'avatar'}/>
                 <div className={dialogs.text}>{i.message}</div>
             </li>
         )
     })
 
-    if(!isLogginIn) return <Navigate to={"/login"} />
+    if (!isLogginIn) return <Navigate to={'/login'}/>
+
+//Hight Order Component
+    //const AuthRedirectComponent = withAuthRedirect(Dialogs)  // не знаю где вызвать НОС в функ компоненте поэтому нок здесь не использую
 
     return (
         <div className={dialogs.dialogs_inner}>
@@ -53,7 +57,8 @@ export function Dialogs(props: DialogsTypeProps) {
                     {messagesData}
                 </ul>
             </div>
-            <MyPost addPost={props.addMessage} title={'My message'}/>
+            <MyPost addPost={props.sendMessage} title={'My message'}/>
         </div>
     )
 }
+

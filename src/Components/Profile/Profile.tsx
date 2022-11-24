@@ -10,6 +10,7 @@ type profileTypeProps = {
 }
 
 export const Profile: React.FC<profileTypeProps> = ({addPost, profile}) => {
+
     return (
         <div className={profileStyle.inner}>
             <img

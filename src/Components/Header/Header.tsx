@@ -6,7 +6,6 @@ import {HeaderContainerPropsType} from './HeaderContainer';
 
 type HeaderPropsType = HeaderContainerPropsType & {}
 export function Header(props: HeaderPropsType) {
-    console.log(props)
     return (
         <div className='container'>
             <header className={header.inner}>
