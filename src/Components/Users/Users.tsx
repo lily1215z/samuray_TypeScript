@@ -3,7 +3,6 @@ import usersStyle from './Users.module.css';
 import photoUser from '../../images/icon-user.png';
 import {UsersContainerPropsType} from './UsersContainer';
 import {NavLink} from 'react-router-dom';
-import {followTC, unFollowTC} from '../../redux/users-reducer';
 
 type UsersPropsType = UsersContainerPropsType & {
     onPageChanged: (ageNumber: number) => void
@@ -19,7 +18,7 @@ export const Users = (props: UsersPropsType) => {
     return <div>
         <div>
             {pages.map(p => {
-                return <span className={props.currentPage === p ? usersStyle.selectedPage : ''}
+                return <span key={p} className={props.currentPage === p ? usersStyle.selectedPage : ''}
                              onClick={() => {
                                  props.onPageChanged(p)
                              }}>{p}</span>

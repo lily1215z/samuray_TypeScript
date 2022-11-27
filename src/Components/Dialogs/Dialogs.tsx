@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
 import React from 'react';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {ProfileStatus} from '../Profile/ProfileInfo/ProfileStatus';
 
 type DialogsTypeProps = {
     dialogsPage: Array<DialogsType>
@@ -48,6 +48,7 @@ export function Dialogs(props: DialogsTypeProps) {
     return (
         <div className={dialogs.dialogs_inner}>
             <div><img src={dialogs_bg} alt={'background'}/></div>
+
             <div className={dialogs.title}>Dialogs</div>
             <div className={dialogs.block_dialog}>
                 <ul className={dialogs.dialogs_items}>

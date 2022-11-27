@@ -2,7 +2,7 @@ import React from 'react';
 import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
-import {addPostsReducerAC, getProfileUserTC} from '../../redux/posts-reducer';
+import {addPostsReducerAC, getProfileUserTC, getStatusUserTC, updateStatusUserTC} from '../../redux/posts-reducer';
 
 import {
     // @ts-ignore
@@ -40,7 +40,8 @@ export type ProfileResponseType = {
 
 type MapStateToPropsType = {
     profile: ProfileResponseType,
-    isAuth?: boolean
+    isAuth?: boolean,
+    status: string
 }
 
 type MapDispatchPropsType = {
@@ -76,25 +77,31 @@ class ProfileContainer extends React.Component<PropsType> {
             userId=2;
         }
         this.props.getProfileUserTC(userId)
+        this.props.getStatusUserTC(userId)
     }
 
     render() {
         return (
-            <Profile addPost={this.props.addPost} {...this.props} profile={this.props.profile} />
+            <Profile addPost={this.props.addPost} {...this.props}
+                     profile={this.props.profile}
+                     status={this.props.status}
+                     updateStatus={this.props.updateStatusUserTC}
+            />
         );
     }
 };
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({  // not return y because I wrote ({...})
     profile: state.profilePage.profile,                                       //здесь был isAuth но его убрали. поэтому ? в типизации поставила
-
+    status: state.profilePage.status
 })
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         addPost: (post: string) => {
             dispatch(addPostsReducerAC(post))
         },
-        getProfileUserTC
+        getProfileUserTC, getStatusUserTC, updateStatusUserTC
     }
 }
 

@@ -6,6 +6,8 @@ import {profileAPI} from '../api/api';
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
+const SET_STATUS = 'SET_STATUS'
+const UPDATE_STATUS = 'UPDATE_STATUS'
 
 const initialState = {
     posts: [
@@ -16,7 +18,8 @@ const initialState = {
             like: 5
         },
     ],
-    profile: null          // or {}
+    profile: null,          // or {} or null
+    status: ''
 }
 
 // export const ProfileReducer = (state: any = initialState, action: PostsReducerActionType): any => {
@@ -40,6 +43,10 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
 
+        case SET_STATUS:
+        case UPDATE_STATUS:
+            return {...state, status: action.status}
+
         default:
             return state;
     }
@@ -47,7 +54,7 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
 
 //type
 export type PostsReducerActionType = ReturnType<typeof addPostsReducerAC> | ReturnType<typeof updatePostsReducerAC>
-| ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof setUserProfileAC> | ReturnType<typeof setStatusUserAC> | ReturnType<typeof updateStatusUserAC>
 
 //action creator
 export const addPostsReducerAC = (post: string) => {
@@ -59,6 +66,13 @@ export const updatePostsReducerAC = (text: string) => {
 export const setUserProfileAC = (profile: ProfileResponseType) => {           //hacer type para profile
     return {type: SET_USER_PROFILE, profile} as const
 }
+export const setStatusUserAC = (status: string) => {
+    return {type: SET_STATUS, status} as const
+}
+export const updateStatusUserAC = (status: string) => {
+    return {type: UPDATE_STATUS, status} as const
+}
+
 //thunk
 export const getProfileUserTC = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.getProfileUser(userId)
@@ -66,6 +80,22 @@ export const getProfileUserTC = (userId: number) => (dispatch: Dispatch) => {
             dispatch(setUserProfileAC(res.data))
         })
 }
+export const getStatusUserTC = (userId: number) => (dispatch: Dispatch) => {
+    profileAPI.getStatusUser(userId)
+        .then(res => {
+            dispatch(setStatusUserAC(res.data))
+        })
+}
+
+export const updateStatusUserTC = (status: string) => (dispatch: Dispatch) => {
+    profileAPI.updateStatusUser(status)
+        .then(res => {
+            if(res.data.resultCode === 0) {
+                dispatch(setStatusUserAC(status))
+            }
+        })
+}
+
 
 //type
 export type PostsType = {
@@ -78,5 +108,6 @@ export type PostsType = {
 export type ProfilePageType = {
     posts: Array<PostsType>
     profile: any                          //hacer type para profile
+    status: string
 }
 
