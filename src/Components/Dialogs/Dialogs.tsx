@@ -2,12 +2,12 @@ import {Navigate, NavLink} from 'react-router-dom'
 import dialogs from './Dialogs.module.css'
 import avatar from '../../images/avatar-dialog.css.png'
 import dialogs_bg from '../../images/dialogs.jpg'
-import {MyPost} from '../Profile/MyPost/MyPost';
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
-import React from 'react';
-import {ProfileStatus} from '../Profile/ProfileInfo/ProfileStatus';
+import React, {useState} from 'react';
+import {ErrorMessage, Field, Form, useFormik} from 'formik';
+import profileStyle from '../Profile/Profile.module.css';
 
 type DialogsTypeProps = {
     dialogsPage: Array<DialogsType>
@@ -58,8 +58,44 @@ export function Dialogs(props: DialogsTypeProps) {
                     {messagesData}
                 </ul>
             </div>
-            <MyPost addPost={props.sendMessage} title={'My message'}/>
+            {/*<AddMessageForm sendMessage={props.sendMessage}/>*/}
+            <AddMessageForm sendMessage={props.sendMessage}/>
         </div>
+    )
+}
+
+type addMessageFormType = {
+    sendMessage: (post: string) => void
+}
+const AddMessageForm = (props: addMessageFormType) => {
+    const [messInPost, setMessInPost] = useState<string>('')
+    const [error, setError] = useState('')
+
+
+    const formik = useFormik({
+        initialValues: {
+            newMessageBody: '',
+        },
+        onSubmit: values => {
+            props.sendMessage(values.newMessageBody)
+            formik.resetForm()
+        },
+    })
+    return (
+        <form onSubmit={formik.handleSubmit}>
+                <textarea
+                    className="message-textarea"
+                    name="newMessageBody"
+                    placeholder="your message"
+                    onChange={formik.handleChange}
+                    value={formik.values.newMessageBody}
+                    // onKeyPress={(e) => e.key === 'Enter' && addMessInPost()}
+                ></textarea>
+            <div>{error}</div>
+            <div className={profileStyle.btn_box}>
+                <button className={'message-btn'}>Add Message</button>
+            </div>
+        </form>
     )
 }
 

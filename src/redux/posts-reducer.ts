@@ -4,7 +4,6 @@ import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
@@ -35,11 +34,6 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
             }
             return {...state, posts: [newPost, ...state.posts]}  //48 урок самурая 33 мин
 
-        case UPDATE_NEW_POST_TEXT:
-            //return {...state, newPostText: action.newText}    //48 урок самурая 33 мин
-            // return {...state, posts: [...state.posts, {post: action.newText}]}
-            return state
-
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
 
@@ -53,15 +47,12 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
 }
 
 //type
-export type PostsReducerActionType = ReturnType<typeof addPostsReducerAC> | ReturnType<typeof updatePostsReducerAC>
+export type PostsReducerActionType = ReturnType<typeof addPostsReducerAC>
     | ReturnType<typeof setUserProfileAC> | ReturnType<typeof setStatusUserAC> | ReturnType<typeof updateStatusUserAC>
 
 //action creator
 export const addPostsReducerAC = (post: string) => {
     return {type: ADD_POST, post: post} as const
-}
-export const updatePostsReducerAC = (text: string) => {
-    return {type: UPDATE_NEW_POST_TEXT, newText: text} as const
 }
 export const setUserProfileAC = (profile: ProfileResponseType) => {           //hacer type para profile
     return {type: SET_USER_PROFILE, profile} as const

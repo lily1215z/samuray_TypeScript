@@ -1,7 +1,9 @@
-// import {v1} from 'uuid';
+
+
+import {Dispatch} from 'redux';
 
 const initialState = {
-    dialogs: [{id: 1, name: 'Svitlana'}, {id: 11, name: 'Alberto'}],
+    dialogs: [{id: 1, name: 'Svitlana'}, {id: 11, name: 'Javier'}],
     messages: [{id: 2, message: 'Hi'}, {id: 22, message: 'Hola'}]
 }
 
@@ -14,29 +16,25 @@ export const DialogsReducer = (state: DialogsPageType = initialState, action: Di
             }
             return {...state, messages: [...state.messages, newMessage]}
 
-        case 'UPDATE-NEW-MESSAGE-BODY':
-            // return {...state, messages: action.body}
-            // return {...state, messages: [...state.messages, {message: action.body}]}
-            return <DialogsPageType>{...state, messages: [...state.messages, {message: action.body}]}  //добавила id в сообщения и оно ругается. Добавила таким образом типизацию и перестало
-//lesson 48 - 27:00
         default:
             return state
     }
 }
 
 //type
-export type DialogsActionType = ReturnType<typeof sendDialogsReducerAC> | ReturnType<typeof updateDialogsReducerAC>
+export type DialogsActionType = ReturnType<typeof sendDialogsReducerAC>
 
 //action creator
 export const sendDialogsReducerAC = (messages: string) => {
     return {type: 'SEND-MESSAGE', messages: messages} as const
 }
 
-export const updateDialogsReducerAC = (body: string, id: number) => {
-    return {type: 'UPDATE-NEW-MESSAGE-BODY', body: body, id} as const
-}
 
 //thunk
+export const sendDialogsReducerTC = (messages: string) => (dispatch: Dispatch) => {
+
+}
+
 
 // type
 export type DialogsType = {
