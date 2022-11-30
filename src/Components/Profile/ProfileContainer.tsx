@@ -14,47 +14,6 @@ import {
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose, Dispatch} from 'redux';
 
-
-type ProfileContainerPropsType = MapStateToPropsType | MapDispatchPropsType
-
-export type ProfileResponseType = {
-    userId: number,
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string,
-    fullName: string,
-    contacts: {
-        github: string,
-        vk: string,
-        facebook: string,
-        instagram: string,
-        twitter: string,
-        website: string,
-        youtube: string,
-        mainLink: string,
-    }
-    photos: {
-        small: string,
-        large: string
-    }
-}
-
-type MapStateToPropsType = {
-    profile: ProfileResponseType,
-    isAuth: boolean,
-    status: string,
-    authorizedUserId: number
-}
-
-type MapDispatchPropsType = {
-    setUserProfileAC: (profile: ProfileResponseType) => void
-    addPost: (post: string) => void
-}
-
-type PathParamsType = {
-    userId: string
-}
-type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType  //RouteComponentProps загуглила решение
-
 function withRouter(Component: any) {   //need fixed
     function ComponentWithRouterProp(props: any) {  //need fixed  бы поставила ProfileContainerPropsType
         let location = useLocation();
@@ -76,6 +35,9 @@ class ProfileContainer extends React.Component<PropsType> {
         let userId = this.props.router.params.userId;
         if(!userId) {
             userId=this.props.authorizedUserId;
+            if(!userId) {
+                this.props.history.push("/login")
+            }
         }
         this.props.getProfileUserTC(userId)
         this.props.getStatusUserTC(userId)
@@ -113,3 +75,45 @@ export default compose<React.ComponentType>(
     withRouter,
     withAuthRedirect
 )(ProfileContainer)
+
+//type
+type ProfileContainerPropsType = MapStateToPropsType | MapDispatchPropsType
+
+export type ProfileResponseType = {
+    userId: number,
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    contacts: {
+        github: string,
+        vk: string,
+        facebook: string,
+        instagram: string,
+        twitter: string,
+        website: string,
+        youtube: string,
+        mainLink: string,
+    }
+    photos: {
+        small: string,
+        large: string
+    }
+}
+
+type MapStateToPropsType = {
+    profile: ProfileResponseType,
+    isAuth: boolean,
+    status: string,
+    authorizedUserId: number | null
+    // authorizedUserId: number
+}
+
+type MapDispatchPropsType = {
+    setUserProfileAC: (profile: ProfileResponseType) => void
+    addPost: (post: string) => void
+}
+
+type PathParamsType = {
+    userId: string
+}
+type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType  //RouteComponentProps загуглила решение

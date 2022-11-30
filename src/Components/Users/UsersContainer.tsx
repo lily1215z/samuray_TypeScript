@@ -10,6 +10,14 @@ import {AppRootStateType} from '../../redux/redux_store';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/users-selectors';
 
 type MapStateToPropsType = UsersPageType
 
@@ -62,19 +70,30 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 }
 
 //контейнерная компонента с коннектом
+// const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+//     return {                 //все что ниже это все попадает в пропсы
+//         users: state.users.users,  //49 lesson samuray 41 min
+//         pageSize: state.users.pageSize,
+//         totalUsersCount: state.users.totalUsersCount,
+//         currentPage: state.users.currentPage,
+//         isFetching: state.users.isFetching,
+//         followingInProgress: state.users.followingInProgress
+//     }
+// }
+
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-    return {                 //все что ниже это все попадает в пропсы
-        users: state.users.users,  //49 lesson samuray 41 min
-        pageSize: state.users.pageSize,
-        totalUsersCount: state.users.totalUsersCount,
-        currentPage: state.users.currentPage,
-        isFetching: state.users.isFetching,
-        followingInProgress: state.users.followingInProgress
+    return {
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 
 export default compose<React.ComponentType>(
-    withAuthRedirect,
+    // withAuthRedirect,
     connect(mapStateToProps, {
         follow: followAC,
         unfollow: unFollowAC,

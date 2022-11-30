@@ -1,5 +1,3 @@
-
-
 import {Dispatch} from 'redux';
 
 const initialState = {
@@ -21,8 +19,6 @@ export const DialogsReducer = (state: DialogsPageType = initialState, action: Di
     }
 }
 
-//type
-export type DialogsActionType = ReturnType<typeof sendDialogsReducerAC>
 
 //action creator
 export const sendDialogsReducerAC = (messages: string) => {
@@ -41,7 +37,7 @@ export type DialogsType = {
     id: number,
     name: string
 }
-
+export type DialogsActionType = ReturnType<typeof sendDialogsReducerAC>
 export type MessagesType = {
     id: number, //было закоменчено id и оно не ругалось.
     message: string

@@ -1,26 +1,26 @@
 import React from 'react';
 import {Header} from './Header';
 import {connect} from 'react-redux';
-import {getAuthMeTC} from '../../redux/auth-reducer';
 import {AppRootStateType} from '../../redux/redux_store';
 
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-    componentDidMount() {
-        this.props.getAuthMeTC()
-    }
 //проверяем в консоли store.getState().auth
     render() {
         return <Header {...this.props} />
     }
 }
 
-// type
-export type HeaderContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
+    isAuth: state.auth.isAuth,
+    login: state.auth.login
+})
 
-type MapDispatchToPropsType = {
-    getAuthMeTC: () => void
-}
+export default connect(mapStateToProps)(HeaderContainer)
+
+
+// type
+export type HeaderContainerPropsType = MapStateToPropsType
 
 type ResponsePropsType<T = {}> = {
     resultCode: number,
@@ -34,12 +34,8 @@ type ResponsePropsType<T = {}> = {
 }
 
 type MapStateToPropsType = {
-    isAuth: ResponsePropsType,
-    login: ResponsePropsType
+    // isAuth: ResponsePropsType,
+    // login: ResponsePropsType   //or ???
+    isAuth: boolean,
+    login: string | null
 }
-
-const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
-    isAuth: state.auth.isAuth,
-    login: state.auth.login
-})
-export default connect(mapStateToProps, {getAuthMeTC})(HeaderContainer)

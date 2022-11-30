@@ -102,6 +102,8 @@ export type UsersActionType = ReturnType<typeof followAC> | ReturnType<typeof un
 //thunk
 export const getUsersTC = (currentPage: number, pageSize:number) => (dispatch: Dispatch) => {
     dispatch(toggleIsFetchingAC(true))
+    dispatch(setCurrentPageAC(currentPage))    //выводит на какой стр мы сейчас находимся - подсвечивается активная стр
+
     usersAPI.getUsers(currentPage, pageSize).then(res => {
         dispatch(toggleIsFetchingAC(false))
         dispatch(setUsersAC(res.data.items))
