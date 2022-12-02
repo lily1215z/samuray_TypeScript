@@ -28,13 +28,11 @@ export const setInitializedAC = () => {
 }
 
 //thunk
-export const initializedAppTC = (): AppThunk => (dispatch: Dispatch) => {
+export const initializedAppTC = (): AppThunk => async (dispatch: Dispatch) => {
 
     let promise = dispatch(getAuthMeTC())
-    Promise.all([promise])
-        .then(() => {
-            dispatch(setInitializedAC())
-        })
+    await Promise.all([promise])
+    dispatch(setInitializedAC())
 }
 
 //type

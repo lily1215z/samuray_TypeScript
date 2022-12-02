@@ -2,6 +2,7 @@ import post from './Post.module.css'
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../../redux/redux_store';
 import {PostsType} from '../../../../redux/posts-reducer';
+import {PureComponent} from 'react';
 
 type  postTypeProps = {}
 
@@ -26,3 +27,5 @@ export const Post:React.FC<postTypeProps> = () => {
         <>{resultPost}</>
     )
 }
+
+// class Post extends PureComponent {}   //оптимизация
