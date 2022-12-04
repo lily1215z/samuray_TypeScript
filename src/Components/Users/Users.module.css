@@ -1,4 +1,26 @@
-.selectedPage {
-    font-weight: 900;
-    color: red;
+.wrapper {
+    /*border: 1px solid red;*/
+    width: 100%;
+}
+
+.inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px 3px;
+}
+
+.paginator {
+    padding: 15px 5px;
+    margin-bottom: 20px;
+    /*border: 1px solid #1238b4;*/
+    text-align: center;
+}
+
+.cart {
+    border: 1px solid #1238b4;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-width: 200px;
+    width: 100%;
 }

@@ -1,5 +1,6 @@
 import {usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
+import {updateObjectInArray} from '../utils/object-helpers';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UN-FOLLOW';
@@ -11,7 +12,7 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 const initialState = {
     users: [],
-    pageSize: 2,
+    pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,   //со старта будет 1 страница. всегда будем запрашивать 1 стр
     isFetching: false,
@@ -21,18 +22,17 @@ const initialState = {
 export const UsersReducer = (state: UsersPageType = initialState, action: UsersActionType): UsersPageType => {
     switch (action.type) {
         case FOLLOW:
-            // return {...state, users: [...state.users.map((i: any )=> i.userId === action.userId ? i.followed === true : i)]}
-
-            //нужно сделать копию самого обьекта в кот меняем. выше пример там напрямую мутирую обьект - плохо. внизу - верно
             return {
                 ...state,
-                users: [...state.users.map((i: any) => i.userId === action.userId ? {...i, followed: true} : i)]
+                // users: state.users.map((i: UserType) => i.id === action.userId ? {...i, followed: true} : i)  БЫЛО
+                users: updateObjectInArray(state.users, action.userId, 'id',   {followed: true})  //СТАЛО
             }
 
         case UNFOLLOW:
             return {
                 ...state,
-                users: [...state.users.map((i: any) => i.userId === action.userId ? {...i, followed: false} : i)]
+                // users: state.users.map((i: UserType) => i.id === action.userId ? {...i, followed: false} : i)
+                users: updateObjectInArray(state.users, action.userId, 'id',   {followed: false})
             }
 
         case SET_USERS:

@@ -10,9 +10,9 @@ type ProfileInfoProps = {
     updateStatus: (status: string) => void
 }
 
-export function ProfileInfo(props: ProfileInfoProps) {
+export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateStatus}) => {
 
-    if(!props.profile) {
+    if(!profile) {
         return <Preloader />
     }
 
@@ -20,19 +20,19 @@ export function ProfileInfo(props: ProfileInfoProps) {
         <div className={profile_info.info}>
             <img
                 // src={avatar}
-                src={props.profile.photos.small}
+                src={profile.photos.small}
                 width='180'
                 height='180'
                 alt="avatar" />
 
-            <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+            <ProfileStatus status={status} updateStatus={updateStatus}/>
 
             <div className={profile_info.box}>
-                <h3 className={profile_info.name}>{props.profile.fullName}</h3>
-                <div className={profile_info.aboutinfo}>Looking for a job: <span className={profile_info.about}>{props.profile.lookingForAJob ? 'yes' : 'no'}</span></div>
-                <div className={profile_info.aboutinfo}>Job: <span className={profile_info.about}>{props.profile.lookingForAJobDescription}</span></div>
-                <div className={profile_info.aboutinfo}>Web resource: <span className={profile_info.about}>{props.profile.contacts.github}</span></div>
-                <div className={profile_info.aboutinfo}>My Id: <span className={profile_info.about}>{props.profile.userId}</span></div>
+                <h3 className={profile_info.name}>{profile.fullName}</h3>
+                <div className={profile_info.aboutinfo}>Looking for a job: <span className={profile_info.about}>{profile.lookingForAJob ? 'yes' : 'no'}</span></div>
+                <div className={profile_info.aboutinfo}>Job: <span className={profile_info.about}>{profile.lookingForAJobDescription}</span></div>
+                <div className={profile_info.aboutinfo}>Web resource: <span className={profile_info.about}>{profile.contacts.github}</span></div>
+                <div className={profile_info.aboutinfo}>My Id: <span className={profile_info.about}>{profile.userId}</span></div>
             </div>
         </div>
     )

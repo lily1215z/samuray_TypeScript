@@ -13,7 +13,7 @@ const state = {
     status: ''
 }
 
-it('length of posts should be incremented', () => {
+test('length of posts should be incremented', () => {
     //1. test data
     let action = addPostsReducerAC('it-camasutra.com')
 
@@ -24,7 +24,7 @@ it('length of posts should be incremented', () => {
     expect (newState.posts.length).toBe(5)
 })
 
-it('message of new posts should be correct', () => {
+test('message of new posts should be correct', () => {
     //1. test data
     let action = addPostsReducerAC('it-camasutra.com')
 
@@ -35,7 +35,7 @@ it('message of new posts should be correct', () => {
     expect(newState.posts[4].post).toBe("it-kamasutra.com")
 })
 
-it('after deleting length of message should be decrement', () => {
+test('after deleting length of message should be decrement', () => {
     //1. test data
     let action = deletePostAC(1)
 

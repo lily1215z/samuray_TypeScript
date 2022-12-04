@@ -1,0 +1,27 @@
+.pageNumber.selectedPage {
+    font-weight: 900;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.99);
+}
+
+.pageNumber {
+    padding: 0px 3px;
+    box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
+    cursor: pointer;
+    max-width: 45px;
+    width: 100%;
+    display: inline-block;
+}
+
+.pageNumber + .pageNumber {
+    margin-left: 10px;
+}
+
+.paginator {
+    margin: 10px;
+}
+.btn_box {
+    margin: 0 20px;
+}

@@ -9,7 +9,6 @@ import {Users} from './Users';
 import {AppRootStateType} from '../../redux/redux_store';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {
     getCurrentPage,
     getFollowingInProgress,
@@ -19,6 +18,7 @@ import {
     getUsers,
 } from '../../redux/users-selectors';
 
+//type
 type MapStateToPropsType = UsersPageType
 
 type MapDispatchToPropsType = {
@@ -33,15 +33,13 @@ type MapDispatchToPropsType = {
 export type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class UsersContainer extends React.Component<UsersContainerPropsType> {
-    // constructor(props: any) {  //т.к. происходит только переброска в супер ничего то можем не писать его вовсе
-    //     super(props);
-    // }
-
     componentDidMount() {
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
+        const {currentPage, pageSize} = this.props
+        this.props.getUsersTC(currentPage, pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
+        // const pageSize = {this.props}
         this.props.getUsersTC(pageNumber, this.props.pageSize);
     }
 
@@ -69,18 +67,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 }
 
-//контейнерная компонента с коннектом
-// const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-//     return {                 //все что ниже это все попадает в пропсы
-//         users: state.users.users,  //49 lesson samuray 41 min
-//         pageSize: state.users.pageSize,
-//         totalUsersCount: state.users.totalUsersCount,
-//         currentPage: state.users.currentPage,
-//         isFetching: state.users.isFetching,
-//         followingInProgress: state.users.followingInProgress
-//     }
-// }
-
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         users: getUsers(state),
@@ -93,7 +79,6 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 }
 
 export default compose<React.ComponentType>(
-    // withAuthRedirect,
     connect(mapStateToProps, {
         follow: followAC,
         unfollow: unFollowAC,

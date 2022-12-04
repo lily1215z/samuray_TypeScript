@@ -1,9 +1,10 @@
 import React from 'react';
-import {connect, useDispatch, useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {Navigate} from 'react-router-dom';
 import {useFormik} from 'formik';
 import {loginTC} from '../../redux/auth-reducer';
+import {CreateInputField} from '../../utils/object-helpers';
 
 type FormikErrorType = {
     login?: string
@@ -14,8 +15,8 @@ type FormikErrorType = {
 export type loginFormType = {
     loginTC: (email: string, password: string, rememberMe: boolean) => void
 }
-export const LoginForm = (props: loginFormType) => {
-    // const dispatch = useDispatch()
+
+export const LoginForm: React.FC<loginFormType> = ({loginTC}) => {
     const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
 
     if(!isLogginIn) return <Navigate to={"/login"} />
@@ -43,39 +44,41 @@ export const LoginForm = (props: loginFormType) => {
             rememberMe: false
         },
         onSubmit: values => {
-            alert(JSON.stringify(values));
-
-            // dispatch(loginTC(values.email, values.password, values.rememberMe))
-            props.loginTC(values.email, values.password, values.rememberMe)
+            alert(JSON.stringify(values, null, 2));
+            loginTC(values.email, values.password, values.rememberMe)
             formik.resetForm()
         },
     })
 
+// при рефакторинге инпутов не работает очистка формы.
     return (
         <form onSubmit={formik.handleSubmit}>
-            <div>
-                <input placeholder={'email'}
-                       name={'email'}
-                       onChange={formik.handleChange}
-                       value={formik.values.email}
-                />
+
+                {CreateInputField('Email','email', formik.handleChange, 'text', formik.values.email)}
+                {/*<input placeholder={'email'}*/}
+                {/*       name={'email'}*/}
+                {/*       onChange={formik.handleChange}*/}
+                {/*       value={formik.values.email}*/}
+                {/*/>*/}
                 {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
-            </div>
-            <div>
-                <input placeholder={'Password'}
-                       type={'password'}
-                       name={'password'}
-                       onChange={formik.handleChange}
-                       value={formik.values.password}
-                />
+
+
+                {CreateInputField('Password','password', formik.handleChange, 'password', formik.values.password)}
+                {/*<input placeholder={'Password'}*/}
+                {/*       type={'password'}*/}
+                {/*       name={'password'}*/}
+                {/*       onChange={formik.handleChange}*/}
+                {/*       value={formik.values.password}*/}
+                {/*/>*/}
                 {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
-            </div>
+
             <div>
-                <input type={'checkbox'}
-                       name={'rememberMe'}
-                       onChange={formik.handleChange}
-                       checked={formik.values.rememberMe}
-                />remember me
+                {CreateInputField(null,'rememberMe', formik.handleChange, 'checkbox', formik.values.rememberMe, 'remember me')}
+                {/*<input type={'checkbox'}*/}
+                {/*       name={'rememberMe'}*/}
+                {/*       onChange={formik.handleChange}*/}
+                {/*       checked={formik.values.rememberMe}*/}
+                {/*/>remember me*/}
             </div>
             <div>
                 <button>Login</button>
@@ -86,17 +89,13 @@ export const LoginForm = (props: loginFormType) => {
     );
 };
 
-type loginType = {
-    isAuth: boolean
-}
 export const Login = (props: any) => {
     if (props.isAuth) return <Navigate to={'/login'}/>
 
     //не отрисовывает компоненту ниже
     return <div>
-        <h2>Login++</h2>
+        <h2>Login3</h2>
         <LoginForm loginTC={loginTC} />
-
     </div>
 }
 

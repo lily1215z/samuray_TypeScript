@@ -1,29 +1,31 @@
-import React, {Component} from 'react';
-import {Routes, Route, useLocation, useNavigate, useParams} from 'react-router-dom';
+import React, {Component, ComponentType, Suspense} from 'react';
+import {Routes, Route, useLocation, useNavigate, useParams, BrowserRouter} from 'react-router-dom';
 import './App.css';
 import {NavBar} from './Components/Navbar/NavBar';
 import {Home} from './Components/Home/Home';
 import UsersContainer from './Components/Users/UsersContainer';
-import ProfileContainer from './Components/Profile/ProfileContainer';
-import HeaderContainer, {HeaderContainerPropsType} from './Components/Header/HeaderContainer';
-import {Login} from './Components/Login/Login';
-import DialogContainer from './Components/Dialogs/DialogsContainer';
-import {connect} from 'react-redux';
+import HeaderContainer from './Components/Header/HeaderContainer';
+import {connect, Provider} from 'react-redux';
 import {compose} from 'redux';
 import {initializedAppTC} from './redux/app-reducer';
-import {AppRootStateType} from './redux/redux_store';
+import {AppRootStateType, store} from './redux/redux_store';
 import {Preloader} from './Components/common/Preloader/Preloader';
+import {Login} from './Components/Login/Login';
+// import ProfileContainer from './Components/Profile/ProfileContainer'
+
+const DialogContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 
 
-function withRouter(Component: any) {   //need fixed
-    function ComponentWithRouterProp(props: any) {  //need fixed  бы поставила ProfileContainerPropsType
+function withRouter<T>(Component: ComponentType<T>) {
+    function ComponentWithRouterProp(props: T) {
         let location = useLocation();
         let navigate = useNavigate();
         let params = useParams();
         return (
             <Component
                 {...props}
-                router={{ location, navigate, params }}
+                router={{location, navigate, params}}
             />
         );
     }
@@ -32,34 +34,48 @@ function withRouter(Component: any) {   //need fixed
 }
 
 class App extends Component<AppContainerPropsType> {
-    // const dialogs = useSelector<AppRootStateType, Array<DialogsType>>(state => state.dialogsPage.dialogs)
-
     componentDidMount() {
         this.props.initializedAppTC()
     }
 
     render() {
-        if(!this.props.initialized) {
-            return <Preloader />
+        if (!this.props.initialized) {
+            return <Preloader/>
         }
         return (
             <>
                 <div className="App">
-                    <HeaderContainer />
+                    <HeaderContainer/>
                     <div className="container">
                         <div className="app__inner">
                             <NavBar/>
                             <Routes>
                                 <Route path="/" element={<Home/>}/>
-                                <Route path="profile/:userId" element={<ProfileContainer />}/>
-                                <Route path="profile" element={<ProfileContainer />}/>
-                                <Route path="dialogs/*" element={<DialogContainer />} />
+                                {/*<Route path="profile/:userId" element={<ProfileContainer/>}/>*/}
+                                {/*<Route path="profile" element={<ProfileContainer/>}/>*/}
+                                {/*<Route path="dialogs/*" element={<DialogContainer />} />*/}
+
+                                <Route path="profile/:userId" element={(
+                                    <Suspense fallback={<Preloader/>}>
+                                        <ProfileContainer/>
+                                    </Suspense>)}/>
+
+                                <Route path="profile" element={(
+                                    <Suspense fallback={<Preloader/>}>
+                                        <ProfileContainer/>
+                                    </Suspense>)}/>
+
+                                <Route path="dialogs/*" element={(
+                                    <Suspense fallback={<div>Загрузка...</div>}>
+                                        <DialogContainer/>
+                                    </Suspense>)}/>
+
                                 <Route path="news" element={<div>news</div>}/>
                                 <Route path="music" element={<div>music</div>}/>
                                 <Route path="settings" element={<div>settings</div>}/>
                                 <Route path="users" element={<UsersContainer/>}/>
                                 <Route path="*" element={<div>Route not match</div>}/>
-                                <Route path="login" element={<Login />}/>
+                                <Route path="login" element={<Login/>}/>
                             </Routes>
                         </div>
                     </div>
@@ -70,21 +86,24 @@ class App extends Component<AppContainerPropsType> {
 
 }
 
-// const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
-//     return {
-//         initialized: state.app.initialized
-//     }
-// }
-
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
         initialized: state.app.initialized
     }
 }
 
-export default compose<React.ComponentType>(
+const AppContainer = compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializedAppTC}))(App)
+
+const SamuraiJSApp = () => {
+    return <Provider store={store}>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <AppContainer/>
+        </BrowserRouter>
+    </Provider>
+}
+export default SamuraiJSApp
 
 //type
 type AppContainerPropsType = MapDispatchToPropsType & mapStateToPropsType

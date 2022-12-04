@@ -1,48 +1,39 @@
 import React from 'react';
-import usersStyle from './Users.module.css';
-import photoUser from '../../images/icon-user.png';
 import {UsersContainerPropsType} from './UsersContainer';
-import {NavLink} from 'react-router-dom';
+import {Paginator} from '../common/Paginator/Paginator';
+import {User} from './User';
+import {UserType} from '../../redux/users-reducer';
+import user from './Users.module.css'
 
 type UsersPropsType = UsersContainerPropsType & {
     onPageChanged: (ageNumber: number) => void
 }
 
-export const Users = (props: UsersPropsType) => {
-    let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
-    let pages = [];
-    for (let i = 1; i <= pageCount; i++) {
-        pages.push(i)
-    }
+export const Users: React.FC<UsersPropsType> = ({
+                                                    onPageChanged,
+                                                    currentPage,
+                                                    pageSize,
+                                                    totalUsersCount,
+                                                    ...props
+                                                }) => {
+    return <div className={user.wrapper}>
+        <div className={user.paginator}>
+            <Paginator onPageChanged={onPageChanged}
+                       currentPage={currentPage}
+                       pageSize={pageSize}
+                       totalUsersCount={totalUsersCount}
+                       portionSize={10}
+                       {...props}
+            /></div>
 
-    return <div>
-        <div>
-            {pages.map(p => {
-                return <span key={p} className={props.currentPage === p ? usersStyle.selectedPage : ''}
-                             onClick={() => {
-                                 props.onPageChanged(p)
-                             }}>{p}</span>
-            })}
+        <div className={user.inner}>
+            {props.users.map((i: UserType) =>
+                <User
+                    key={i.id}
+                    pageSize={0} totalUsersCount={0} currentPage={0}
+                    user={i}
+                    {...props} />
+            )}
         </div>
-
-        { props.users.map((i: any) => <div key={i.id}>
-            <NavLink to={'/profile/' + i.id}>
-                <img src={i.photos.small !== null ? i.photos.small : photoUser} width={'150'} alt={'photoUser'}/>
-            </NavLink>
-            {i.followed ?                           //props.follow() это берем UsersContainer
-                <button disabled={props.followingInProgress.some(id=>id===i.id)}
-                        onClick={() => {props.unFollowTC(i.id)
-                }}>Unfollow</button>
-
-                : <button disabled={props.followingInProgress.some(id=>id===i.id)}
-                          onClick={() => {props.followTC(i.id)
-                }}>Follow</button>}
-
-            <div>{i.name}</div>
-            <div>{i.status}</div>
-            <div>{'i.location.city'}</div>
-            <div>{'i.location.country'}</div>
-
-        </div>)}
     </div>
 };
