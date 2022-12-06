@@ -2,7 +2,12 @@ import React from 'react';
 import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
-import {addPostsReducerAC, getProfileUserTC, getStatusUserTC, updateStatusUserTC} from '../../redux/posts-reducer';
+import {
+    addPostsReducerAC,
+    getProfileUserTC,
+    getStatusUserTC,
+    updateStatusUserTC
+} from '../../redux/posts-reducer';
 
 import {
     // @ts-ignore
@@ -22,7 +27,7 @@ function withRouter(Component: any) {   //need fixed
         return (
             <Component
                 {...props}
-                router={{ location, navigate, params }}
+                router={{location, navigate, params}}
             />
         );
     }
@@ -31,28 +36,44 @@ function withRouter(Component: any) {   //need fixed
 }
 
 class ProfileContainer extends React.Component<PropsType> {
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.router.params.userId;
-        if(!userId) {
-            userId=this.props.authorizedUserId;
-            if(!userId) {
-                this.props.history.push("/login")
+        // let userId = this.props.match.params.userId;
+        if (!userId) {
+            userId = this.props.authorizedUserId;
+            if (!userId) {
+                this.props.history.push('/login')
             }
         }
         this.props.getProfileUserTC(userId)
         this.props.getStatusUserTC(userId)
     }
 
+    componentDidMount() {
+        debugger
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        //96 lessons samuray 13 min
+        if (this.props.router.params.userId !== prevProps.router.params.userId) {
+            this.refreshProfile()
+        }
+
+    }
+
     render() {
         return (
             <Profile addPost={this.props.addPost} {...this.props}
+                     isOwner={!this.props.router.params.userId}
                      profile={this.props.profile}
                      status={this.props.status}
                      updateStatus={this.props.updateStatusUserTC}
+                     // savePhoto={this.props.savePhotoTC}
             />
         );
     }
-};
+}
 
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({  // not return y because I wrote ({...})
     profile: state.profilePage.profile,
@@ -66,7 +87,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         addPost: (post: string) => {
             dispatch(addPostsReducerAC(post))
         },
-        getProfileUserTC, getStatusUserTC, updateStatusUserTC
+        getProfileUserTC, getStatusUserTC, updateStatusUserTC,
+        // savePhotoTC
     }
 }
 

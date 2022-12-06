@@ -41,5 +41,14 @@ export const profileAPI = {
     },
     updateStatusUser(status: string) {  //orArray<string>
         return instance.put('/profile/status', {status})
-    }
+    },
+    // savePhoto(photoFile: ChangeEvent<HTMLInputElement>) {                    //запрос д/замены фото в профайле
+    //     const formData = new FormData();
+    //     formData.append('image', photoFile)                       //image написан в доке к АПИ
+    //     return instance.put('/profile/photo)', formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data'
+    //         }
+    //     })
+    // }
 }

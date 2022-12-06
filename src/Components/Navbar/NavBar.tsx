@@ -22,8 +22,8 @@ export function NavBar() {
                 <li className={navbar.item}>
                     <NavLink to='/settings' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Settings</NavLink></li>
 
-                {/*<li className={navbar.item}>*/}
-                {/*    <NavLink to='/login' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Login</NavLink></li>*/}
+                <li className={navbar.item}>
+                    <NavLink to='/login' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Login</NavLink></li>
             </ul>
         </nav>
     )

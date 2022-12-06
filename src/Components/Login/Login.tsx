@@ -19,7 +19,7 @@ export type loginFormType = {
 export const LoginForm: React.FC<loginFormType> = ({loginTC}) => {
     const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
 
-    if(!isLogginIn) return <Navigate to={"/login"} />
+    if (!isLogginIn) return <Navigate to={'/login'}/>
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const formik = useFormik({
@@ -54,26 +54,26 @@ export const LoginForm: React.FC<loginFormType> = ({loginTC}) => {
     return (
         <form onSubmit={formik.handleSubmit}>
 
-                {CreateInputField('Email','email', formik.handleChange, 'text', formik.values.email)}
-                {/*<input placeholder={'email'}*/}
-                {/*       name={'email'}*/}
-                {/*       onChange={formik.handleChange}*/}
-                {/*       value={formik.values.email}*/}
-                {/*/>*/}
-                {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+            {CreateInputField('Email', 'email', formik.handleChange, 'text', formik.values.email)}
+            {/*<input placeholder={'email'}*/}
+            {/*       name={'email'}*/}
+            {/*       onChange={formik.handleChange}*/}
+            {/*       value={formik.values.email}*/}
+            {/*/>*/}
+            {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
 
 
-                {CreateInputField('Password','password', formik.handleChange, 'password', formik.values.password)}
-                {/*<input placeholder={'Password'}*/}
-                {/*       type={'password'}*/}
-                {/*       name={'password'}*/}
-                {/*       onChange={formik.handleChange}*/}
-                {/*       value={formik.values.password}*/}
-                {/*/>*/}
-                {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+            {CreateInputField('Password', 'password', formik.handleChange, 'password', formik.values.password)}
+            {/*<input placeholder={'Password'}*/}
+            {/*       type={'password'}*/}
+            {/*       name={'password'}*/}
+            {/*       onChange={formik.handleChange}*/}
+            {/*       value={formik.values.password}*/}
+            {/*/>*/}
+            {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
 
             <div>
-                {CreateInputField(null,'rememberMe', formik.handleChange, 'checkbox', formik.values.rememberMe, 'remember me')}
+                {CreateInputField(null, 'rememberMe', formik.handleChange, 'checkbox', formik.values.rememberMe, 'remember me')}
                 {/*<input type={'checkbox'}*/}
                 {/*       name={'rememberMe'}*/}
                 {/*       onChange={formik.handleChange}*/}
@@ -95,7 +95,7 @@ export const Login = (props: any) => {
     //не отрисовывает компоненту ниже
     return <div>
         <h2>Login3</h2>
-        <LoginForm loginTC={loginTC} />
+        <LoginForm loginTC={loginTC}/>
     </div>
 }
 

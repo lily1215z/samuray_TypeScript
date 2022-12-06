@@ -23,7 +23,8 @@ export function Header(props: HeaderPropsType) {
             </header>
             <div className={header.panel_info}>
                 <div className={header.panel_log}>{props.isAuth ? props.login : <NavLink to={'/login'} className={header.login}>LogIn</NavLink>}</div>
-                <div className={header.panel_log}>LogOut</div>
+                {/*<div className={header.panel_log}>LogOut</div>*/}
+                <div>LogOut</div>
             </div>
         </div>
     )

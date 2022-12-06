@@ -2,7 +2,6 @@ import {Dispatch} from 'redux';
 import {authAPI} from '../api/api';
 import {AppThunk} from './redux_store';
 
-
 const SET_USER_DATA = 'SET-USER-DATA';
 
 const initialState = {
@@ -11,6 +10,10 @@ const initialState = {
     login: null,
     isAuth: false  //отвечает за загрузилась крутилка или нет
 }
+
+
+//type
+export type authReducerActionType = ReturnType<typeof setAuthUserDataAC>
 // type authReducerType = typeof initialState;
 type authReducerType = {
     userId: number | null,
@@ -56,6 +59,4 @@ export const logoutTC = (): AppThunk => async (dispatch: Dispatch) => {
             }
 }
 
-//type
-export type authReducerActionType = ReturnType<typeof setAuthUserDataAC>
 

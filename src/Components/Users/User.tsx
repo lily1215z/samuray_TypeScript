@@ -12,24 +12,35 @@ type UserPropsType = UsersContainerPropsType & {
 export const User: React.FC<UserPropsType> = ({user, ...props}) => {
     return (
         <div className={style.cart}>
-            <div >
-                <NavLink to={'/profile/' + user.id}>
-                    <img src={user.photos.small !== null ? user.photos.small : photoUser} width={'150'} alt={'photoUser'}/>
+            <div>
+                <NavLink to={'/profile/' + user.id} className={style.img}>
+                    {/*<img src={user.photos.small !== null ? user.photos.small : photoUser}*/}
+                    <img src={user.photos.small || photoUser}
+                         width={'150'}
+                         alt={'photoUser'}/>
                 </NavLink>
-               <div> {user.followed ?                           //props.follow() это берем UsersContainer
-                    <button disabled={props.followingInProgress.some(id => id === user.id)}
-                            onClick={() => {props.unFollowTC(user.id)
+
+                <div className={style.info_box}>
+                    <div className={style.name}>{user.name}</div>
+                    <div>My status: {user.status}</div>
+                    <div>My city: {'Barcelona'}</div>
+                    <div>My country: {'Spain'}</div>
+                </div>
+
+                <div className={style.btn_box}>
+                    {user.followed ?                           //props.follow() это берем UsersContainer
+                        <button
+                            className={style.btn_follow}
+                            disabled={props.followingInProgress.some(id => id === user.id)}
+                            onClick={() => {
+                                props.unFollowTC(user.id)
                             }}>Unfollow</button>
 
-                    : <button disabled={props.followingInProgress.some(id => id === user.id)}
-                              onClick={() => {props.followTC(user.id)
-                              }}>Follow</button>}
-               </div>
-                <div>{user.name}</div>
-                <div>{user.status}</div>
-                <div>{'user.location.city'}</div>
-                <div>{'user.location.country'}</div>
-
+                        : <button disabled={props.followingInProgress.some(id => id === user.id)}
+                                  onClick={() => {
+                                      props.followTC(user.id)
+                                  }}>Follow</button>}
+                </div>
             </div>
         </div>
     )

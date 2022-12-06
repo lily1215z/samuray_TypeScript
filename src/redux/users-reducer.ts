@@ -84,6 +84,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => async (disp
     dispatch(setUsersTotalCountAC(res.data.totalCount))
 }
 
+//рефакторинг для санки followTC и unFollowTC
 const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: any, actionCreator: any) => {
     dispatch(toggleIsFollowingProgressAC(true, id))
     let res = await apiMethod(id)
@@ -96,23 +97,11 @@ const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: any
 export const followTC = (id: number) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.followUser.bind(usersAPI)
     followUnfollowFlow(dispatch, id, apiMethod, followAC)    //рефакторинг 90 урок - 20 мин
-    // dispatch(toggleIsFollowingProgressAC(true, id))
-    // let res = await apiMethod(id)
-    //         if (res.data.resultCode === 0) {
-    //             dispatch(actionCreator(id))
-    //         }
-    //         dispatch(toggleIsFollowingProgressAC(false, id))
 }
 
 export const unFollowTC = (id: number) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.unfollowUser.bind(usersAPI)
     followUnfollowFlow(dispatch, id, apiMethod, unFollowAC)
-    // dispatch(toggleIsFollowingProgressAC(true, id))
-    // let res = await apiMethod(id)
-    //         if (res.data.resultCode === 0) {
-    //             dispatch(actionCreator(id))
-    //         }
-    //         dispatch(toggleIsFollowingProgressAC(false, id))
 }
 
 // export const getAuthMeTC = () => (dispatch: Dispatch) => {

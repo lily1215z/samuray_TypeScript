@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import paginatorStyle from './Paginator.module.css'
 import {UsersContainerPropsType} from '../../Users/UsersContainer';
 import cn from 'classnames'
+import swordNext from '../../../images/swordNext.png';
+import swordPrev from '../../../images/swordPrev.png';
 
 type UsersPropsType = UsersContainerPropsType & {
     onPageChanged: (ageNumber: number) => void
@@ -27,28 +29,39 @@ export const Paginator: React.FC<UsersPropsType> = ({
     const rightPortionNumber = portionNumber * portionSize;
 
     return (
-        <div>
+        <div className={paginatorStyle.block}>
 
             {portionNumber > 1 &&
-                <button onClick={() => {
+                <div
+                    className={paginatorStyle.btn}
+                    onClick={() => {
                     setPortionNumber(portionNumber - 1)
-                }}>PREV</button>}
+                }}>  <img
+                    src={swordPrev}
+                    width='100'
+                    alt="logo"/></div>}
 
-            <span className={paginatorStyle.btn_box}>
+            <div className={paginatorStyle.paginator_box}>
                {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionNumber)
                    .map((p) => {
                        return <span
                            key={p}
                            // className={currentPage === p ? paginatorStyle.selectedPage : ''}
                            className={cn({[paginatorStyle.selectedPage]: currentPage === p}, paginatorStyle.pageNumber)}
-                           onClick={(e) => {
+                           onClick={() => {
                                onPageChanged(p)
                            }}
                        >{p}</span>
                    })}
-           </span>
+           </div>
             {portionCount > portionNumber &&
-                <button onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
+                <div
+                    className={paginatorStyle.btn}
+                    onClick={() => setPortionNumber(portionNumber + 1)}>
+                    <img
+                        src={swordNext}
+                        width='100'
+                        alt="logo"/></div>}
 
         </div>
     )

@@ -1,4 +1,4 @@
-// import {v1} from 'uuid';
+
 import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
 import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
@@ -8,6 +8,7 @@ const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
 const DELETE_POST = 'DELETE_POST'
+// const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 const initialState = {
     posts: [
@@ -18,7 +19,27 @@ const initialState = {
             like: 5
         },
     ],
-    profile: null,          // or {} or null
+    // profile: null,          // or {} or null
+    profile: {
+        userId: 12,
+        lookingForAJob: false,
+        lookingForAJobDescription: 'выводит initialState',
+        fullName: '',
+        contacts: {
+            github: '',
+            vk: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: '',
+            youtube: '',
+            mainLink: '',
+        },
+        photos: {
+            small: '',
+            large: ''
+        }
+    },
     status: ''
 }
 
@@ -43,7 +64,10 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
             return {...state, status: action.status}
 
         case DELETE_POST:
-            return {...state, posts: state.posts.filter(i=> i.id !== action.postId)}
+            return {...state, posts: state.posts.filter(i => i.id !== action.postId)}
+
+        // case SAVE_PHOTO_SUCCESS:
+        //     return {...state, profile: {...state.profile, photos: action.file}}
 
         default:
             return state;
@@ -66,29 +90,40 @@ export const updateStatusUserAC = (status: string) => {
 export const deletePostAC = (postId: number) => {
     return {type: DELETE_POST, postId} as const
 }
+// export const savePhotoAC = (file: ChangeEvent<HTMLInputElement>) => {
+//     return {type: SAVE_PHOTO_SUCCESS, file} as const
+// }
 
 //thunk
 export const getProfileUserTC = (userId: number) => async (dispatch: Dispatch) => {
     let res = await profileAPI.getProfileUser(userId)
-            dispatch(setUserProfileAC(res.data))
+    dispatch(setUserProfileAC(res.data))
 }
 
 export const getStatusUserTC = (userId: number) => async (dispatch: Dispatch) => {
     let res = await profileAPI.getStatusUser(userId)
-            dispatch(setStatusUserAC(res.data))
+    dispatch(setStatusUserAC(res.data))
 }
 
 export const updateStatusUserTC = (status: string) => async (dispatch: Dispatch) => {
     let res = await profileAPI.updateStatusUser(status)
-            if(res.data.resultCode === 0) {
-                dispatch(setStatusUserAC(status))
-            }
+    if (res.data.resultCode === 0) {
+        dispatch(setStatusUserAC(status))
+    }
 }
+
+// export const savePhotoTC = (file: ChangeEvent<HTMLInputElement>) => async (dispatch: Dispatch) => {
+//     let res = await profileAPI.savePhoto(file)
+//     if (res.data.resultCode === 0) {
+//         dispatch(savePhotoAC(res.data.data.photos))
+//     }
+// }
 
 //type
 export type PostsReducerActionType = ReturnType<typeof addPostsReducerAC>
     | ReturnType<typeof setUserProfileAC> | ReturnType<typeof setStatusUserAC> | ReturnType<typeof updateStatusUserAC>
     | ReturnType<typeof deletePostAC>
+    // | ReturnType<typeof savePhotoAC>
 
 export type PostsType = {
     id: number
@@ -99,7 +134,7 @@ export type PostsType = {
 
 export type ProfilePageType = {
     posts: Array<PostsType>
-    profile: any                          //hacer type para profile
+    profile: ProfileResponseType
     status: string
 }
 

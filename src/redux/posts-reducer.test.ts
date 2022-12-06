@@ -9,7 +9,26 @@ const state = {
         {id: 3, post: 'hello, my friend', img: 'https://hostenko.com/wpcafe/wp-content/uploads/rndavatar.png', like: 5},
         {id: 4, post: 'hello, dear friend', img: 'https://hostenko.com/wpcafe/wp-content/uploads/rndavatar.png', like: 5},
     ],
-    profile: null,
+    profile: {
+        userId: 1,
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        fullName: '',
+        contacts: {
+            github: '',
+            vk: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: '',
+            youtube: '',
+            mainLink: '',
+        },
+        photos: {
+            small: '',
+            large: ''
+        }
+    },
     status: ''
 }
 

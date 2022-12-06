@@ -26,18 +26,24 @@
     display: flex;
     justify-content: flex-end;
 }
+
 .panel_log {
-    border: 1px solid rgb(0, 0, 0, 0.3);
-    color: #000;
-    font-weight: 600;
-    padding: 7px 2px;
-    margin-left: 10px;
-    border-radius: 5px;
+    color: #fff;
+    font-weight: 700;
+    padding: 2px 1px;
+    margin-right: 17px;
     cursor: pointer;
-    box-shadow: 0px 0px 5px -1px rgba(0,0,0,0.75);
     max-width: 80px;
     width: 100%;
     text-align: center;
+    position: relative;
+}
+.panel_log:after {
+    content: url(/src/images/authLogin.png);
+    position: absolute;
+    top: -6px;
+    left: 0;
+    z-index: -1;
 }
 .login {
     color: #000;

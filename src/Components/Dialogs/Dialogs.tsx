@@ -1,12 +1,12 @@
 import {Navigate, NavLink} from 'react-router-dom'
 import dialogs from './Dialogs.module.css'
 import avatar from '../../images/avatar-dialog.css.png'
-import dialogs_bg from '../../images/dialogs.jpg'
+import dialogs_bg from '../../images/010.jpg'
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
-import React, {useState} from 'react';
-import {ErrorMessage, Field, Form, useFormik} from 'formik';
+import React from 'react';
+import { useFormik} from 'formik';
 import profileStyle from '../Profile/Profile.module.css';
 
 type DialogsTypeProps = {
@@ -67,31 +67,47 @@ export function Dialogs(props: DialogsTypeProps) {
 type addMessageFormType = {
     sendMessage: (post: string) => void
 }
+type FormikDialogErrorType = {
+    newMessageBody?: string
+}
 const AddMessageForm = (props: addMessageFormType) => {
-    const [messInPost, setMessInPost] = useState<string>('')
-    const [error, setError] = useState('')
-
-
     const formik = useFormik({
+        validate: (values) => {
+            const errors: FormikDialogErrorType = {}
+
+            if(!values.newMessageBody) {
+                errors.newMessageBody = 'Please, write your message'
+            }
+            return errors
+        },
+
         initialValues: {
             newMessageBody: '',
         },
+
         onSubmit: values => {
             props.sendMessage(values.newMessageBody)
             formik.resetForm()
         },
     })
+
+    //onKeyPress пропускает пустые сообщения и после ентера кликаю на кнопку то первое сообщение тоже проходит потом выдает ошибку.
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}
+              // onKeyPress={(e) => {
+              //     if (e.key === 'Enter') {
+              //         formik.handleSubmit();
+              //     }}}
+        >
                 <textarea
                     className="message-textarea"
                     name="newMessageBody"
                     placeholder="your message"
                     onChange={formik.handleChange}
                     value={formik.values.newMessageBody}
-                    // onKeyPress={(e) => e.key === 'Enter' && addMessInPost()}
                 ></textarea>
-            <div>{error}</div>
+            {}
+            <div>{formik.errors.newMessageBody ? <div className={dialogs.errors}>{formik.errors.newMessageBody}</div> : null}</div>
             <div className={profileStyle.btn_box}>
                 <button className={'message-btn'}>Add Message</button>
             </div>
