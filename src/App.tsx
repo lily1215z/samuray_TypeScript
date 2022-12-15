@@ -1,5 +1,5 @@
 import React, {Component, ComponentType, Suspense} from 'react';
-import {Routes, Route, useLocation, useNavigate, useParams, BrowserRouter} from 'react-router-dom';
+import {Routes, Route, useLocation, useNavigate, useParams, BrowserRouter, Navigate} from 'react-router-dom';
 import './App.css';
 import {NavBar} from './Components/Navbar/NavBar';
 import {Home} from './Components/Home/Home';
@@ -11,7 +11,6 @@ import {initializedAppTC} from './redux/app-reducer';
 import {AppRootStateType, store} from './redux/redux_store';
 import {Preloader} from './Components/common/Preloader/Preloader';
 import {Login} from './Components/Login/Login';
-// import ProfileContainer from './Components/Profile/ProfileContainer'
 
 const DialogContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
@@ -74,8 +73,10 @@ class App extends Component<AppContainerPropsType> {
                                 <Route path="music" element={<div>music</div>}/>
                                 <Route path="settings" element={<div>settings</div>}/>
                                 <Route path="users" element={<UsersContainer/>}/>
-                                <Route path="*" element={<div>Route not match</div>}/>
                                 <Route path="login" element={<Login/>}/>
+
+                                <Route path="/404" element={<h3>Route not match</h3>}/>
+                                <Route path="*" element={<Navigate to={'/404'} /> }/>
                             </Routes>
                         </div>
                     </div>

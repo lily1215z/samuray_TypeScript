@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {authAPI} from '../api/api';
+import {authAPI, LoginParamsType} from '../api/api';
 import {AppThunk} from './redux_store';
 
 const SET_USER_DATA = 'SET-USER-DATA';
@@ -45,11 +45,11 @@ export const getAuthMeTC = (): any => async (dispatch: Dispatch) => {   //исп
     }
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => async (dispatch: Dispatch) => {
-    let res =await authAPI.login(email, password, rememberMe)
-            if (res.data.resultCode === 0) {
-                dispatch(getAuthMeTC())
-            }
+export const loginTC = (dataForm: LoginParamsType): AppThunk => async (dispatch: Dispatch) => {
+    let res = await authAPI.login(dataForm)
+    if (res.data.resultCode === 0) {
+        dispatch(getAuthMeTC())
+    }
 }
 
 export const logoutTC = (): AppThunk => async (dispatch: Dispatch) => {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 const instance = axios.create({
     withCredentials: true,
@@ -22,13 +22,13 @@ export const usersAPI = {
 
 export const authAPI = {
     getAuthMe() {
-        return instance.get(`auth/me`)
+        return instance.get<ResponseType<{id: number, email: string, login: string}>>(`auth/me`)
     },
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post('/auth/login', {email, password, rememberMe})
+    login(dataForm: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>('auth/login', dataForm)
     },
     logout() {
-        return instance.delete('/auth/login')
+        return instance.delete<ResponseType>('auth/login')
     }
 }
 
@@ -42,6 +42,9 @@ export const profileAPI = {
     updateStatusUser(status: string) {  //orArray<string>
         return instance.put('/profile/status', {status})
     },
+    saveProfile(fullName: string, aboutMe: string, lookingForAJob: boolean, lookingForAJobDescription: string) {
+        return instance.put('/profile', {fullName, aboutMe, lookingForAJob, lookingForAJobDescription})
+    }
     // savePhoto(photoFile: ChangeEvent<HTMLInputElement>) {                    //запрос д/замены фото в профайле
     //     const formData = new FormData();
     //     formData.append('image', photoFile)                       //image написан в доке к АПИ
@@ -51,4 +54,18 @@ export const profileAPI = {
     //         }
     //     })
     // }
+}
+
+//type
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+export type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: D
 }

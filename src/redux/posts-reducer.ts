@@ -2,12 +2,14 @@
 import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
 import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
+import {AppRootStateType, AppThunk} from './redux_store';
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
 const DELETE_POST = 'DELETE_POST'
+// const SAVE_PROFILE = 'SAVE_PROFILE'
 // const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 const initialState = {
@@ -78,7 +80,7 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
 export const addPostsReducerAC = (post: string) => {
     return {type: ADD_POST, post: post} as const
 }
-export const setUserProfileAC = (profile: ProfileResponseType) => {           //hacer type para profile
+export const setUserProfileAC = (profile: ProfileResponseType) => {
     return {type: SET_USER_PROFILE, profile} as const
 }
 export const setStatusUserAC = (status: string) => {
@@ -109,6 +111,14 @@ export const updateStatusUserTC = (status: string) => async (dispatch: Dispatch)
     let res = await profileAPI.updateStatusUser(status)
     if (res.data.resultCode === 0) {
         dispatch(setStatusUserAC(status))
+    }
+}
+
+export const saveProfileTC = (fullName: string, aboutMe: string, lookingForAJob: boolean, lookingForAJobDescription: string): AppThunk => async (dispatch: Dispatch, getState: ()=> AppRootStateType) => {
+    const userId = getState().auth.userId
+    const res = await profileAPI.saveProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription)
+    if (res.data.resultCode === 0) {
+        // dispatch(setUserProfileAC(userId))
     }
 }
 

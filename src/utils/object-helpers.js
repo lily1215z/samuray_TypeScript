@@ -12,7 +12,7 @@ export const updateObjectInArray = (items, itemId, objPropName, newObjProps) => 
 //======  common function for input in Login
 //formik.handleChange = onChange
 //formik.values.email = value
-export const CreateInputField = (placeholder, name, onChange, type, props={}, text='') => {
+export const CreateInputField = (placeholder, name, onChange, type, props = {}, text = '') => {
     return (
         <div>
             <input placeholder={placeholder}

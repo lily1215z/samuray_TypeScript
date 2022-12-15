@@ -3,7 +3,8 @@ import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileStatus} from './ProfileStatus';
 import {ProfileResponseType} from '../ProfileContainer';
 import photoUser from '../../../images/icon-user.png';
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
+import {ProfileDataForm} from './ProfileDataForm';
 
 type ProfileInfoProps = {
     profile: ProfileResponseType
@@ -14,6 +15,7 @@ type ProfileInfoProps = {
 }
 
 export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateStatus, isOwner}) => {
+    const [editMode, setEditMode] = useState(false)
 
     if (!profile) {
         return <Preloader/>
@@ -47,28 +49,30 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, update
             <div className={profile_info.box}>
 
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
-                <ProfileData profile={profile}/>
+                {editMode ? <ProfileDataForm />
+                    :
+                    <ProfileData
+                        profile={profile}
+                        isOwner={isOwner}
+                        goToEditMode={() => setEditMode(true)}
+                    />}
+
             </div>
         </div>
     )
 }
 
-type ContactPropsType = {
-    contactTitle: string
-    contactValue: string
-}
-export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
-    return <div className={profile_info.aboutinfo}>{contactTitle}
-        <span className={profile_info.about}>{contactValue}</span>
-    </div>
-}
-
 
 type ProfileDataPropsType = {
     profile: ProfileResponseType
+    isOwner: boolean
+    goToEditMode: () => void
 }
-export const ProfileData: React.FC<ProfileDataPropsType> = ({profile}) => {
+export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
     return <>
+        {isOwner && <div>
+            <button onClick={goToEditMode}>edit</button>
+        </div>}
         <h3 className={profile_info.name}>Full name: {profile.fullName}</h3>
 
         <div className={profile_info.aboutinfo}>Looking for a job:
@@ -90,4 +94,14 @@ export const ProfileData: React.FC<ProfileDataPropsType> = ({profile}) => {
             })}</span>
         </div>
     </>
+}
+
+type ContactPropsType = {
+    contactTitle: string
+    contactValue: string
+}
+export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
+    return <div className={profile_info.aboutinfo}>{contactTitle}
+        <span className={profile_info.about}>{contactValue}</span>
+    </div>
 }

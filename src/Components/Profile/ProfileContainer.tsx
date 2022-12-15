@@ -50,7 +50,6 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     componentDidMount() {
-        debugger
         this.refreshProfile()
     }
 

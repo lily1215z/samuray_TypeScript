@@ -5,6 +5,7 @@ import {Navigate} from 'react-router-dom';
 import {useFormik} from 'formik';
 import {loginTC} from '../../redux/auth-reducer';
 import {CreateInputField} from '../../utils/object-helpers';
+import {LoginParamsType} from '../../api/api';
 
 type FormikErrorType = {
     login?: string
@@ -13,13 +14,13 @@ type FormikErrorType = {
 }
 
 export type loginFormType = {
-    loginTC: (email: string, password: string, rememberMe: boolean) => void
+    loginTC: (dataForm: LoginParamsType) => void
 }
 
 export const LoginForm: React.FC<loginFormType> = ({loginTC}) => {
     const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
 
-    if (!isLogginIn) return <Navigate to={'/login'}/>
+    if (isLogginIn) return <Navigate to={'/login'}/>
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const formik = useFormik({
@@ -45,7 +46,7 @@ export const LoginForm: React.FC<loginFormType> = ({loginTC}) => {
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
-            loginTC(values.email, values.password, values.rememberMe)
+            loginTC(values)
             formik.resetForm()
         },
     })
@@ -54,23 +55,19 @@ export const LoginForm: React.FC<loginFormType> = ({loginTC}) => {
     return (
         <form onSubmit={formik.handleSubmit}>
 
-            {CreateInputField('Email', 'email', formik.handleChange, 'text', formik.values.email)}
-            {/*<input placeholder={'email'}*/}
-            {/*       name={'email'}*/}
-            {/*       onChange={formik.handleChange}*/}
-            {/*       value={formik.values.email}*/}
-            {/*/>*/}
-            {formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
+            {/*{CreateInputField('Email', 'email', formik.handleChange, 'text', formik.values.email)}*/}
+            <input placeholder={'email'}
+                   {...formik.getFieldProps('email')}
+            />
+            {formik.touched.email && formik.errors.email ? <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
 
 
-            {CreateInputField('Password', 'password', formik.handleChange, 'password', formik.values.password)}
-            {/*<input placeholder={'Password'}*/}
-            {/*       type={'password'}*/}
-            {/*       name={'password'}*/}
-            {/*       onChange={formik.handleChange}*/}
-            {/*       value={formik.values.password}*/}
-            {/*/>*/}
-            {formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+            {/*{CreateInputField('Password', 'password', formik.handleChange, 'password', formik.values.password)}*/}
+            <input placeholder={'Password'}
+                   type={'password'}
+                   {...formik.getFieldProps('password')}
+            />
+            {formik.touched.password && formik.errors.password ? <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
 
             <div>
                 {CreateInputField(null, 'rememberMe', formik.handleChange, 'checkbox', formik.values.rememberMe, 'remember me')}
