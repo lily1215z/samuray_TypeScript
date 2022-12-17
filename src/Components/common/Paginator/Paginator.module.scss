@@ -1,0 +1,57 @@
+@import '../../../style/variables';
+@import '../../../style/mixins';
+
+
+.pageNumber {
+  cursor: pointer;
+  position: relative;
+  color: $colorLight;
+  font-weight: 900;
+
+  //.pageNumber:after
+  &:after {
+    @include after($pagNum, -8px, 50%);
+    z-index: -1;
+    transform: translateX(-50%);
+  }
+
+  //.pageNumber.selectedPage
+  &.selectedPage {
+    color: rgba(0, 0, 0, 0);
+    position: relative;
+
+    //.pageNumber.selectedPage:after
+    &:after {
+      @include after($pagActive, -8px, 50%);
+      z-index: 1;
+      transform: translateX(-50%);
+    }
+  }
+
+  & + .pageNumber {
+    margin-left: 32px;
+  }
+}
+
+
+.paginator {
+  margin: 10px;
+
+  //.paginator_box
+  &_box {
+    margin: 0 20px;
+    max-width: 500px;
+    width: 100%;
+  }
+}
+
+
+.block {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn {
+  cursor: pointer;
+}

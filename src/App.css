@@ -48,8 +48,9 @@
   margin-bottom: 20px;
 }
 
-.message-btn {
+.message_btn {
   font-size: 18px;
+  color: #000;
   background-color: rgba(224, 77, 19, 0.7);
   max-width: 200px;
   width: 100%;
@@ -58,9 +59,13 @@
   border-radius: 5px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 0 10px 0 rgb(236, 13, 13);
+  box-shadow: 0 0 5px 0 rgb(236, 13, 13);
+  transition: all 0.3s;
 }
-
+.message_btn:hover {
+  color: #fff;
+  box-shadow: 0 0 5px 0 rgb(196, 85, 85);
+}
 .link {
   color: #52129f;
 }

@@ -37,13 +37,13 @@ export const profileAPI = {
         return instance.get(`profile/${userId}`)
     },
     getStatusUser(userId: number) {
-        return instance.get(`/profile/status/${userId}`)
+        return instance.get(`profile/status/${userId}`)
     },
     updateStatusUser(status: string) {  //orArray<string>
-        return instance.put('/profile/status', {status})
+        return instance.put('profile/status', {status})
     },
     saveProfile(fullName: string, aboutMe: string, lookingForAJob: boolean, lookingForAJobDescription: string) {
-        return instance.put('/profile', {fullName, aboutMe, lookingForAJob, lookingForAJobDescription})
+        return instance.put('profile', {fullName, aboutMe, lookingForAJob, lookingForAJobDescription})
     }
     // savePhoto(photoFile: ChangeEvent<HTMLInputElement>) {                    //запрос д/замены фото в профайле
     //     const formData = new FormData();

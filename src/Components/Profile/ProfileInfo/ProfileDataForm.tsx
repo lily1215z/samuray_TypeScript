@@ -1,13 +1,17 @@
-
 import React from 'react';
-import profile_info from './ProfileInfo.module.css';
+import profile_info from './ProfileInfo.module.scss';
 import {useFormik} from 'formik';
 import {CreateInputField} from '../../../utils/object-helpers';
 import {saveProfileTC} from '../../../redux/posts-reducer';
+import {useAppDispatch} from '../../../redux/redux_store';
 
-type ProfileDataFormType = {}
+type ProfileDataFormType = {
+    setEditMode: (value: boolean) => void;
+}
 
-export const ProfileDataForm: React.FC<ProfileDataFormType> = (props) => {
+export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode}) => {
+    const dispatch = useAppDispatch();
+
     const formik = useFormik({
         initialValues: {
             fullName: '',
@@ -17,20 +21,34 @@ export const ProfileDataForm: React.FC<ProfileDataFormType> = (props) => {
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
-            saveProfileTC(values.fullName, values.aboutMe, values.lookingForAJob, values.lookingForAJobDescription)
+            dispatch(saveProfileTC(values.fullName, values.aboutMe, values.lookingForAJob, values.lookingForAJobDescription))
+            setEditMode(false)
             formik.resetForm()
         },
     })
     return (<form onSubmit={formik.handleSubmit}>
-        <button>save</button>
-        <h3 className={profile_info.name}>
-            Full name: {CreateInputField('Full name', 'fullName', formik.handleChange, 'text', formik.values.fullName)}</h3>
-
-        <div className={profile_info.aboutinfo}>Looking for a job:
-            <span className={profile_info.about}>{CreateInputField('', 'lookingForAJob', formik.handleChange, 'checkbox', formik.values.lookingForAJob)}</span>
+        <div className={profile_info.name_edit}>
+            <div className={profile_info.subtitle}>Full name:</div>
+            <span className={profile_info.about}>{CreateInputField('Full name', 'fullName', formik.handleChange, 'text', formik.values.fullName)}</span>
         </div>
 
-        <div className={profile_info.aboutinfo}>My professional skills:
+        <div className={profile_info.aboutinfo_edit}>
+            <div className={profile_info.subtitle}>Looking for a job:</div>
+            {/*<span*/}
+            {/*    className={profile_info.about}>{CreateInputField('', 'lookingForAJob', formik.handleChange, 'checkbox', formik.values.lookingForAJob)}*/}
+            {/*</span>*/}
+            <input
+                id="check"
+                type={'checkbox'}
+                name={'lookingForAJob'}
+                onChange={formik.handleChange}
+                checked={formik.values.lookingForAJob}
+            />
+            <label className={profile_info.about_check_label} htmlFor="check"></label>
+        </div>
+
+        <div className={profile_info.aboutinfo_edit}>
+            <div className={profile_info.subtitle}>My professional skills:</div>
             <div className={profile_info.about}><textarea
                 placeholder={'My skills'}
                 name={'lookingForAJobDescription'}
@@ -39,13 +57,17 @@ export const ProfileDataForm: React.FC<ProfileDataFormType> = (props) => {
             ></textarea></div>
         </div>
 
-        <div className={profile_info.aboutinfo}>About me:
+        <div className={profile_info.aboutinfo_edit}>
+            <div className={profile_info.subtitle}>About me:</div>
             <div className={profile_info.about}><textarea
                 placeholder={'About me'}
                 name={'aboutMe'}
                 onChange={formik.handleChange}
                 value={formik.values.aboutMe}
             ></textarea></div>
+        </div>
+        <div className={profile_info.aboutinfo_edit_btn}>
+            <button className={'message_btn'} type={'submit'}>save</button>
         </div>
 
     </form>)

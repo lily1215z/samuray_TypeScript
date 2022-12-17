@@ -1,10 +1,11 @@
-import profileStyle from './Profile.module.css'
+import profileStyle from './Profile.module.scss'
 import profile_img from '../../images/profile.jpg';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {Post} from './MyPost/Post/Post';
 import {ProfileResponseType} from './ProfileContainer';
 import {useFormik} from 'formik';
-import dialogs from '../Dialogs/Dialogs.module.css';
+import dialogs from '../Dialogs/Dialogs.module.scss';
+import React from 'react';
 
 type profileTypeProps = {
     addPost: (post: string) => void
@@ -40,6 +41,7 @@ export const Profile: React.FC<profileTypeProps> = ({addPost, profile, status, u
     )
 }
 
+
 type addPostFormType = {
     addPost: (post: string) => void
 }
@@ -68,11 +70,11 @@ const AddNewPostForm = (props: addPostFormType) => {
     })
     return (
         <form onSubmit={formik.handleSubmit}
-            // onKeyPress={(e) => {
-            //     if (e.key === 'Enter') {
-            //         formik.handleSubmit();
-            //     }}}
-        >
+            onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                    formik.handleSubmit();
+                }}}>
+
                 <textarea
                     className="message-textarea"
                     name="newPostText"
@@ -84,7 +86,7 @@ const AddNewPostForm = (props: addPostFormType) => {
             <div>{formik.errors.newPostText ?
                 <div className={dialogs.errors}>{formik.errors.newPostText}</div> : null}</div>
             <div className={profileStyle.btn_box}>
-                <button className={'message-btn'}>Add Post</button>
+                <button className={'message_btn'}>Add Post</button>
             </div>
         </form>
     )

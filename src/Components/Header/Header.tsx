@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom';
 import {HeaderContainerPropsType} from './HeaderContainer';
 import {logoutTC} from '../../redux/auth-reducer';
 import {useAppDispatch} from '../../redux/redux_store';
+import exit from '../../images/exit.png';
 
 type HeaderPropsType = HeaderContainerPropsType & {}
 
@@ -12,7 +13,7 @@ export function Header(props: HeaderPropsType) {
 
     const dispatch = useAppDispatch();
     const logOut = () => {
-        dispatch(logoutTC);
+        dispatch(logoutTC());
     }
 
     return (
@@ -33,8 +34,7 @@ export function Header(props: HeaderPropsType) {
             <div className={header.panel_info}>
                 <div className={header.panel_log}>{props.isAuth ? props.login :
                     <NavLink to={'/login'} className={header.login}>LogIn</NavLink>}</div>
-                {/*<div className={header.panel_log}>LogOut</div>*/}
-                <button onClick={logOut}>LogOut</button>
+                <div onClick={logOut} className={header.panel_logout}><img src={exit} alt='exit'/></div>
             </div>
         </div>
     )

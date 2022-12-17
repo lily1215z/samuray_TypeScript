@@ -1,0 +1,141 @@
+@import "../../style/variables";
+@import "../../style/mixins";
+
+.form {
+
+  //form_box
+  &_box {
+    margin-bottom: 30px;
+    display: flex;
+    padding: 3px 5px;
+    position: relative;
+
+    & input {
+      padding: 8px 7px;
+      width: 100%;
+      outline: transparent;
+      background-color: $colorLight;
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 2px 7px 2px $bgDark700;
+    }
+  }
+
+  //form_title
+  &_title {
+    margin-bottom: 20px;
+    color: $bgDark700;
+  }
+
+  //form_subtitle
+  &_subtitle {
+    width: 140px;
+    color: $bgDark700;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  //form_block
+  &_block {
+
+    padding: 50px;
+  }
+
+  //form_wrapper
+  &_wrapper {
+    @include position(absolute);
+    @include flex(center);
+    align-items: center;
+    background-color: rgb(234, 109, 26);
+  }
+
+  //form_inner
+  &_inner {
+    @include width(700px);
+    box-shadow: 2px 2px 54px 3px $bgDark700;
+    border-radius: 50%;
+    padding: 100px;
+    background-color: #f68647;
+  }
+
+  //form_btn
+  &_btn {
+    width: 100%;
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+    background-color: rgb(234, 109, 26);
+    border: none;
+    color: $colorLight;
+    font-weight: 700;
+    font-size: 24px;
+    border-radius: 5px;
+    transition: all 0.3s;
+
+    &:hover {
+      box-shadow: 0 0 5px 0 $bgDark700;
+      color: $bgDark700;
+    }
+  }
+
+  //form_info
+  &_info {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  //form_info_data
+  &_info_data {
+    display: flex;
+  }
+
+  //form_info_span
+  &_info_span {
+    text-align: left;
+    width: 90px;
+  }
+
+  //form_info_box
+  &_info_box {
+    margin-top: 10px;
+  }
+
+  //form_checkbox
+  &_checkbox {
+    display: block;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  //.form_checkbox_label
+  &_checkbox_label {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 0 0 5px 2px $boxShadow;
+    //border: 2px solid $boxShadow;
+    width: 28px;
+    height: 28px;
+  }
+
+  //form_error
+  &_error {
+    color: red;
+    position: absolute;
+    bottom: -17px;
+    left: 110px;
+    font-size: 12px;
+    margin-left: 5px;
+  }
+}
+
+.form_checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.form_checkbox input:checked + .form_checkbox_label::after {
+  @include after($checkbox, -1px, -1px);
+  cursor: pointer;
+}

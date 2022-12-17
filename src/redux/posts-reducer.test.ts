@@ -13,6 +13,7 @@ const state = {
         userId: 1,
         lookingForAJob: false,
         lookingForAJobDescription: '',
+        aboutMe: '',
         fullName: '',
         contacts: {
             github: '',

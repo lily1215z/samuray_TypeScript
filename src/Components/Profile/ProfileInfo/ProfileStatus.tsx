@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import profile_info from '../ProfileInfo/ProfileInfo.module.css'
+import profile_info from './ProfileInfo.module.scss'
 
 type ProfileStatusPropsType = {
     status: string
@@ -42,12 +42,12 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
     render() {
         return (
-            <div className={profile_info.aboutinfo}>Status:
+            <div className={profile_info.aboutinfo_status}> <span className={profile_info.status_title}>Status:</span>
                 {!this.state.editMode &&
                     <span
                         className={profile_info.about}
                         onDoubleClick={this.activeEditMode}
-                    >{this.props.status || ' -----'}</span>
+                    >{this.props.status || ' --/---/--'}</span>
                 }
                 {this.state.editMode &&
                     <div>
@@ -56,6 +56,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
                             autoFocus
                             onBlur={this.deactivateEditMode}
                             value={this.state.status}   //показываем status не из пропсов а из state
+                            className={profile_info.status_edit}
                         />
                     </div>
                 }

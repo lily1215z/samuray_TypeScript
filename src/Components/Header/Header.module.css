@@ -26,7 +26,9 @@
     display: flex;
     justify-content: flex-end;
 }
-
+.panel_logout {
+    cursor: pointer;
+}
 .panel_log {
     color: #fff;
     font-weight: 700;

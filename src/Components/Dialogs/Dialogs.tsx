@@ -1,5 +1,5 @@
 import {Navigate, NavLink} from 'react-router-dom'
-import dialogs from './Dialogs.module.css'
+import dialogs from './Dialogs.module.scss'
 import avatar from '../../images/avatar-dialog.css.png'
 import dialogs_bg from '../../images/010.jpg'
 import {useSelector} from 'react-redux';
@@ -7,7 +7,7 @@ import {AppRootStateType} from '../../redux/redux_store';
 import {DialogsType, MessagesType} from '../../redux/dialogs-reducer';
 import React from 'react';
 import { useFormik} from 'formik';
-import profileStyle from '../Profile/Profile.module.css';
+import profileStyle from '../Profile/Profile.module.scss';
 
 type DialogsTypeProps = {
     dialogsPage: Array<DialogsType>
@@ -94,10 +94,10 @@ const AddMessageForm = (props: addMessageFormType) => {
     //onKeyPress пропускает пустые сообщения и после ентера кликаю на кнопку то первое сообщение тоже проходит потом выдает ошибку.
     return (
         <form onSubmit={formik.handleSubmit}
-              // onKeyPress={(e) => {
-              //     if (e.key === 'Enter') {
-              //         formik.handleSubmit();
-              //     }}}
+              onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                      formik.handleSubmit();
+                  }}}
         >
                 <textarea
                     className="message-textarea"
@@ -109,7 +109,7 @@ const AddMessageForm = (props: addMessageFormType) => {
             {}
             <div>{formik.errors.newMessageBody ? <div className={dialogs.errors}>{formik.errors.newMessageBody}</div> : null}</div>
             <div className={profileStyle.btn_box}>
-                <button className={'message-btn'}>Add Message</button>
+                <button className={'message_btn'}>Add Message</button>
             </div>
         </form>
     )

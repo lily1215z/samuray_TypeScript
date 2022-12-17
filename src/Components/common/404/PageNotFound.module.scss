@@ -1,0 +1,18 @@
+@import '../../../style/mixins';
+@import '../../../style/variables';
+
+.wrapper {
+  @include flex(center);
+  //border: 1px solid red;
+  width: 100%;
+  align-items: center;
+  padding-top: 50px;
+  position: relative;
+
+  &:after {
+    @include after($icon404, 10px, 50%);
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+
+}

@@ -1,16 +1,17 @@
-import profile_info from './ProfileInfo.module.css'
+import profile_info from './ProfileInfo.module.scss';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileStatus} from './ProfileStatus';
 import {ProfileResponseType} from '../ProfileContainer';
 import photoUser from '../../../images/icon-user.png';
 import React, {ChangeEvent, useState} from 'react';
 import {ProfileDataForm} from './ProfileDataForm';
+import pen from '../../../images/pen.png';
 
 type ProfileInfoProps = {
     profile: ProfileResponseType
     status: string
     updateStatus: (status: string) => void
-    isOwner: boolean
+    isOwner: boolean  //отвечает за отображение профиля и за кнопку редактирваония если мы в режиме редактирования
     // savePhoto: (file: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -49,7 +50,10 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, update
             <div className={profile_info.box}>
 
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
-                {editMode ? <ProfileDataForm />
+
+                {/*режим редактирвоания*/}
+                {editMode ? <ProfileDataForm setEditMode={setEditMode}/>
+                // {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode}/>
                     :
                     <ProfileData
                         profile={profile}
@@ -69,24 +73,29 @@ type ProfileDataPropsType = {
     goToEditMode: () => void
 }
 export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
+    console.log(profile)
     return <>
-        {isOwner && <div>
-            <button onClick={goToEditMode}>edit</button>
-        </div>}
-        <h3 className={profile_info.name}>Full name: {profile.fullName}</h3>
+        <div>
+            {isOwner && <div>
+                <div onClick={goToEditMode} className={profile_info.info_edit}><img src={pen} alt="edit"/></div>
+            </div>}
 
-        <div className={profile_info.aboutinfo}>Looking for a job:
-            <span className={profile_info.about}>{profile.lookingForAJob ? 'yes' : 'no'}</span>
+            <div className={profile_info.name_box}>Full name:<span
+                className={profile_info.name}>{profile.fullName}</span></div>
+
+            <div className={profile_info.aboutinfo}>Looking for a job:
+                <span className={profile_info.about}>{profile.lookingForAJob ? 'yes' : 'no'}</span>
+            </div>
+            {
+                profile.lookingForAJob && <div className={profile_info.aboutinfo}>My professionak skills:
+                    <span className={profile_info.about}>{profile.lookingForAJobDescription}</span>
+                </div>
+            }
+            <div className={profile_info.aboutinfo}>About me:
+                <span className={profile_info.about}>{profile.aboutMe}</span>
+            </div>
         </div>
-        <div className={profile_info.aboutinfo}>My professionak skills:
-            <span className={profile_info.about}>{profile.lookingForAJobDescription}</span>
-        </div>
-        <div className={profile_info.aboutinfo}>Web resource:
-            <span className={profile_info.about}>{profile.contacts.github}</span>
-        </div>
-        <div className={profile_info.aboutinfo}>My Id:
-            <span className={profile_info.about}>{profile.userId}</span>
-        </div>
+
         <div className={profile_info.aboutinfo}>Contacts:
             <span className={profile_info.about}>{Object.keys(profile.contacts).map(key => {
                 // @ts-ignore
@@ -96,12 +105,18 @@ export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, g
     </>
 }
 
+
 type ContactPropsType = {
     contactTitle: string
     contactValue: string
 }
 export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
-    return <div className={profile_info.aboutinfo}>{contactTitle}
-        <span className={profile_info.about}>{contactValue}</span>
-    </div>
+    return (
+        <>
+            <div className={profile_info.aboutinfo_value}>{contactTitle}</div>
+            {/*<ul className={profile_info.about_contact}>*/}
+            {/*    <li className={profile_info.about_contact_key}>{contactValue}</li>*/}
+            {/*</ul>*/}
+        </>
+    )
 }

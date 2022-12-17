@@ -1,7 +1,7 @@
 
 import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
 import {Dispatch} from 'redux';
-import {profileAPI} from '../api/api';
+import { profileAPI} from '../api/api';
 import {AppRootStateType, AppThunk} from './redux_store';
 
 const ADD_POST = 'ADD-POST';
@@ -24,8 +24,9 @@ const initialState = {
     // profile: null,          // or {} or null
     profile: {
         userId: 12,
-        lookingForAJob: false,
+        lookingForAJob: true,
         lookingForAJobDescription: 'выводит initialState',
+        aboutMe: 'это то что написано в initialState',
         fullName: '',
         contacts: {
             github: '',
@@ -59,6 +60,7 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Po
             return {...state, posts: [newPost, ...state.posts]}  //48 урок самурая 33 мин
 
         case SET_USER_PROFILE:
+            console.log("newData", action.profile)
             return {...state, profile: action.profile}
 
         case SET_STATUS:
@@ -117,8 +119,12 @@ export const updateStatusUserTC = (status: string) => async (dispatch: Dispatch)
 export const saveProfileTC = (fullName: string, aboutMe: string, lookingForAJob: boolean, lookingForAJobDescription: string): AppThunk => async (dispatch: Dispatch, getState: ()=> AppRootStateType) => {
     const userId = getState().auth.userId
     const res = await profileAPI.saveProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription)
+    console.log(res)
     if (res.data.resultCode === 0) {
-        // dispatch(setUserProfileAC(userId))
+        if (userId) {   //делаю проверку т.к. типизация ругается что может прийти еще и null
+            let res = await profileAPI.getProfileUser(userId)
+            dispatch(setUserProfileAC(res.data) )
+        }
     }
 }
 

@@ -8,23 +8,13 @@ const initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false  //отвечает за загрузилась крутилка или нет
+    isAuth: false  //отвечает за загрузилась крутилка или нет. Св-ва д/редиректа логина
 }
 
-
-//type
-export type authReducerActionType = ReturnType<typeof setAuthUserDataAC>
-// type authReducerType = typeof initialState;
-type authReducerType = {
-    userId: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean
-}
 export const AuthReducer = (state: authReducerType = initialState, action: authReducerActionType): authReducerType => {
     switch (action.type) {
         case SET_USER_DATA:
-            return {...state, ...action.payload, isAuth: true}
+            return {...state, ...action.payload, isAuth: action.payload.isAuth}
 
         default:
             return state
@@ -53,10 +43,19 @@ export const loginTC = (dataForm: LoginParamsType): AppThunk => async (dispatch:
 }
 
 export const logoutTC = (): AppThunk => async (dispatch: Dispatch) => {
-    let res = await authAPI.logout()
+    console.log('asdf')
+    const res = await authAPI.logout()
             if (res.data.resultCode === 0) {
                 dispatch(setAuthUserDataAC(null, null, null, false))
             }
 }
 
-
+//type
+export type authReducerActionType = ReturnType<typeof setAuthUserDataAC>
+// type authReducerType = typeof initialState;
+type authReducerType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+}

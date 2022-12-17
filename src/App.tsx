@@ -10,7 +10,8 @@ import {compose} from 'redux';
 import {initializedAppTC} from './redux/app-reducer';
 import {AppRootStateType, store} from './redux/redux_store';
 import {Preloader} from './Components/common/Preloader/Preloader';
-import {Login} from './Components/Login/Login';
+import Login from './Components/Login/Login';
+import {PageNotFound} from './Components/common/404/PageNotFound';
 
 const DialogContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
@@ -75,7 +76,7 @@ class App extends Component<AppContainerPropsType> {
                                 <Route path="users" element={<UsersContainer/>}/>
                                 <Route path="login" element={<Login/>}/>
 
-                                <Route path="/404" element={<h3>Route not match</h3>}/>
+                                <Route path="/404" element={<PageNotFound />}/>
                                 <Route path="*" element={<Navigate to={'/404'} /> }/>
                             </Routes>
                         </div>

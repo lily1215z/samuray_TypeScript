@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import paginatorStyle from './Paginator.module.css'
+import paginatorStyle from './Paginator.module.scss'
 import {UsersContainerPropsType} from '../../Users/UsersContainer';
 import cn from 'classnames'
 import swordNext from '../../../images/swordNext.png';
