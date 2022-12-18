@@ -6,9 +6,9 @@ export function NavBar() {
     return (
         <nav className={navbar.navbar}>
             <ul className={navbar.items}>
-                <li className={navbar.item}><
-                    NavLink to='/' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Home</NavLink>
-                </li>
+                {/*<li className={navbar.item}><*/}
+                {/*    NavLink to='/' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Home</NavLink>*/}
+                {/*</li>*/}
                 <li className={navbar.item}>
                     <NavLink to='/profile' className={({ isActive }) =>(isActive ? "active_nav" : "")}>Profile</NavLink></li>
                 <li className={navbar.item}>

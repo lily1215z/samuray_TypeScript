@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
+import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
 
 const instance = axios.create({
     withCredentials: true,
@@ -42,8 +43,8 @@ export const profileAPI = {
     updateStatusUser(status: string) {  //orArray<string>
         return instance.put('profile/status', {status})
     },
-    saveProfile(fullName: string, aboutMe: string, lookingForAJob: boolean, lookingForAJobDescription: string) {
-        return instance.put('profile', {fullName, aboutMe, lookingForAJob, lookingForAJobDescription})
+    saveProfile(profile: ProfileResponseType) {
+        return instance.put('profile', profile)
     }
     // savePhoto(photoFile: ChangeEvent<HTMLInputElement>) {                    //запрос д/замены фото в профайле
     //     const formData = new FormData();
@@ -55,8 +56,17 @@ export const profileAPI = {
     //     })
     // }
 }
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get<CaptchaResponseType>('security/get-captcha-url')
+    }
+}
+
 
 //type
+export type CaptchaResponseType = {
+    url: string
+}
 export type LoginParamsType = {
     email: string
     password: string

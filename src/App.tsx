@@ -2,7 +2,6 @@ import React, {Component, ComponentType, Suspense} from 'react';
 import {Routes, Route, useLocation, useNavigate, useParams, BrowserRouter, Navigate} from 'react-router-dom';
 import './App.css';
 import {NavBar} from './Components/Navbar/NavBar';
-import {Home} from './Components/Home/Home';
 import UsersContainer from './Components/Users/UsersContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import {connect, Provider} from 'react-redux';
@@ -34,12 +33,22 @@ function withRouter<T>(Component: ComponentType<T>) {
 }
 
 class App extends Component<AppContainerPropsType> {
+    catchAllErrors = (promiseRejectionEvent: Event) => {
+        alert('some error happened');
+        console.error(promiseRejectionEvent)
+    }
+
     componentDidMount() {
         this.props.initializedAppTC()
+        window.addEventListener('unhandledrejection', this.catchAllErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllErrors)
     }
 
     render() {
-        if (!this.props.initialized) {
+        if (!this.props.initialized) {  //if app no initialized we will se  Preloader
             return <Preloader/>
         }
         return (
@@ -50,7 +59,8 @@ class App extends Component<AppContainerPropsType> {
                         <div className="app__inner">
                             <NavBar/>
                             <Routes>
-                                <Route path="/" element={<Home/>}/>
+                                <Route path="/" element={<Navigate to="profile" /> }/>
+                                {/*<Route path="/" element={<Home/>}/>*/}
                                 {/*<Route path="profile/:userId" element={<ProfileContainer/>}/>*/}
                                 {/*<Route path="profile" element={<ProfileContainer/>}/>*/}
                                 {/*<Route path="dialogs/*" element={<DialogContainer />} />*/}
@@ -76,8 +86,8 @@ class App extends Component<AppContainerPropsType> {
                                 <Route path="users" element={<UsersContainer/>}/>
                                 <Route path="login" element={<Login/>}/>
 
-                                <Route path="/404" element={<PageNotFound />}/>
-                                <Route path="*" element={<Navigate to={'/404'} /> }/>
+                                <Route path="/404" element={<PageNotFound/>}/>
+                                <Route path="*" element={<Navigate to={'/404'}/>}/>
                             </Routes>
                         </div>
                     </div>

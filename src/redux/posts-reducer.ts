@@ -110,21 +110,29 @@ export const getStatusUserTC = (userId: number) => async (dispatch: Dispatch) =>
 }
 
 export const updateStatusUserTC = (status: string) => async (dispatch: Dispatch) => {
-    let res = await profileAPI.updateStatusUser(status)
-    if (res.data.resultCode === 0) {
-        dispatch(setStatusUserAC(status))
+    try {
+        let res = await profileAPI.updateStatusUser(status)
+        if (res.data.resultCode === 0) {
+            dispatch(setStatusUserAC(status))
+        }
+    } catch (e) {
+        console.log(e)
     }
 }
 
-export const saveProfileTC = (fullName: string, aboutMe: string, lookingForAJob: boolean, lookingForAJobDescription: string): AppThunk => async (dispatch: Dispatch, getState: ()=> AppRootStateType) => {
+export const saveProfileTC = (profile: ProfileResponseType): AppThunk => async (dispatch, getState: ()=> AppRootStateType) => {
     const userId = getState().auth.userId
-    const res = await profileAPI.saveProfile(fullName, aboutMe, lookingForAJob, lookingForAJobDescription)
+    const res = await profileAPI.saveProfile(profile)
     console.log(res)
     if (res.data.resultCode === 0) {
         if (userId) {   //делаю проверку т.к. типизация ругается что может прийти еще и null
-            let res = await profileAPI.getProfileUser(userId)
-            dispatch(setUserProfileAC(res.data) )
+            // let res = await profileAPI.getProfileUser(userId)       //97 lesson. 48min
+            // dispatch(setUserProfileAC(res.data))
+
+            await dispatch(getProfileUserTC(userId))
         }
+    } else {
+        console.log('все упало :(')
     }
 }
 

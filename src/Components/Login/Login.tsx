@@ -14,9 +14,10 @@ type FormikErrorType = {
 
 export type loginFormType = {
     // loginTC: (dataForm: LoginParamsType) => void
+    captchaUrl: string | null
 }
 
-export const LoginForm: React.FC<loginFormType> = () => {
+export const LoginForm: React.FC<loginFormType> = (props) => {
     const dispatch = useAppDispatch();
 
     // const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
@@ -86,6 +87,10 @@ export const LoginForm: React.FC<loginFormType> = () => {
                 />
                 <label className={loginForm.form_checkbox_label} htmlFor="rememberMe"></label>
             </div>
+            {
+                props.captchaUrl && <img src={props.captchaUrl}  alt={'captchaUrl'}/>
+            }
+
             <div>
                 <button type={'submit'} className={loginForm.form_btn}>LogIn</button>
             </div>
@@ -117,7 +122,7 @@ const Login = (props: any) => {
 
                 <h2 className={loginForm.form_title}>Enter in my social network:</h2>
                 {/*<LoginForm loginTC={loginTC}/>*/}
-                <LoginForm />
+                <LoginForm captchaUrl={props.captchaUrl}/>
             </div>
 
         </div>
@@ -126,11 +131,13 @@ const Login = (props: any) => {
 
 
 type mapStateToPropsType = {
-    isAuth: boolean
+    isAuth: boolean,
+    captchaUrl: string | null
 }
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return (
         {
+            captchaUrl: state.auth.captchaUrl,
             isAuth: state.auth.isAuth
         }
     )

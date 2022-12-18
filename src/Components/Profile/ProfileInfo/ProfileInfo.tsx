@@ -1,11 +1,11 @@
 import profile_info from './ProfileInfo.module.scss';
 import {Preloader} from '../../common/Preloader/Preloader';
-import {ProfileStatus} from './ProfileStatus';
 import {ProfileResponseType} from '../ProfileContainer';
 import photoUser from '../../../images/icon-user.png';
 import React, {ChangeEvent, useState} from 'react';
 import {ProfileDataForm} from './ProfileDataForm';
 import pen from '../../../images/pen.png';
+import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 
 type ProfileInfoProps = {
     profile: ProfileResponseType
@@ -49,11 +49,12 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, update
 
             <div className={profile_info.box}>
 
-                <ProfileStatus status={status} updateStatus={updateStatus}/>
+                {/*<ProfileStatus status={status} updateStatus={updateStatus}/>*/}
+                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
                 {/*режим редактирвоания*/}
                 {editMode ? <ProfileDataForm setEditMode={setEditMode}/>
-                // {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode}/>
+                    // {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode}/>
                     :
                     <ProfileData
                         profile={profile}
@@ -94,14 +95,17 @@ export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, g
             <div className={profile_info.aboutinfo}>About me:
                 <span className={profile_info.about}>{profile.aboutMe}</span>
             </div>
+
+
+            <div className={profile_info.aboutinfo}>Contacts:
+                <span className={profile_info.about}>{Object.keys(profile.contacts).map(key => {
+                    // @ts-ignore
+                    return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+
+                })}</span>
+            </div>
         </div>
 
-        <div className={profile_info.aboutinfo}>Contacts:
-            <span className={profile_info.about}>{Object.keys(profile.contacts).map(key => {
-                // @ts-ignore
-                return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
-            })}</span>
-        </div>
     </>
 }
 
@@ -112,11 +116,11 @@ type ContactPropsType = {
 }
 export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
     return (
-        <>
+        <div>
             <div className={profile_info.aboutinfo_value}>{contactTitle}</div>
-            {/*<ul className={profile_info.about_contact}>*/}
-            {/*    <li className={profile_info.about_contact_key}>{contactValue}</li>*/}
-            {/*</ul>*/}
-        </>
+            <ul className={profile_info.about_contact}>
+                <li className={profile_info.about_contact_key}>{contactValue}</li>
+            </ul>
+        </div>
     )
 }

@@ -3,7 +3,9 @@ import profile_info from './ProfileInfo.module.scss';
 import {useFormik} from 'formik';
 import {CreateInputField} from '../../../utils/object-helpers';
 import {saveProfileTC} from '../../../redux/posts-reducer';
-import {useAppDispatch} from '../../../redux/redux_store';
+import {AppRootStateType, useAppDispatch} from '../../../redux/redux_store';
+import {useSelector} from 'react-redux';
+import profile_img from '../../../images/profile.jpg';
 
 type ProfileDataFormType = {
     setEditMode: (value: boolean) => void;
@@ -11,25 +13,63 @@ type ProfileDataFormType = {
 
 export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode}) => {
     const dispatch = useAppDispatch();
+    const fullName = useSelector<AppRootStateType, string>(state => state.profilePage.profile.fullName)
+
+    // useEffect(() => {
+    //     if (!isEmpty(data)) {
+    //         formik.setValues({
+    //             ...data
+    //         });
+    //     }
+    // }, [data]);
+
+    // useEffect(() => {
+    //     setStatus(props.status)
+    // }, [props.status])
 
     const formik = useFormik({
+        enableReinitialize: true,
+        //  initialValues: {
+        //      fullName: '',
+        //      lookingForAJob: false,
+        //      lookingForAJobDescription: '',
+        //      aboutMe: ''
+        //  },
         initialValues: {
-            fullName: '',
+            fullName: fullName || '',
             lookingForAJob: false,
             lookingForAJobDescription: '',
-            aboutMe: ''
+            aboutMe: '',
+
+            userId: 1,
+            contacts: {
+                github: '',
+                vk: '',
+                facebook: '',
+                instagram: '',
+                twitter: '',
+                website: '',
+                youtube: '',
+                mainLink: '',
+            },
+            photos: {
+                small: profile_img,
+                large: profile_img,
+            }
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-            dispatch(saveProfileTC(values.fullName, values.aboutMe, values.lookingForAJob, values.lookingForAJobDescription))
+            // alert(JSON.stringify(values, null, 2));
+            dispatch(saveProfileTC(values))
             setEditMode(false)
             formik.resetForm()
         },
     })
+    //formik.setValues({fullName:"hey",lookingForAJob: true});
     return (<form onSubmit={formik.handleSubmit}>
         <div className={profile_info.name_edit}>
             <div className={profile_info.subtitle}>Full name:</div>
-            <span className={profile_info.about}>{CreateInputField('Full name', 'fullName', formik.handleChange, 'text', formik.values.fullName)}</span>
+            <span
+                className={profile_info.about}>{CreateInputField('Full name', 'fullName', formik.handleChange, 'text', formik.values.fullName)}</span>
         </div>
 
         <div className={profile_info.aboutinfo_edit}>
@@ -66,6 +106,16 @@ export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode}) =>
                 value={formik.values.aboutMe}
             ></textarea></div>
         </div>
+
+        <div className={profile_info.aboutinfo}>Contacts:
+            <span className={profile_info.about}>{Object.keys(formik.values.contacts).map(key => {
+                return <div key={key}>
+                    {key}: {CreateInputField(key, 'contacts.' + key, formik.handleChange, 'text')}
+                </div>
+            })}
+            </span>
+        </div>
+
         <div className={profile_info.aboutinfo_edit_btn}>
             <button className={'message_btn'} type={'submit'}>save</button>
         </div>
