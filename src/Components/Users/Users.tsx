@@ -3,7 +3,7 @@ import {UsersContainerPropsType} from './UsersContainer';
 import {Paginator} from '../common/Paginator/Paginator';
 import {User} from './User';
 import {UserType} from '../../redux/users-reducer';
-import user from './Users.module.css'
+import user from './Users.module.scss'
 import users from '../../images/users.png'
 
 type UsersPropsType = UsersContainerPropsType & {

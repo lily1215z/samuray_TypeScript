@@ -1,8 +1,8 @@
 import {Dispatch} from 'redux';
 
 const initialState = {
-    dialogs: [{id: 1, name: 'Svitlana'}, {id: 11, name: 'Javier'}],
-    messages: [{id: 2, message: 'Hi'}, {id: 22, message: 'Hola'}]
+    dialogs: [{id: 1, name: 'Svitlana'}, {id: 11, name: 'Javier'}, {id: 81, name: 'Kristina'}],
+    messages: [{id: 2, message: 'Hi, lets start speak'}, {id: 22, message: 'Hola, si me gusta. Vamos hablar'}, {id: 23, message: 'Where do you live?'}]
 }
 
 export const DialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionType): DialogsPageType => {

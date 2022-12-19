@@ -1,6 +1,10 @@
+@import "../../style/variables";
+@import "../../style/mixins";
+
 .inner {
     width: 100%;
     position: relative;
+    margin-bottom: 50px;
 }
 
 .img {

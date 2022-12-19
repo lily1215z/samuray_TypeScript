@@ -3,7 +3,6 @@ import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../redux/redux_store';
 import {
-    addPostsReducerAC,
     getProfileUserTC,
     getStatusUserTC,
     updateStatusUserTC
@@ -12,30 +11,13 @@ import {
 import {
     // @ts-ignore
     RouteComponentProps,
-    useLocation,
-    useNavigate,
-    useParams,
 } from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
-import {compose, Dispatch} from 'redux';
-
-function withRouter(Component: any) {   //need fixed
-    function ComponentWithRouterProp(props: any) {  //need fixed  бы поставила ProfileContainerPropsType
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <Component
-                {...props}
-                router={{location, navigate, params}}
-            />
-        );
-    }
-
-    return ComponentWithRouterProp;
-}
+import {compose} from 'redux';
+import {withRouter} from '../../hoc/withRouter';
 
 class ProfileContainer extends React.Component<PropsType> {
+
     refreshProfile() {
         let userId = this.props.router.params.userId;
         // let userId = this.props.match.params.userId;
@@ -63,12 +45,12 @@ class ProfileContainer extends React.Component<PropsType> {
 
     render() {
         return (
-            <Profile addPost={this.props.addPost} {...this.props}
+            <Profile {...this.props}
                      isOwner={!this.props.router.params.userId}
                      profile={this.props.profile}
                      status={this.props.status}
                      updateStatus={this.props.updateStatusUserTC}
-                     // savePhoto={this.props.savePhotoTC}
+                // savePhoto={this.props.savePhotoTC}
             />
         );
     }
@@ -81,24 +63,36 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({  //
     isAuth: state.auth.isAuth
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        addPost: (post: string) => {
-            dispatch(addPostsReducerAC(post))
-        },
-        getProfileUserTC, getStatusUserTC, updateStatusUserTC,
-        // savePhotoTC
-    }
-}
 
+//когда делала отд mapDispatchToProps и в нее все влаживала то не работало. лучше передавать в connect напрямую
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {getProfileUserTC, getStatusUserTC, updateStatusUserTC}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)
 
 //type
+type MapStateToPropsType = {
+    profile: ProfileResponseType,
+    isAuth: boolean,
+    status: string,
+    authorizedUserId: number | null
+    // authorizedUserId: number
+}
+
+type MapDispatchPropsType = {
+    getProfileUserTC: (userId: number) => void
+    getStatusUserTC: (userId: string) => void
+    updateStatusUserTC: (status: string) => void
+}
+
+type PathParamsType = {
+    userId: string
+}
+
 type ProfileContainerPropsType = MapStateToPropsType | MapDispatchPropsType
+
+type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType  //RouteComponentProps загуглила решение
 
 export type ProfileResponseType = {
     userId: number,
@@ -122,20 +116,4 @@ export type ProfileResponseType = {
     }
 }
 
-type MapStateToPropsType = {
-    profile: ProfileResponseType,
-    isAuth: boolean,
-    status: string,
-    authorizedUserId: number | null
-    // authorizedUserId: number
-}
 
-type MapDispatchPropsType = {
-    setUserProfileAC: (profile: ProfileResponseType) => void
-    addPost: (post: string) => void
-}
-
-type PathParamsType = {
-    userId: string
-}
-type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType  //RouteComponentProps загуглила решение

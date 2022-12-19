@@ -53,7 +53,7 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, update
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
                 {/*режим редактирвоания*/}
-                {editMode ? <ProfileDataForm setEditMode={setEditMode}/>
+                {editMode ? <ProfileDataForm setEditMode={setEditMode} profile={profile}/>
                     // {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode}/>
                     :
                     <ProfileData
@@ -74,7 +74,7 @@ type ProfileDataPropsType = {
     goToEditMode: () => void
 }
 export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
-    console.log(profile)
+
     return <>
         <div>
             {isOwner && <div>
@@ -98,7 +98,7 @@ export const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, g
 
 
             <div className={profile_info.aboutinfo}>Contacts:
-                <span className={profile_info.about}>{Object.keys(profile.contacts).map(key => {
+                <span >{Object.keys(profile.contacts).map(key => {
                     // @ts-ignore
                     return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
 
@@ -116,11 +116,9 @@ type ContactPropsType = {
 }
 export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
     return (
-        <div>
+        <div className={profile_info.aboutinfo_value_box}>
             <div className={profile_info.aboutinfo_value}>{contactTitle}</div>
-            <ul className={profile_info.about_contact}>
-                <li className={profile_info.about_contact_key}>{contactValue}</li>
-            </ul>
+            <div  className={profile_info.aboutinfo_value_key}>{contactValue}</div>
         </div>
     )
 }

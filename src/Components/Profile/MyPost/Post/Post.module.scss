@@ -1,0 +1,39 @@
+@import "../../../../style/variables";
+@import "../../../../style/mixins";
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    box-shadow: 3px 5px 7px 2px $boxShadow200;
+
+    //.item+.item
+    &+.item {
+        margin-top: 20px;
+    }
+
+    //.item_text
+    &_text {
+        flex: 1;
+    }
+}
+
+.img {
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+.like {
+    @include width(45px);
+    display: block;
+    margin-left: 20px;
+    position: relative;
+    text-align: right;
+    cursor: pointer;
+
+    //.like:after
+    &::after {
+        @include after($like, -5px, -5px);
+        z-index: -1;
+    }
+}

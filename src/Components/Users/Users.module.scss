@@ -1,0 +1,82 @@
+@import "../../style/variables";
+@import "../../style/mixins";
+
+.wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.inner {
+  @include flex(space-around);
+  flex-wrap: wrap;
+  padding: 20px 3px;
+}
+
+.paginator {
+  padding: 15px 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cart {
+  @include width(200px);
+  box-shadow: 0 0 15px -1px $bgDark500;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.img {
+  @include width(150px);
+  display: block;
+  min-height: 170px;
+  margin: 0 auto;
+
+  //.img img
+  & img {
+    border-radius: 10px;
+  }
+
+  //.img_box
+  &_box {
+    margin-bottom: 10px;
+
+    //.img_box img
+    & img {
+      width: 100%;
+    }
+  }
+}
+
+.btn_box button {
+  width: 100%;
+  display: block;
+  padding: 5px 2px;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  background-color: $orange300;
+  box-shadow: 0 0 10px 0 $bgDark600;
+  font-weight: 600;
+  color: $bgDark400;
+  transition: all 0.3s;
+
+  //.btn_box button:hover
+  &:hover {
+    background-color: $orange400;
+    box-shadow: 0 0 5px 0 $bgDark600;
+  }
+}
+
+.info_box {
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.name {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #06297c;
+}

@@ -1,0 +1,62 @@
+@import "../../style/variables";
+@import "../../style/mixins";
+
+.inner{
+    @include flex(space-between);
+    align-items: center;
+    padding: 20px 25px;
+}
+
+.title {
+    position: relative;
+    padding-bottom: 10px;
+
+    //.title::before
+    &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 70%;
+        height: 3px;
+        background-color: $bgDark800;
+        border-radius: 5px;
+    }
+}
+
+.panel {
+    //.panel_info
+    &_info {
+        @include flex(flex-end);
+        padding: 5px 5px;
+        margin: 10px 0 20px;
+    }
+
+    //.panel_logout
+    &_logout {
+        cursor: pointer;
+    }
+
+    //.panel_log
+    &_log {
+        @include width(80px);
+        color: $colorLight;
+        font-weight: 700;
+        padding: 2px 1px;
+        margin-right: 17px;
+        cursor: pointer;
+        text-align: center;
+        position: relative;
+
+        //.panel_log:after
+        &::after {
+            @include after($authLogin, -6px, 0);
+            z-index: -1;
+        }
+    }
+}
+
+.login {
+    color: $colorLight;
+    font-weight: 600;
+}

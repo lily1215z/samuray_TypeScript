@@ -1,8 +1,7 @@
-import post from './Post.module.css'
+import post from './Post.module.scss'
 import {useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../../redux/redux_store';
 import {PostsType} from '../../../../redux/posts-reducer';
-import {PureComponent} from 'react';
 
 type  postTypeProps = {}
 
@@ -12,14 +11,17 @@ export const Post:React.FC<postTypeProps> = () => {
     let resultPost = posts.map(i => {
         return (
             <li className={post.item} key={i.id}>
-                <img
-                    className={post.img}
-                    src={i.img}
-                    width='90'
-                    height='90'
-                    alt="avatar"/>
-                <p>{i.post}</p>
-                <span className={post.like}>like: {i.like}</span>
+                <div>
+                    <img
+                        className={post.img}
+                        src={i.img}
+                        width='90'
+                        height='90'
+                        alt="avatar"/>
+                </div>
+
+                <p className={post.item_text}>{i.post}</p>
+                <span className={post.like}> {i.like}</span>
             </li>
         )
     })
@@ -27,5 +29,3 @@ export const Post:React.FC<postTypeProps> = () => {
         <>{resultPost}</>
     )
 }
-
-// class Post extends PureComponent {}   //оптимизация

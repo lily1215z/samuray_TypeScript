@@ -1,4 +1,3 @@
-
 import {ProfileResponseType} from '../Components/Profile/ProfileContainer';
 import {Dispatch} from 'redux';
 import { profileAPI} from '../api/api';
@@ -9,7 +8,6 @@ const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
 const DELETE_POST = 'DELETE_POST'
-// const SAVE_PROFILE = 'SAVE_PROFILE'
 // const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 const initialState = {
@@ -19,6 +17,12 @@ const initialState = {
             post: 'hello, my dear friend',
             img: 'https://hostenko.com/wpcafe/wp-content/uploads/rndavatar.png',
             like: 5
+        },
+        {
+            id: 2,
+            post: 'Hola, como estas? Mi amiga. ',
+            img: 'https://hostenko.com/wpcafe/wp-content/uploads/rndavatar.png',
+            like: 8
         },
     ],
     // profile: null,          // or {} or null
@@ -46,9 +50,7 @@ const initialState = {
     status: ''
 }
 
-// export const ProfileReducer = (state: any = initialState, action: PostsReducerActionType): any => {
 export const ProfileReducer = (state: ProfilePageType = initialState, action: PostsReducerActionType): ProfilePageType => {
-// export const ProfileReducer = (state: Array<PostsType> = initialState, action: PostsReducerActionType): Array<PostsType> => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {

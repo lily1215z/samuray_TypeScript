@@ -5,8 +5,8 @@
   display: flex;
   align-items: flex-start;
   margin-top: 20px;
-  //border: 1px solid red;
 
+  //.info_edit img
   &_edit img {
     position: absolute;
     top: 50px;
@@ -25,39 +25,29 @@
   margin-bottom: 5px;
   padding: 3px;
   font-size: 14px;
-  color: #04236e;
+  color: $bgDark700;
   display: block;
 
+  //.aboutinfo_status
+  &_status {
+    display: flex;
+    align-items: center;
+  }
+
+  //aboutinfo_edit
   &_edit {
     display: flex;
+    position: relative;
+
+    //.aboutinfo_edit_btn
+    &_btn {
+      cursor: pointer;
+      margin-top: 20px;
+    }
   }
 }
 
-.subtitle {
-  @include width(180px);
-  margin-bottom: 15px;
-  color: #04236e;
-}
-
-.aboutinfo_value {
-  font-size: 14px;
-  color: #04236e;
-  display: inline-block;
-  margin-left: 10px;
-  padding: 0 5px;
-}
-
-.aboutinfo_edit_btn {
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.aboutinfo_edit {
-  //display: block;
-  //margin-bottom: 20px;
-  position: relative;
-}
-
+//style for ckeckbox in edit
 .aboutinfo_edit input[type="checkbox"] {
   display: none;
 }
@@ -70,7 +60,7 @@
   height: 25px;
   border-radius: 5px;
   margin-left: 10px;
-  background-color: #fff;
+  background-color: $colorLight;
   opacity: 0.5;
 }
 
@@ -79,12 +69,35 @@
   cursor: pointer;
 }
 
+.subtitle {
+  @include width(180px);
+  margin-bottom: 15px;
+  color: $bgDark700;
+}
+
+.aboutinfo_value {
+  @include width(100px);
+  font-size: 14px;
+  color: $bgDark700;
+  display: inline-block;
+  margin-left: 10px;
+
+  //aboutinfo_value_key
+  &_key {
+    font-weight: 700;
+  }
+
+  //aboutinfo_value_box
+  &_box {
+    display: flex;
+  }
+}
 
 .about {
   font-size: 18px;
   font-weight: 700;
   margin-left: 10px;
-  color: #04236e;
+  color: $bgDark700;
 
   & input[type='checkbox'] {
     opacity: 0.5;
@@ -106,17 +119,18 @@
 }
 
 .name {
-  color: #04236e;
+  color: $bgDark700;
   font-weight: 900;
   font-size: 22px;
   margin-left: 10px;
 
   //name_box
   &_box {
-    font-weight: 700;
     font-size: 18px;
+    color: $bgDark700;
   }
 
+  //name_edit
   &_edit {
     display: flex;
     margin-top: 20px;
@@ -131,10 +145,11 @@
       min-height: 30px;
     }
   }
-}
 
-.load_img input[type='file'] {
-  display: none;
+  //name_edit_box
+  &_edit_box {
+    @include width(100px);
+  }
 }
 
 .load_img {
@@ -144,18 +159,24 @@
   position: absolute;
   bottom: 0;
   left: 0;
-}
 
-.load_img:after {
-  content: 'edit';
-  position: absolute;
-  top: -20px;
-  left: 15px;
-  background-color: #dd732d;
-  font-size: 14px;
-  padding: 0 5px;
-  border-radius: 3px;
-  font-weight: 700;
+  //.load_img input[type='file']
+  & input[type='file'] {
+    display: none;
+  }
+
+  //.load_img:after
+  &::after {
+    content: 'edit';
+    position: absolute;
+    top: -20px;
+    left: 15px;
+    background-color: $orange300;
+    font-size: 14px;
+    padding: 0 5px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
 }
 
 .profile_box_img {
@@ -165,7 +186,7 @@
 
 .status_edit {
   border: none;
-  background-color: #fff;
+  background-color: $colorLight;
   opacity: 0.5;
   padding: 3px 5px;
   border-radius: 3px;
@@ -174,12 +195,7 @@
 }
 
 .status_title {
-  margin-right: 10px;
   font-size: 14px;
-  color: #04236e;
+  color: $bgDark700;
 
-}
-
-.aboutinfo_status {
-  display: flex;
 }

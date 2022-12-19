@@ -3,7 +3,7 @@ import photoUser from '../../images/icon-user.png';
 import {NavLink} from 'react-router-dom';
 import {UsersContainerPropsType} from './UsersContainer';
 import {UserType} from '../../redux/users-reducer';
-import style from './Users.module.css'
+import style from './Users.module.scss'
 
 type UserPropsType = UsersContainerPropsType & {
     user: UserType

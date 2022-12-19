@@ -1,4 +1,5 @@
 import profileStyle from './Profile.module.scss'
+import app from '../../App.module.scss';
 import profile_img from '../../images/profile.jpg';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {Post} from './MyPost/Post/Post';
@@ -6,9 +7,11 @@ import {ProfileResponseType} from './ProfileContainer';
 import {useFormik} from 'formik';
 import dialogs from '../Dialogs/Dialogs.module.scss';
 import React from 'react';
+import {addPostsReducerAC} from '../../redux/posts-reducer';
+import {useAppDispatch} from '../../redux/redux_store';
 
 type profileTypeProps = {
-    addPost: (post: string) => void
+    // addPost: (post: string) => void
     profile: ProfileResponseType
     status: string
     updateStatus: (status: string) => void
@@ -16,7 +19,14 @@ type profileTypeProps = {
     // savePhoto: (file: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Profile: React.FC<profileTypeProps> = ({addPost, profile, status, updateStatus, isOwner}) => {
+export const Profile: React.FC<profileTypeProps> = ({ profile, status, updateStatus, isOwner}) => {
+    console.log('profile', profile)
+
+    const dispatch = useAppDispatch();
+    const addPost = (post: string) => {
+        dispatch(addPostsReducerAC(post))
+    }
+
     return (
         <div className={profileStyle.inner}>
             <img
@@ -31,7 +41,7 @@ export const Profile: React.FC<profileTypeProps> = ({addPost, profile, status, u
                 isOwner={isOwner} profile={profile} status={status} updateStatus={updateStatus}/>
 
             <div className={profileStyle.post}>
-                <h3>{'My posts'}</h3>
+                <h3>My posts</h3>
                 <AddNewPostForm addPost={addPost}/>
             </div>
             <ul>
@@ -76,7 +86,7 @@ const AddNewPostForm = (props: addPostFormType) => {
                 }}}>
 
                 <textarea
-                    className="message-textarea"
+                    className={app.message_textarea}
                     name="newPostText"
                     placeholder="your news"
                     onChange={formik.handleChange}
@@ -86,7 +96,7 @@ const AddNewPostForm = (props: addPostFormType) => {
             <div>{formik.errors.newPostText ?
                 <div className={dialogs.errors}>{formik.errors.newPostText}</div> : null}</div>
             <div className={profileStyle.btn_box}>
-                <button className={'message_btn'}>Add Post</button>
+                <button className={app.message_btn}>Add Post</button>
             </div>
         </form>
     )

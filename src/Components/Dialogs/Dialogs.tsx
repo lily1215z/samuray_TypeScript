@@ -1,5 +1,6 @@
 import {Navigate, NavLink} from 'react-router-dom'
 import dialogs from './Dialogs.module.scss'
+import app from '../../App.module.scss';
 import avatar from '../../images/avatar-dialog.css.png'
 import dialogs_bg from '../../images/010.jpg'
 import {useSelector} from 'react-redux';
@@ -26,7 +27,7 @@ export function Dialogs(props: DialogsTypeProps) {
         return (
             <li key={i.id} className={dialogs.dialog}>
                 <NavLink to={`${i.id}`}
-                         className={({isActive}) => (isActive ? 'active_dialog' : 'link')}>{i.name}</NavLink>
+                         className={({isActive}) => (isActive ? `${app.active_dialog}` : `${app.link}`)}>{i.name}</NavLink>
             </li>
         )
     })
@@ -58,7 +59,7 @@ export function Dialogs(props: DialogsTypeProps) {
                     {messagesData}
                 </ul>
             </div>
-            {/*<AddMessageForm sendMessage={props.sendMessage}/>*/}
+
             <AddMessageForm sendMessage={props.sendMessage}/>
         </div>
     )
@@ -100,7 +101,7 @@ const AddMessageForm = (props: addMessageFormType) => {
                   }}}
         >
                 <textarea
-                    className="message-textarea"
+                    className={app.message_textarea}
                     name="newMessageBody"
                     placeholder="your message"
                     onChange={formik.handleChange}
@@ -109,7 +110,7 @@ const AddMessageForm = (props: addMessageFormType) => {
             {}
             <div>{formik.errors.newMessageBody ? <div className={dialogs.errors}>{formik.errors.newMessageBody}</div> : null}</div>
             <div className={profileStyle.btn_box}>
-                <button className={'message_btn'}>Add Message</button>
+                <button className={app.message_btn}>Add Message</button>
             </div>
         </form>
     )

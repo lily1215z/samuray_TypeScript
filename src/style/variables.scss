@@ -1,11 +1,29 @@
 
 $colorLight: #ffffff;
-$bgDark800: rgb(26, 7, 80);
-$bgDark700: #04236e;
-$bgDark900: #000000;
-$boxShadow: #6c68bb;
 $wrapper: #e574b0;
+$error: #f50f0f;
+$errorAll: #ff0000;
+$active: #e0187b;
 
+$bgDark300: #561f01;
+$bgDark400: #111111;
+$bgDark500: rgba(0,0,0,0.4);
+$bgDark600: rgba(0, 0, 0, 0.75);
+$bgDark700: #04236e;
+$bgDark800: rgb(26, 7, 80);
+$bgDark900: #000000;
+
+$orange100: #f68647;
+$orange200: rgb(234, 109, 26);
+$orange300: #dd732d;
+$orange400: #dc6314;
+$orange500: rgba(224, 77, 19, 0.7);
+
+$boxShadow: #6c68bb;
+$boxShadow100: #52129f;
+$boxShadow200: rgba(251, 11, 0, 0.2);
+$boxShadow300: rgb(236, 13, 13);
+$boxShadow400: rgb(196, 85, 85);
 
 $pagActive: '/images/pagActive.png';
 $pagNum: '/images/pagNum.png';
@@ -14,3 +32,5 @@ $checkboxEdit: '/images/check_edit.png';
 $had: '/images/01.png';
 $icon404: '/images/404.png';
 $pen: '/images/pen.png';
+$authLogin: '/images/authLogin.png';
+$like: '/images/like.png';

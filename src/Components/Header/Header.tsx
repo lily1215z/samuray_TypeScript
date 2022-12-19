@@ -1,6 +1,6 @@
 import logo from '../../images/logo.png';
 import logoBg from '../../images/logo-bg.png';
-import header from './Header.module.css'
+import header from './Header.module.scss'
 import {NavLink} from 'react-router-dom';
 import {HeaderContainerPropsType} from './HeaderContainer';
 import {logoutTC} from '../../redux/auth-reducer';

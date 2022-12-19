@@ -1,6 +1,8 @@
+@import '../../style/variables';
+@import '../../style/mixins';
+
 .navbar {
-    max-width: 250px;
-    width: 100%;
+    @include width(250px);
     padding-top: 50px;
     margin-right: 20px;
     padding-left: 30px;
@@ -9,10 +11,12 @@
 .item {
     font-size: 20px;
     font-weight: 700;
-}
 
-.item+.item {
-    margin-top: 25px;
+    //.item+.item
+    &+.item {
+        margin-top: 25px;
+    }
+
 }
 
 .items {

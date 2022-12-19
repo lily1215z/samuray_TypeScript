@@ -46,7 +46,7 @@
     @include position(absolute);
     @include flex(center);
     align-items: center;
-    background-color: rgb(234, 109, 26);
+    background-color: $orange200;
   }
 
   //form_inner
@@ -55,7 +55,7 @@
     box-shadow: 2px 2px 54px 3px $bgDark700;
     border-radius: 50%;
     padding: 100px;
-    background-color: #f68647;
+    background-color: $orange100;
   }
 
   //form_btn
@@ -64,7 +64,7 @@
     display: block;
     padding: 5px;
     cursor: pointer;
-    background-color: rgb(234, 109, 26);
+    background-color: $orange200;
     border: none;
     color: $colorLight;
     font-weight: 700;
@@ -115,14 +115,13 @@
     position: relative;
     border-radius: 50%;
     box-shadow: 0 0 5px 2px $boxShadow;
-    //border: 2px solid $boxShadow;
     width: 28px;
     height: 28px;
   }
 
   //form_error
   &_error {
-    color: red;
+    color: $error;
     position: absolute;
     bottom: -17px;
     left: 110px;

@@ -1,46 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import profile_info from './ProfileInfo.module.scss';
 import {useFormik} from 'formik';
 import {CreateInputField} from '../../../utils/object-helpers';
 import {saveProfileTC} from '../../../redux/posts-reducer';
-import {AppRootStateType, useAppDispatch} from '../../../redux/redux_store';
-import {useSelector} from 'react-redux';
+import {useAppDispatch} from '../../../redux/redux_store';
 import profile_img from '../../../images/profile.jpg';
+import cn from 'classnames';
+import {ProfileResponseType} from '../ProfileContainer';
 
 type ProfileDataFormType = {
     setEditMode: (value: boolean) => void;
+    profile: ProfileResponseType
 }
 
-export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode}) => {
+export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode, profile}) => {
     const dispatch = useAppDispatch();
-    const fullName = useSelector<AppRootStateType, string>(state => state.profilePage.profile.fullName)
 
-    // useEffect(() => {
-    //     if (!isEmpty(data)) {
-    //         formik.setValues({
-    //             ...data
-    //         });
-    //     }
-    // }, [data]);
-
-    // useEffect(() => {
-    //     setStatus(props.status)
-    // }, [props.status])
+    console.log('profile', profile)
 
     const formik = useFormik({
-        enableReinitialize: true,
-        //  initialValues: {
-        //      fullName: '',
-        //      lookingForAJob: false,
-        //      lookingForAJobDescription: '',
-        //      aboutMe: ''
-        //  },
         initialValues: {
-            fullName: fullName || '',
+            fullName: '',
             lookingForAJob: false,
             lookingForAJobDescription: '',
             aboutMe: '',
-
             userId: 1,
             contacts: {
                 github: '',
@@ -64,19 +47,31 @@ export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode}) =>
             formik.resetForm()
         },
     })
-    //formik.setValues({fullName:"hey",lookingForAJob: true});
+
+    useEffect(() => {
+        formik.setFieldValue('lookingForAJob', profile.lookingForAJob)
+        formik.setFieldValue('lookingForAJobDescription', profile.lookingForAJobDescription)
+        formik.setFieldValue('aboutMe', profile.aboutMe)
+        formik.setFieldValue('fullName', profile.fullName)
+    }, [profile])
+
+
     return (<form onSubmit={formik.handleSubmit}>
         <div className={profile_info.name_edit}>
             <div className={profile_info.subtitle}>Full name:</div>
-            <span
-                className={profile_info.about}>{CreateInputField('Full name', 'fullName', formik.handleChange, 'text', formik.values.fullName)}</span>
+            <div className={profile_info.about}>
+                <input
+                    placeholder={'Full name'}
+                    name={'fullName'}
+                    onChange={formik.handleChange}
+                    value={formik.values.fullName}
+                />
+            </div>
+
         </div>
 
         <div className={profile_info.aboutinfo_edit}>
             <div className={profile_info.subtitle}>Looking for a job:</div>
-            {/*<span*/}
-            {/*    className={profile_info.about}>{CreateInputField('', 'lookingForAJob', formik.handleChange, 'checkbox', formik.values.lookingForAJob)}*/}
-            {/*</span>*/}
             <input
                 id="check"
                 type={'checkbox'}
@@ -109,8 +104,9 @@ export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode}) =>
 
         <div className={profile_info.aboutinfo}>Contacts:
             <span className={profile_info.about}>{Object.keys(formik.values.contacts).map(key => {
-                return <div key={key}>
-                    {key}: {CreateInputField(key, 'contacts.' + key, formik.handleChange, 'text')}
+                return <div key={key} className={cn(profile_info.name_edit)}>
+                    <span className={profile_info.name_edit_box}>{key}:</span>
+                    {CreateInputField(key, 'contacts.' + key, formik.handleChange, 'text')}
                 </div>
             })}
             </span>

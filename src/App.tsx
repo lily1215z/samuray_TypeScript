@@ -1,6 +1,6 @@
-import React, {Component, ComponentType, Suspense} from 'react';
-import {Routes, Route, useLocation, useNavigate, useParams, BrowserRouter, Navigate} from 'react-router-dom';
-import './App.css';
+import React, {Component, Suspense} from 'react';
+import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom';
+import app from './App.module.scss';
 import {NavBar} from './Components/Navbar/NavBar';
 import UsersContainer from './Components/Users/UsersContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
@@ -11,31 +11,17 @@ import {AppRootStateType, store} from './redux/redux_store';
 import {Preloader} from './Components/common/Preloader/Preloader';
 import Login from './Components/Login/Login';
 import {PageNotFound} from './Components/common/404/PageNotFound';
+import {withRouter} from './hoc/withRouter';
 
 const DialogContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 
-
-function withRouter<T>(Component: ComponentType<T>) {
-    function ComponentWithRouterProp(props: T) {
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <Component
-                {...props}
-                router={{location, navigate, params}}
-            />
-        );
-    }
-
-    return ComponentWithRouterProp;
-}
-
 class App extends Component<AppContainerPropsType> {
+
     catchAllErrors = (promiseRejectionEvent: Event) => {
-        alert('some error happened');
-        console.error(promiseRejectionEvent)
+        alert('Oops, something went wrong...');
+        // console.error(promiseRejectionEvent)
+        // return <CatchAllErrors />
     }
 
     componentDidMount() {
@@ -48,15 +34,15 @@ class App extends Component<AppContainerPropsType> {
     }
 
     render() {
-        if (!this.props.initialized) {  //if app no initialized we will se  Preloader
+        if (!this.props.initialized) {  //if app no initialized we see Preloader
             return <Preloader/>
         }
         return (
             <>
-                <div className="App">
+                <div className={app.container}>
                     <HeaderContainer/>
-                    <div className="container">
-                        <div className="app__inner">
+                    <div className={app.container}>
+                        <div className={app.app_inner}>
                             <NavBar/>
                             <Routes>
                                 <Route path="/" element={<Navigate to="profile" /> }/>
