@@ -73,8 +73,9 @@
 }
 
 .all_error {
-  border: 2px solid $errorAll;
-  position: absolute;
+  border-bottom: 2px solid $errorAll;
+  border-left: 2px solid $errorAll;
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);

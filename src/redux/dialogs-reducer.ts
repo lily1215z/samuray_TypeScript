@@ -1,4 +1,3 @@
-import {Dispatch} from 'redux';
 
 const initialState = {
     dialogs: [{id: 1, name: 'Svitlana'}, {id: 11, name: 'Javier'}, {id: 81, name: 'Kristina'}],
@@ -24,13 +23,6 @@ export const DialogsReducer = (state: DialogsPageType = initialState, action: Di
 export const sendDialogsReducerAC = (messages: string) => {
     return {type: 'SEND-MESSAGE', messages: messages} as const
 }
-
-
-//thunk
-export const sendDialogsReducerTC = (messages: string) => (dispatch: Dispatch) => {
-
-}
-
 
 // type
 export type DialogsType = {

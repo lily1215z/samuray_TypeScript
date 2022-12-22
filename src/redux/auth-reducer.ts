@@ -1,6 +1,8 @@
 import {Dispatch} from 'redux';
 import {authAPI, LoginParamsType, securityAPI} from '../api/api';
 import {AppThunk} from './redux_store';
+import axios from 'axios';
+import {handleServerAppError, handleServerNetworkError} from '../utils/object-helpers';
 
 const SET_USER_DATA = 'SET-USER-DATA';
 const GET_CAPTCHA_URL = 'GET-CAPTCHA-URL';
@@ -38,24 +40,41 @@ export const getCaptchaUrlAC = (captcha: string) => {
 
 //thunk
 export const getAuthMeTC = (): any => async (dispatch: Dispatch) => {   //исправить any
-    const res = await authAPI.getAuthMe()
-    if (res.data.resultCode === 0) {
-        let {id, email, login} = res.data.data               //деструктуризация
-        dispatch(setAuthUserDataAC(id, email, login, true))
+    try {
+        const res = await authAPI.getAuthMe()
+        if (res.data.resultCode === 0) {
+            let {id, email, login} = res.data.data               //деструктуризация
+            dispatch(setAuthUserDataAC(id, email, login, true))
+        } else {
+            handleServerAppError(res.data, dispatch) //ошибки наши
+        }
+    } catch(e) {
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)  //др ошибки
+        }
     }
+
 }
 
 export const loginTC = (dataForm: LoginParamsType): AppThunk => async (dispatch: Dispatch) => {
-    const res = await authAPI.login(dataForm)
-    if (res.data.resultCode === 0) {
-        dispatch(getAuthMeTC())
-    } else {
-        // const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error';
-        if(res.data.resultCode === 10) {  //error is wrong
-            // @ts-ignore
-            dispatch(getCaptchaUrlTC())
+    try {
+        const res = await authAPI.login(dataForm)
+        if (res.data.resultCode === 0) {
+            dispatch(getAuthMeTC())
+        } else {
+            handleServerAppError(res.data, dispatch)
+            // const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error';
+            if(res.data.resultCode === 10) {  //error is wrong
+                // @ts-ignore
+                dispatch(getCaptchaUrlTC())
+            }
+        }
+    } catch(e) {
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)  //др ошибки
         }
     }
+
 }
 
 export const getCaptchaUrlTC = () => async (dispatch: Dispatch) => {
@@ -65,10 +84,17 @@ export const getCaptchaUrlTC = () => async (dispatch: Dispatch) => {
 }
 
 export const logoutTC = (): AppThunk => async (dispatch: Dispatch) => {
-    console.log('asdf')
-    const res = await authAPI.logout()
-    if (res.data.resultCode === 0) {
-        dispatch(setAuthUserDataAC(null, null, null, false))
+    try {
+        const res = await authAPI.logout()
+        if (res.data.resultCode === 0) {
+            dispatch(setAuthUserDataAC(null, null, null, false))
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)
+        }
     }
 }
 

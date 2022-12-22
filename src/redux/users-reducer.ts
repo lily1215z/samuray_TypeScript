@@ -1,6 +1,7 @@
 import {usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
-import {updateObjectInArray} from '../utils/object-helpers';
+import {handleServerAppError, handleServerNetworkError, updateObjectInArray} from '../utils/object-helpers';
+import axios from 'axios';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UN-FOLLOW';
@@ -12,7 +13,7 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 const initialState = {
     users: [],
-    pageSize: 10,
+    pageSize: 12,
     totalUsersCount: 0,
     currentPage: 1,   //со старта будет 1 страница. всегда будем запрашивать 1 стр
     isFetching: false,
@@ -36,8 +37,8 @@ export const UsersReducer = (state: UsersPageType = initialState, action: UsersA
             }
 
         case SET_USERS:
-            // return {...state, users: action.users}
-            return {...state, users: [...action.users, ...state.users]}  //склеиваем старый state с новым 49lesson 34 min
+            return {...state, users: action.users}
+            // return {...state, users: [...action.users, ...state.users]}  //склеиваем старый state с новым 49lesson 34 min
 
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.pageNumber}
@@ -75,23 +76,43 @@ export const toggleIsFollowingProgressAC = (toggle: boolean, userId: number) => 
 
 //thunk
 export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
-    dispatch(toggleIsFetchingAC(true))
-    dispatch(setCurrentPageAC(currentPage))    //выводит на какой стр мы сейчас находимся - подсвечивается активная стр
+    try {
+        dispatch(toggleIsFetchingAC(true))
+        dispatch(setCurrentPageAC(currentPage))    //выводит на какой стр мы сейчас находимся - подсвечивается активная стр
 
-    let res = await usersAPI.getUsers(currentPage, pageSize)
-    dispatch(toggleIsFetchingAC(false))
-    dispatch(setUsersAC(res.data.items))
-    dispatch(setUsersTotalCountAC(res.data.totalCount))
+        let res = await usersAPI.getUsers(currentPage, pageSize)
+        if(res.data) {
+            dispatch(toggleIsFetchingAC(false))
+            dispatch(setUsersAC(res.data.items))
+            dispatch(setUsersTotalCountAC(res.data.totalCount))
+        } else {
+            handleServerAppError(res.data, dispatch) //ошибки наши
+        }
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)
+        }
+    }
+
 }
 
 //рефакторинг для санки followTC и unFollowTC
 const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: any, actionCreator: any) => {
-    dispatch(toggleIsFollowingProgressAC(true, id))
-    let res = await apiMethod(id)
-    if (res.data.resultCode === 0) {
-        dispatch(actionCreator(id))
+    try {
+        dispatch(toggleIsFollowingProgressAC(true, id))
+        const res = await apiMethod(id)
+        if (res.data.resultCode === 0) {
+            dispatch(actionCreator(id))
+        } else {
+            handleServerAppError(res.data, dispatch) //ошибки наши
+        }
+        dispatch(toggleIsFollowingProgressAC(false, id))
+    } catch (e) {
+        if (axios.isAxiosError(e)) {
+            handleServerNetworkError(e, dispatch)  //др ошибки
+        }
     }
-    dispatch(toggleIsFollowingProgressAC(false, id))
+
 }
 
 export const followTC = (id: number) => async (dispatch: Dispatch) => {
@@ -103,16 +124,6 @@ export const unFollowTC = (id: number) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.unfollowUser.bind(usersAPI)
     followUnfollowFlow(dispatch, id, apiMethod, unFollowAC)
 }
-
-// export const getAuthMeTC = () => (dispatch: Dispatch) => {
-//     authAPI.getAuthMe()
-//         .then(res => {
-//             if (res.data.resultCode === 0) {
-//                 let {id, email, login} = res.data.data               //деструктуризация
-//                 dispatch(setAuthUserDataAC(id, email, login))
-//             }
-//         })
-// }
 
 //type
 type followTypeAC = ReturnType<typeof followAC>

@@ -182,6 +182,10 @@
 .profile_box_img {
   position: relative;
   margin-bottom: 15px;
+
+  & img {
+    border-radius: 5px;
+  }
 }
 
 .status_edit {

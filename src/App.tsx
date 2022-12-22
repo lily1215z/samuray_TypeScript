@@ -12,40 +12,43 @@ import {Preloader} from './Components/common/Preloader/Preloader';
 import Login from './Components/Login/Login';
 import {PageNotFound} from './Components/common/404/PageNotFound';
 import {withRouter} from './hoc/withRouter';
+import {CatchErrors} from './Components/common/CatchErrors';
 
 const DialogContainer = React.lazy(() => import('./Components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 
 class App extends Component<AppContainerPropsType> {
 
-    catchAllErrors = (promiseRejectionEvent: Event) => {
-        alert('Oops, something went wrong...');
-        // console.error(promiseRejectionEvent)
-        // return <CatchAllErrors />
-    }
+    // shouldComponentUpdate(nextProps: Readonly<AppContainerPropsType>, nextState: Readonly<{}>): boolean {
+    //     if (nextProps !== this.props) {
+    //         return true
+    //     } else if (nextState !== this.state) return true
+    //     return false
+    // }
 
     componentDidMount() {
         this.props.initializedAppTC()
-        window.addEventListener('unhandledrejection', this.catchAllErrors)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('unhandledrejection', this.catchAllErrors)
     }
 
     render() {
         if (!this.props.initialized) {  //if app no initialized we see Preloader
             return <Preloader/>
         }
+
         return (
             <>
                 <div className={app.container}>
                     <HeaderContainer/>
                     <div className={app.container}>
+
+                        {this.props.preloader && <Preloader />}
+                        {this.props.error !== null && <CatchErrors />}
+
                         <div className={app.app_inner}>
                             <NavBar/>
                             <Routes>
-                                <Route path="/" element={<Navigate to="profile" /> }/>
+
+                                <Route path="/" element={<Navigate to="profile"/>}/>
                                 {/*<Route path="/" element={<Home/>}/>*/}
                                 {/*<Route path="profile/:userId" element={<ProfileContainer/>}/>*/}
                                 {/*<Route path="profile" element={<ProfileContainer/>}/>*/}
@@ -86,7 +89,9 @@ class App extends Component<AppContainerPropsType> {
 
 const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
     return {
-        initialized: state.app.initialized
+        initialized: state.app.initialized,
+        error: state.app.error,
+        preloader: state.app.preloader
     }
 }
 
@@ -111,4 +116,6 @@ type MapDispatchToPropsType = {
 }
 type mapStateToPropsType = {
     initialized: boolean
+    error: string | null
+    preloader: boolean
 }

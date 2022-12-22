@@ -6,26 +6,28 @@ import React, {ChangeEvent, useState} from 'react';
 import {ProfileDataForm} from './ProfileDataForm';
 import pen from '../../../images/pen.png';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
+import {savePhotoTC} from '../../../redux/posts-reducer';
+import {useAppDispatch} from '../../../redux/redux_store';
 
 type ProfileInfoProps = {
     profile: ProfileResponseType
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean  //отвечает за отображение профиля и за кнопку редактирваония если мы в режиме редактирования
-    // savePhoto: (file: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateStatus, isOwner}) => {
     const [editMode, setEditMode] = useState(false)
+    const dispatch = useAppDispatch();
 
     if (!profile) {
         return <Preloader/>
     }
 
     const onMainPhotoSelector = (e: ChangeEvent<HTMLInputElement>) => {
-        // if (e.currentTarget.files.length) {
-        //     savePhoto(e.currentTarget.files[0])
-        // }
+        if (e.currentTarget.files) {
+            dispatch(savePhotoTC(e.currentTarget.files[0])).then()
+        }
     }
 
     return (

@@ -10,20 +10,20 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10) {
+    getUsers(currentPage: number = 1, pageSize: number = 12) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
     },
     unfollowUser(id: number) {
-        return instance.delete(`follow/${id}`)
+        return instance.delete<ResponseType>(`follow/${id}`)
     },
     followUser(id: number) {
-        return instance.post(`follow/${id}`)
+        return instance.post<ResponseType>(`follow/${id}`)
     },
 }
 
 export const authAPI = {
     getAuthMe() {
-        return instance.get<ResponseType<{id: number, email: string, login: string}>>(`auth/me`)
+        return instance.get<ResponseType<{ id: number, email: string, login: string }>>(`auth/me`)
     },
     login(dataForm: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>('auth/login', dataForm)
@@ -35,27 +35,33 @@ export const authAPI = {
 
 export const profileAPI = {
     getProfileUser(userId: number) {
-        return instance.get(`profile/${userId}`)
+        return instance.get<ProfileResponseType>(`profile/${userId}`)
     },
     getStatusUser(userId: number) {
-        return instance.get(`profile/status/${userId}`)
+        return instance.get<string>(`profile/status/${userId}`)
     },
     updateStatusUser(status: string) {  //orArray<string>
-        return instance.put('profile/status', {status})
+        return instance.put<ResponseType>('profile/status', {status})
     },
     saveProfile(profile: ProfileResponseType) {
-        return instance.put('profile', profile)
+        return instance.put<ResponseType>('profile', profile)
+    },
+    savePhoto(photoFile: File) {                    //запрос д/замены фото в профайле
+        const formData = new FormData();
+        formData.append('image', photoFile)                       //image написан в доке к АПИ
+        return instance.put<ResponseType<{
+            photos: {
+                small: string,
+                large: string
+            }
+        }>>('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
-    // savePhoto(photoFile: ChangeEvent<HTMLInputElement>) {                    //запрос д/замены фото в профайле
-    //     const formData = new FormData();
-    //     formData.append('image', photoFile)                       //image написан в доке к АПИ
-    //     return instance.put('/profile/photo)', formData, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     })
-    // }
 }
+
 export const securityAPI = {
     getCaptchaUrl() {
         return instance.get<CaptchaResponseType>('security/get-captcha-url')
@@ -66,6 +72,7 @@ export const securityAPI = {
 //type
 export type CaptchaResponseType = {
     url: string
+    resultCode: number
 }
 export type LoginParamsType = {
     email: string

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import profile_info from './ProfileInfo.module.scss';
+import app from '../../../App.module.scss';
 import {useFormik} from 'formik';
 import {CreateInputField} from '../../../utils/object-helpers';
 import {saveProfileTC} from '../../../redux/posts-reducer';
@@ -113,7 +114,7 @@ export const ProfileDataForm: React.FC<ProfileDataFormType> = ({setEditMode, pro
         </div>
 
         <div className={profile_info.aboutinfo_edit_btn}>
-            <button className={'message_btn'} type={'submit'}>save</button>
+            <button className={app.message_btn} type={'submit'}>save</button>
         </div>
 
     </form>)
