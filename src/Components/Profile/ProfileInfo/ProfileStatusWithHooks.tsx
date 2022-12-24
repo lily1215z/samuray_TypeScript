@@ -11,8 +11,8 @@ type ProfileStatusPropsType = {
 export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> = (props: ProfileStatusPropsType) => {
     const dispatch = useAppDispatch();
 
-    const [editMode, setEditMode] = useState(false)  //такой же стейт (название) есть локально в ProfileDataForm
-                                                              //но мой работает только здесь. если прокинуть тот то они будут взаимосвязаны
+    const [editMode, setEditMode] = useState(false)  //same name I have in other local state - in ProfileDataForm
+                         // This work only here. If forward same state from ProfileDataForm they will work together
    const [status, setStatus] = useState(props.status);
 
     useEffect(() => {                   //need for render status from state in input when first render
@@ -25,7 +25,6 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> = (props: 
 
     const deactivateEditMode = () => {
         setEditMode(false)
-        // props.updateStatus(status)
         dispatch(updateStatusUserTC(status)).then()
     }
 
@@ -44,11 +43,10 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusPropsType> = (props: 
             {editMode &&
                 <div>
                     <input
-                        // onChange={(e)=> setStatus(e.currentTarget.value)}
                         onChange={onStatusChange}
                         autoFocus
                         onBlur={deactivateEditMode}
-                        value={status}   //показываем status не из пропсов а из state
+                        value={status}   //show status from state. Not from props
                         className={profile_info.status_edit}
                     />
                 </div>

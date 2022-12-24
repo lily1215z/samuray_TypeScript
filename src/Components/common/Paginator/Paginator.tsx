@@ -46,7 +46,6 @@ export const Paginator: React.FC<UsersPropsType> = ({
                    .map((p) => {
                        return <span
                            key={p}
-                           // className={currentPage === p ? paginatorStyle.selectedPage : ''}
                            className={cn({[paginatorStyle.selectedPage]: currentPage === p}, paginatorStyle.pageNumber)}
                            onClick={() => {
                                onPageChanged(p)

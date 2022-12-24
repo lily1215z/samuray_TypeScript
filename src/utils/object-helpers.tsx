@@ -40,6 +40,6 @@ export const handleServerAppError = (data: any, dispatch: Dispatch ) => {
 }
 
 export const handleServerNetworkError = (error: {message: string}, dispatch: Dispatch) => {
-    dispatch(isErrorsAC(error.message))
+    dispatch(isErrorsAC(error.message ? error.message : 'Some error occurred'))
     dispatch(isPreloaderAC(false))
 }

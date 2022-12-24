@@ -13,15 +13,11 @@ type FormikErrorType = {
 }
 
 export type loginFormType = {
-    // loginTC: (dataForm: LoginParamsType) => void
     captchaUrl: string | null
 }
 
 export const LoginForm: React.FC<loginFormType> = (props) => {
     const dispatch = useAppDispatch();
-
-    // const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
-    // if (!isLogginIn) return <Navigate to={'/login'}/>
 
     const formik = useFormik({
         validate: (values) => {
@@ -51,13 +47,11 @@ export const LoginForm: React.FC<loginFormType> = (props) => {
         },
     })
 
-// при рефакторинге инпутов не работает очистка формы.
     return (
         <form className={loginForm.form} onSubmit={formik.handleSubmit}>
 
             <div className={loginForm.form_box}>
                 <div className={loginForm.form_subtitle}>Email:</div>
-                {/*{CreateInputField('Email', 'email', formik.handleChange, 'text', formik.values.email)}*/}
                 <input placeholder={'free@samuraijs.com'}
                        {...formik.getFieldProps('email')}
                 />
@@ -67,7 +61,6 @@ export const LoginForm: React.FC<loginFormType> = (props) => {
 
             <div className={loginForm.form_box}>
                 <div className={loginForm.form_subtitle}>Password:</div>
-                {/*{CreateInputField('Password', 'password', formik.handleChange, 'password', formik.values.password)}*/}
                 <input placeholder={'free'}
                        type={'password'}
 
@@ -78,7 +71,6 @@ export const LoginForm: React.FC<loginFormType> = (props) => {
             </div>
 
             <div className={loginForm.form_checkbox}>
-                {/*{CreateInputField(null, 'rememberMe', formik.handleChange, 'checkbox', formik.values.rememberMe, 'remember me')}*/}
                 <input type='checkbox'
                        id="rememberMe"
                        name={'rememberMe'}
@@ -121,7 +113,6 @@ const Login = (props: any) => {
                 </div>
 
                 <h2 className={loginForm.form_title}>Enter in my social network:</h2>
-                {/*<LoginForm loginTC={loginTC}/>*/}
                 <LoginForm captchaUrl={props.captchaUrl}/>
             </div>
 
@@ -144,4 +135,3 @@ const mapStateToProps = (state: AppRootStateType): mapStateToPropsType => {
 }
 
 export default connect(mapStateToProps, {})(Login)
-// export default connect(mapStateToProps, {loginTC})(Login)

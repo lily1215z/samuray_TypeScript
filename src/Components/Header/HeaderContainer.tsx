@@ -5,7 +5,6 @@ import {AppRootStateType} from '../../redux/redux_store';
 
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
-//проверяем в консоли store.getState().auth
     render() {
         return <Header {...this.props} />
     }
@@ -21,17 +20,6 @@ export default connect(mapStateToProps)(HeaderContainer)
 
 // type
 export type HeaderContainerPropsType = MapStateToPropsType
-
-type ResponsePropsType<T = {}> = {
-    resultCode: number,
-    messages: Array<string>
-    // data: {
-    //     id: number,
-    //     email: string,
-    //     login: string
-    // },
-    data: T
-}
 
 type MapStateToPropsType = {
     // isAuth: ResponsePropsType,

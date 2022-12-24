@@ -11,7 +11,7 @@ const initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false,  //отвечает за загрузилась крутилка или нет. Св-ва д/редиректа логина
+    isAuth: false,  //This property response for preload. This is property for redirect login
     captchaUrl: null  //if null then captcha is not required
 }
 
@@ -20,7 +20,7 @@ export const AuthReducer = (state: authReducerType = initialState, action: authR
         case SET_USER_DATA:
             return {...state, ...action.payload, isAuth: action.payload.isAuth}
 
-        // case GET_CAPTCHA_URL: {   //в каптче нет поле ввода. Не стала его доделывать. он не нужен в проекте
+        // case GET_CAPTCHA_URL: {
             // return {...state, ...action.payload}  //or
             // return {...state, ...action.payload, captchaUrl: action.payload.captcha}
         // }
@@ -39,21 +39,20 @@ export const getCaptchaUrlAC = (captcha: string) => {
 }
 
 //thunk
-export const getAuthMeTC = (): any => async (dispatch: Dispatch) => {   //исправить any
+export const getAuthMeTC = (): any => async (dispatch: Dispatch) => {
     try {
         const res = await authAPI.getAuthMe()
         if (res.data.resultCode === 0) {
-            let {id, email, login} = res.data.data               //деструктуризация
+            let {id, email, login} = res.data.data               //destructuring
             dispatch(setAuthUserDataAC(id, email, login, true))
         } else {
-            handleServerAppError(res.data, dispatch) //ошибки наши
+            handleServerAppError(res.data, dispatch)
         }
     } catch(e) {
         if (axios.isAxiosError(e)) {
-            handleServerNetworkError(e, dispatch)  //др ошибки
+            handleServerNetworkError(e, dispatch)
         }
     }
-
 }
 
 export const loginTC = (dataForm: LoginParamsType): AppThunk => async (dispatch: Dispatch) => {
@@ -71,10 +70,9 @@ export const loginTC = (dataForm: LoginParamsType): AppThunk => async (dispatch:
         }
     } catch(e) {
         if (axios.isAxiosError(e)) {
-            handleServerNetworkError(e, dispatch)  //др ошибки
+            handleServerNetworkError(e, dispatch)
         }
     }
-
 }
 
 export const getCaptchaUrlTC = () => async (dispatch: Dispatch) => {

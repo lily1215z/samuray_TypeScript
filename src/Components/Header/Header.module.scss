@@ -5,6 +5,11 @@
     @include flex(space-between);
     align-items: center;
     padding: 20px 25px;
+    position: relative;
+
+    @media screen and (max-width: 1000px) {
+        padding: 20px 0;
+    }
 }
 
 .title {
@@ -20,6 +25,21 @@
         width: 70%;
         height: 3px;
         background-color: $bgDark800;
+        border-radius: 5px;
+        @media screen and (max-width: 720px) {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 830px) {
+      font-size: 28px;
+    }
+    @media screen and (max-width: 720px) {
+        background-color: $orange600Body;
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        padding: 0 10px;
         border-radius: 5px;
     }
 }

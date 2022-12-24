@@ -13,7 +13,7 @@ type ProfileInfoProps = {
     profile: ProfileResponseType
     status: string
     updateStatus: (status: string) => void
-    isOwner: boolean  //отвечает за отображение профиля и за кнопку редактирваония если мы в режиме редактирования
+    isOwner: boolean  //responsible show profile & edit btn if we stay in edit mode
 }
 
 export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, updateStatus, isOwner}) => {
@@ -51,12 +51,9 @@ export const ProfileInfo: React.FC<ProfileInfoProps> = ({profile, status, update
 
             <div className={profile_info.box}>
 
-                {/*<ProfileStatus status={status} updateStatus={updateStatus}/>*/}
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
-                {/*режим редактирвоания*/}
                 {editMode ? <ProfileDataForm setEditMode={setEditMode} profile={profile}/>
-                    // {editMode ? <ProfileDataForm profile={profile} setEditMode={setEditMode}/>
                     :
                     <ProfileData
                         profile={profile}

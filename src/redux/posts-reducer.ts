@@ -109,11 +109,11 @@ export const getProfileUserTC = (userId: number) => async (dispatch: Dispatch) =
         if (res.data) {
             dispatch(setUserProfileAC(res.data))
         } else {
-            handleServerAppError(res.data, dispatch) //ошибки наши
+            handleServerAppError(res.data, dispatch)
         }
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            handleServerNetworkError(e, dispatch)  //др ошибки
+            handleServerNetworkError(e, dispatch)
         }
     }
 }
@@ -154,7 +154,7 @@ export const saveProfileTC = (profile: ProfileResponseType): AppThunk => async (
         const userId = getState().auth.userId
         const res = await profileAPI.saveProfile(profile)
         if (res.data.resultCode === 0) {
-            if (userId) {   //делаю проверку т.к. типизация ругается что может прийти еще и null
+            if (userId) {   //make a check because TS write me <Here can back null>
                 // let res = await profileAPI.getProfileUser(userId)       //97 lesson. 48min
                 // dispatch(setUserProfileAC(res.data))
                 await dispatch(getProfileUserTC(userId))
@@ -164,7 +164,7 @@ export const saveProfileTC = (profile: ProfileResponseType): AppThunk => async (
         }
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            handleServerNetworkError(e, dispatch)  //др ошибки
+            handleServerNetworkError(e, dispatch)
         }
     }
 
@@ -180,7 +180,7 @@ export const savePhotoTC = (file: File) => async (dispatch: Dispatch) => {
         }
     } catch (e: any) {
         if (axios.isAxiosError(e)) {
-            handleServerNetworkError(e, dispatch)  //др ошибки
+            handleServerNetworkError(e, dispatch)
         }
     }
 }

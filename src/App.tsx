@@ -18,14 +18,6 @@ const DialogContainer = React.lazy(() => import('./Components/Dialogs/DialogsCon
 const ProfileContainer = React.lazy(() => import('./Components/Profile/ProfileContainer'));
 
 class App extends Component<AppContainerPropsType> {
-
-    // shouldComponentUpdate(nextProps: Readonly<AppContainerPropsType>, nextState: Readonly<{}>): boolean {
-    //     if (nextProps !== this.props) {
-    //         return true
-    //     } else if (nextState !== this.state) return true
-    //     return false
-    // }
-
     componentDidMount() {
         this.props.initializedAppTC()
     }
@@ -49,10 +41,6 @@ class App extends Component<AppContainerPropsType> {
                             <Routes>
 
                                 <Route path="/" element={<Navigate to="profile"/>}/>
-                                {/*<Route path="/" element={<Home/>}/>*/}
-                                {/*<Route path="profile/:userId" element={<ProfileContainer/>}/>*/}
-                                {/*<Route path="profile" element={<ProfileContainer/>}/>*/}
-                                {/*<Route path="dialogs/*" element={<DialogContainer />} />*/}
 
                                 <Route path="profile/:userId" element={(
                                     <Suspense fallback={<Preloader/>}>
@@ -75,7 +63,7 @@ class App extends Component<AppContainerPropsType> {
                                 <Route path="users" element={<UsersContainer/>}/>
                                 <Route path="login" element={<Login/>}/>
 
-                                <Route path="/404" element={<PageNotFound/>}/>
+                                <Route path="404" element={<PageNotFound/>}/>
                                 <Route path="*" element={<Navigate to={'/404'}/>}/>
                             </Routes>
                         </div>

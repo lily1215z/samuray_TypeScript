@@ -12,12 +12,6 @@ const initialState = {
     error: '',
     preloader: false
 }
-// type appReducerType = typeof initialState;
-type appReducerType = {
-    initialized: boolean
-    error: string | null
-    preloader: boolean
-}
 
 export const AppReducer = (state: appReducerType = initialState, action: appReducerActionType): appReducerType => {
     switch (action.type) {
@@ -56,11 +50,11 @@ export const initializedAppTC = (): AppThunk => async (dispatch: Dispatch) => {
         if (res.data.resultCode === 0) {
             dispatch(getAuthMeTC())
         } else {
-            handleServerAppError(res.data, dispatch) //ошибки наши
+            handleServerAppError(res.data, dispatch)
         }
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            handleServerNetworkError(e, dispatch)  //др ошибки
+            handleServerNetworkError(e, dispatch)
         }
     } finally {
         dispatch(setInitializedAC(true))
@@ -69,5 +63,12 @@ export const initializedAppTC = (): AppThunk => async (dispatch: Dispatch) => {
 }
 
 //type
+// type appReducerType = typeof initialState;
+type appReducerType = {
+    initialized: boolean
+    error: string | null
+    preloader: boolean
+}
+
 export type appReducerActionType = ReturnType<typeof setInitializedAC> | ReturnType<typeof isErrorsAC>
 | ReturnType<typeof isPreloaderAC>

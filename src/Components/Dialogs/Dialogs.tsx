@@ -19,10 +19,6 @@ export function Dialogs(props: DialogsTypeProps) {
     const messages = useSelector<AppRootStateType, Array<MessagesType>>(state => state.dialogsPage.messages)
     const isLogginIn = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
 
-    // const addMessageValue = (message: string) => {
-    //     props.addMessage(id, message)
-    // }
-
     let dialogsData = props.dialogsPage.map(i => {
         return (
             <li key={i.id} className={dialogs.dialog}>
@@ -43,12 +39,9 @@ export function Dialogs(props: DialogsTypeProps) {
 
     if (!isLogginIn) return <Navigate to={'/login'}/>
 
-//Hight Order Component
-    //const AuthRedirectComponent = withAuthRedirect(Dialogs)  // не знаю где вызвать НОС в функ компоненте поэтому нок здесь не использую
-
     return (
         <div className={dialogs.dialogs_inner}>
-            <div><img src={dialogs_bg} alt={'background'}/></div>
+            <div><img className={dialogs.dialogs_img} src={dialogs_bg} alt={'background'}/></div>
 
             <div className={dialogs.title}>Dialogs</div>
             <div className={dialogs.block_dialog}>

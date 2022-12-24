@@ -31,7 +31,7 @@ export type DialogsType = {
 }
 export type DialogsActionType = ReturnType<typeof sendDialogsReducerAC>
 export type MessagesType = {
-    id: number, //было закоменчено id и оно не ругалось.
+    id: number,
     message: string
 }
 

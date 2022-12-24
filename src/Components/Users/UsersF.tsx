@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import photoUser from '../../images/icon-user.png'
 
-//писали в ней потом переписали  ее на классовый компонент и далее уже работаем с классов компонентой
+//this is example function component. Wrote with her, then started wrote in class component
 export const UsersF = (props: any) => {
     const getUsers = () => {
         if (props.users.length === 0) { //если без проверки то будет бага

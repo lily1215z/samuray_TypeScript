@@ -8,13 +8,13 @@ type ProfileStatusPropsType = {
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
 
-    state = {       //это локальный стейт
+    state = {       //this is local state
         editMode: false,
         status: this.props.status
     }
 
-    activeEditMode = () => {    //чтоб не байдить то можно писать стрелочную ф-ю Но при дебаге стрелочная будет показывать undefinеd но это не так
-        this.setState({   //сработает как локальный стейт - хук
+    activeEditMode = () => {    //If I don't want use bind I can write arrow function. But when I will be use debugger arrow function show me undefined
+        this.setState({   //Will work like hook - local state
             editMode: true
         })
     }
@@ -55,7 +55,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
                             onChange={this.onStatusChange}
                             autoFocus
                             onBlur={this.deactivateEditMode}
-                            value={this.state.status}   //показываем status не из пропсов а из state
+                            value={this.state.status}   //show status from state, not from props
                             className={profile_info.status_edit}
                         />
                     </div>

@@ -11,12 +11,10 @@ import {addPostsReducerAC} from '../../redux/posts-reducer';
 import {useAppDispatch} from '../../redux/redux_store';
 
 type profileTypeProps = {
-    // addPost: (post: string) => void
     profile: ProfileResponseType
     status: string
     updateStatus: (status: string) => void
     isOwner: boolean
-    // savePhoto: (file: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Profile: React.FC<profileTypeProps> = ({ profile, status, updateStatus, isOwner}) => {

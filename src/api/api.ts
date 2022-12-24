@@ -46,9 +46,9 @@ export const profileAPI = {
     saveProfile(profile: ProfileResponseType) {
         return instance.put<ResponseType>('profile', profile)
     },
-    savePhoto(photoFile: File) {                    //запрос д/замены фото в профайле
+    savePhoto(photoFile: File) {                    //request to change profile photo
         const formData = new FormData();
-        formData.append('image', photoFile)                       //image написан в доке к АПИ
+        formData.append('image', photoFile)                    //image written in API documentation
         return instance.put<ResponseType<{
             photos: {
                 small: string,

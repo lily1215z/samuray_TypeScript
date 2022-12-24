@@ -1,6 +1,4 @@
 import {addPostsReducerAC, deletePostAC, ProfileReducer} from './posts-reducer';
-// import {v1} from 'uuid';
-
 
 const state = {
     posts: [

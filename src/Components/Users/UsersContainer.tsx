@@ -39,7 +39,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 
     onPageChanged = (pageNumber: number) => {
-        // const pageSize = {this.props}
         this.props.getUsersTC(pageNumber, this.props.pageSize);
     }
 

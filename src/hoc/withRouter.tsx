@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 export function withRouter<T>(Component: ComponentType<T>) {
 
-    const ComponentWithRouterProp = (props: any) => {  //need fixed  бы поставила ProfileContainerPropsType
+    const ComponentWithRouterProp = (props: any) => {
         let location = useLocation();
         let navigate = useNavigate();
         let params = useParams();

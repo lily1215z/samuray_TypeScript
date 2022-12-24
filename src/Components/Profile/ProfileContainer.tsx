@@ -50,21 +50,19 @@ class ProfileContainer extends React.Component<PropsType> {
                      profile={this.props.profile}
                      status={this.props.status}
                      updateStatus={this.props.updateStatusUserTC}
-                // savePhoto={this.props.savePhotoTC}
             />
         );
     }
 }
 
-const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({  // not return y because I wrote ({...})
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({  // not return, so I wrote ({...})
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
     isAuth: state.auth.isAuth
 })
 
-
-//когда делала отд mapDispatchToProps и в нее все влаживала то не работало. лучше передавать в connect напрямую
+//When make separately mapDispatchToProps y put all inside - don't work. Better forward in connect
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getProfileUserTC, getStatusUserTC, updateStatusUserTC}),
     withRouter,
@@ -77,7 +75,6 @@ type MapStateToPropsType = {
     isAuth: boolean,
     status: string,
     authorizedUserId: number | null
-    // authorizedUserId: number
 }
 
 type MapDispatchPropsType = {
@@ -92,7 +89,7 @@ type PathParamsType = {
 
 type ProfileContainerPropsType = MapStateToPropsType | MapDispatchPropsType
 
-type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType  //RouteComponentProps загуглила решение
+type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType  //RouteComponentProps fined this decision in internet
 
 export type ProfileResponseType = {
     userId: number,

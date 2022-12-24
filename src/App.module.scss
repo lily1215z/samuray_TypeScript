@@ -4,6 +4,11 @@
 .container {
   @include width(1200px);
   margin: 0 auto;
+  padding: 0 10px;
+
+  @media screen and (max-width: 1000px) {
+    padding: 0 5px;
+  }
 }
 
 .app_inner {

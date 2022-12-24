@@ -28,7 +28,7 @@ export const User: React.FC<UserPropsType> = ({user, ...props}) => {
                 </div>
 
                 <div className={style.btn_box}>
-                    {user.followed ?                           //props.follow() это берем UsersContainer
+                    {user.followed ?                           //props.follow() this is from UsersContainer
                         <button
                             className={style.btn_follow}
                             disabled={props.followingInProgress.some(id => id === user.id)}

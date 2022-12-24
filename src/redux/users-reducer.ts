@@ -15,7 +15,7 @@ const initialState = {
     users: [],
     pageSize: 12,
     totalUsersCount: 0,
-    currentPage: 1,   //со старта будет 1 страница. всегда будем запрашивать 1 стр
+    currentPage: 1,   //in start will be first page.
     isFetching: false,
     followingInProgress: []
 }
@@ -25,8 +25,8 @@ export const UsersReducer = (state: UsersPageType = initialState, action: UsersA
         case FOLLOW:
             return {
                 ...state,
-                // users: state.users.map((i: UserType) => i.id === action.userId ? {...i, followed: true} : i)  БЫЛО
-                users: updateObjectInArray(state.users, action.userId, 'id',   {followed: true})  //СТАЛО
+                // users: state.users.map((i: UserType) => i.id === action.userId ? {...i, followed: true} : i)  was
+                users: updateObjectInArray(state.users, action.userId, 'id',   {followed: true})  //now
             }
 
         case UNFOLLOW:
@@ -38,7 +38,7 @@ export const UsersReducer = (state: UsersPageType = initialState, action: UsersA
 
         case SET_USERS:
             return {...state, users: action.users}
-            // return {...state, users: [...action.users, ...state.users]}  //склеиваем старый state с новым 49lesson 34 min
+            // return {...state, users: [...action.users, ...state.users]}  //49lesson 34 min when need old state plus new state
 
         case SET_CURRENT_PAGE:
             return {...state, currentPage: action.pageNumber}
@@ -78,7 +78,7 @@ export const toggleIsFollowingProgressAC = (toggle: boolean, userId: number) => 
 export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
     try {
         dispatch(toggleIsFetchingAC(true))
-        dispatch(setCurrentPageAC(currentPage))    //выводит на какой стр мы сейчас находимся - подсвечивается активная стр
+        dispatch(setCurrentPageAC(currentPage))    //What current page now we stay - active page illuminated.
 
         let res = await usersAPI.getUsers(currentPage, pageSize)
         if(res.data) {
@@ -86,7 +86,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => async (disp
             dispatch(setUsersAC(res.data.items))
             dispatch(setUsersTotalCountAC(res.data.totalCount))
         } else {
-            handleServerAppError(res.data, dispatch) //ошибки наши
+            handleServerAppError(res.data, dispatch)
         }
     } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -96,7 +96,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => async (disp
 
 }
 
-//рефакторинг для санки followTC и unFollowTC
+//Refactoring for thunks followTC & unFollowTC
 const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: any, actionCreator: any) => {
     try {
         dispatch(toggleIsFollowingProgressAC(true, id))
@@ -117,7 +117,7 @@ const followUnfollowFlow = async (dispatch: Dispatch, id: number, apiMethod: any
 
 export const followTC = (id: number) => async (dispatch: Dispatch) => {
     let apiMethod = usersAPI.followUser.bind(usersAPI)
-    followUnfollowFlow(dispatch, id, apiMethod, followAC)    //рефакторинг 90 урок - 20 мин
+    followUnfollowFlow(dispatch, id, apiMethod, followAC)    //refactoring 90 lesson - 20 min
 }
 
 export const unFollowTC = (id: number) => async (dispatch: Dispatch) => {
