@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import app from '../../App.module.scss';
-import {AppRootStateType, useAppDispatch} from '../../redux/redux_store';
+import {useAppDispatch, useAppSelector} from '../../redux/redux_store';
 import {isErrorsAC} from '../../redux/app-reducer';
-import {useSelector} from 'react-redux';
 
 type CatchErrorsType = {}
 
 export const CatchErrors: React.FC<CatchErrorsType> = () => {
-    const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
+    // const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
+    const errorMessage = useAppSelector(state => state.app.error)
     const dispatch = useAppDispatch();
 
     setTimeout(() => {
@@ -23,10 +23,8 @@ export const CatchErrors: React.FC<CatchErrorsType> = () => {
 
     return (<>
             <div className={app.all_error}>
-                {error}
+                {errorMessage}
             </div>
-
         </>
-
     );
 };

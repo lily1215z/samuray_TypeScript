@@ -22,12 +22,13 @@ export function Header(props: HeaderPropsType) {
                 <div>
                     <img
                         src={logo}
-                        width="130"
+                        className={header.header_img_logo}
                         alt="logo"/>
                     <h1 className={header.title}>let's speak with everyone!!!</h1>
                 </div>
                 <img
                     src={logoBg}
+                    className={header.header_img}
                     height="200"
                     alt="logo-bg"/>
             </header>

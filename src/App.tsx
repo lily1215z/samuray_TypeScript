@@ -23,18 +23,21 @@ class App extends Component<AppContainerPropsType> {
     }
 
     render() {
-        if (!this.props.initialized) {  //if app no initialized we see Preloader
+        if (!this.props.initialized) {
             return <Preloader/>
         }
 
+        // if(this.props.error !== null) {
+        //     return  <CatchErrors />
+        // }
+
         return (
             <>
+                {this.props.error !== null && <CatchErrors />}
+
                 <div className={app.container}>
                     <HeaderContainer/>
                     <div className={app.container}>
-
-                        {this.props.preloader && <Preloader />}
-                        {this.props.error !== null && <CatchErrors />}
 
                         <div className={app.app_inner}>
                             <NavBar/>

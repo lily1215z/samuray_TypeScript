@@ -6,6 +6,10 @@
   align-items: flex-start;
   margin-top: 20px;
 
+  @media screen and (max-width: 450px) {
+    display: block;
+  }
+
   //.info_edit img
   &_edit img {
     position: absolute;
@@ -19,6 +23,10 @@
   margin-left: 50px;
   position: relative;
   width: 100%;
+
+  @media screen and (max-width: 500px) {
+    margin-left: 10px;
+  }
 }
 
 .aboutinfo {
@@ -160,6 +168,10 @@
   bottom: 0;
   left: 0;
 
+  @media screen and (max-width: 450px) {
+    left: 30%;
+  }
+
   //.load_img input[type='file']
   & input[type='file'] {
     display: none;
@@ -182,6 +194,10 @@
 .profile_box_img {
   position: relative;
   margin-bottom: 15px;
+
+  @media screen and (max-width: 450px) {
+    text-align: center;
+  }
 
   & img {
     border-radius: 5px;

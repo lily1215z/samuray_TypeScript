@@ -15,7 +15,7 @@ export const Paginator: React.FC<UsersPropsType> = ({
                                                         pageSize,
                                                         currentPage,
                                                         onPageChanged,
-                                                        portionSize = 10
+                                                        portionSize = 8
                                                     }) => {
     let pageCount = Math.ceil(totalUsersCount / pageSize);
     let pages = [];
@@ -33,13 +33,13 @@ export const Paginator: React.FC<UsersPropsType> = ({
 
             {portionNumber > 1 &&
                 <div
-                    className={paginatorStyle.btn}
+                    className={`${paginatorStyle.btn} ${paginatorStyle.btn_prev}`}
                     onClick={() => {
                     setPortionNumber(portionNumber - 1)
                 }}>  <img
                     src={swordPrev}
                     width='100'
-                    alt="logo"/></div>}
+                    alt="arrow prev"/></div>}
 
             <div className={paginatorStyle.paginator_box}>
                {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionNumber)
@@ -55,12 +55,12 @@ export const Paginator: React.FC<UsersPropsType> = ({
            </div>
             {portionCount > portionNumber &&
                 <div
-                    className={paginatorStyle.btn}
+                    className={`${paginatorStyle.btn} ${paginatorStyle.btn_next}`}
                     onClick={() => setPortionNumber(portionNumber + 1)}>
                     <img
                         src={swordNext}
                         width='100'
-                        alt="logo"/></div>}
+                        alt="arrow next"/></div>}
 
         </div>
     )

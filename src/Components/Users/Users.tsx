@@ -17,6 +17,11 @@ export const Users: React.FC<UsersPropsType> = ({
                                                     totalUsersCount,
                                                     ...props
                                                 }) => {
+    let portionSizeOnePage = 8;
+    if(window.innerWidth <= 440) {
+        portionSizeOnePage = 5;
+    }
+
     return <div className={user.wrapper}>
         <div className={user.img_box}>
             <img
@@ -29,7 +34,7 @@ export const Users: React.FC<UsersPropsType> = ({
                        currentPage={currentPage}
                        pageSize={pageSize}
                        totalUsersCount={totalUsersCount}
-                       portionSize={10}
+                       portionSize={portionSizeOnePage}
                        {...props}
             /></div>
 

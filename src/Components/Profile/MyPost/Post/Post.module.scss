@@ -16,6 +16,10 @@
     &_text {
         flex: 1;
     }
+
+    @media screen and (max-width: 380px) {
+        display: block;
+    }
 }
 
 .img {

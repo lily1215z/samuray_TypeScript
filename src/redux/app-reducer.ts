@@ -62,7 +62,6 @@ export const initializedAppTC = (): AppThunk => async (dispatch: Dispatch) => {
     }
 }
 
-//type
 // type appReducerType = typeof initialState;
 type appReducerType = {
     initialized: boolean
