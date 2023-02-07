@@ -89,7 +89,6 @@ const AddNewPostForm = (props: addPostFormType) => {
                     placeholder="your news"
                     onChange={formik.handleChange}
                     value={formik.values.newPostText}
-                    // onKeyPress={(e) => e.key === 'Enter' && addMessInPost()}
                 ></textarea>
             <div>{formik.errors.newPostText ?
                 <div className={dialogs.errors}>{formik.errors.newPostText}</div> : null}</div>

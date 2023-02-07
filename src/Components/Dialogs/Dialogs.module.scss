@@ -1,0 +1,131 @@
+@import '../../style/variables';
+@import '../../style/mixins';
+
+.block_dialog {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10px;
+    position: relative;
+
+    //.block_dialog:after
+    &::after {
+        content: '';
+        position: absolute;
+        right: 20px;
+        top: 0;
+        width: 65%;
+        height: 2px;
+        background-color: $bgDark800;
+    }
+
+    //.block_dialog:before
+    &::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 20px;
+        width: 2px;
+        height: 35%;
+        background-color: $bgDark800;
+
+        @media screen and (max-width: 360px) {
+            content: none;
+        }
+    }
+
+    @media screen and (max-width: 360px) {
+        padding: 20px 0;
+    }
+}
+
+.dialog {
+    font-size: 18px;
+    font-weight: 600;
+
+    //.dialog + .dialog
+    & + .dialog {
+        margin-top: 15px;
+    }
+}
+
+.dialogs_inner {
+    @include width(850px);
+    margin-top: 25px;
+}
+
+.dialogs_items {
+    @include width(150px);
+
+    @media screen and (max-width: 460px) {
+        max-width: 100px;
+    }
+
+    @media screen and (max-width: 360px) {
+        max-width: 80px;
+    }
+}
+
+.dialogs_img {
+    object-fit: cover;
+    width: 100%;
+}
+.messages {
+    width: 100%;
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+
+    //.message + .message
+    & + .message {
+        margin-top: 25px;
+    }
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 900;
+    color: $bgDark700;
+}
+
+.avatar {
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.text {
+    background-color: $bgDark900;
+    opacity: 0.85;
+    color: $colorLight;
+    font-size: 14px;
+    margin-left: 25px;
+    padding: 5px 7px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+
+    //.text:after
+    &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 0 solid transparent;
+        border-top-width: 15px;
+        border-bottom-width: 0;
+        border-right: 15px solid $bgDark900;
+        bottom: 0;
+        left: -15px;
+    }
+}
+
+.errors {
+    color: $error;
+    font-size: 13px;
+    font-weight: 700;
+    position: relative;
+    top: -20px;
+    left: 10px;
+}

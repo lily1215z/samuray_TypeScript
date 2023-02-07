@@ -6,18 +6,17 @@ import {isErrorsAC} from '../../redux/app-reducer';
 type CatchErrorsType = {}
 
 export const CatchErrors: React.FC<CatchErrorsType> = () => {
-    // const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
     const errorMessage = useAppSelector(state => state.app.error)
     const dispatch = useAppDispatch();
 
     setTimeout(() => {
         dispatch(isErrorsAC(null))
-    }, 4000);
+    }, 2500);
 
     useEffect(() => {
         const id = setTimeout(() => {
             dispatch(isErrorsAC(null))
-        }, 4000)
+        }, 2500)
         return clearTimeout(id)
     }, [])
 

@@ -4,10 +4,10 @@ import app from '../../App.module.scss';
 import {useState} from 'react';
 
 export function NavBar() {
-    const [showBar, setShowBar] = useState(true);
+    const [showBar, setShowBar] = useState( true);
 
     const isNavbarOpen = () => {
-        setShowBar(!showBar)
+            setShowBar(!showBar)
     }
 
     return (

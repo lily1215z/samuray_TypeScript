@@ -86,10 +86,21 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
-  background-color: $bgDark300;
+  background-color: #422a2a;
   font-size: 22px;
   font-weight: 900;
-  padding: 20px 30px;
+  padding: 5px 15px;
   color: $errorAll;
   border-radius: 5px;
+}
+
+.style {
+  color: $bgDark700;
+  font-weight: 700;
+  font-size: 40px;
+  border: 1px solid $bgDark300;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

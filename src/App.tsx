@@ -1,5 +1,5 @@
 import React, {Component, Suspense} from 'react';
-import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom';
+import {Routes, Route, Navigate, HashRouter} from 'react-router-dom';
 import app from './App.module.scss';
 import {NavBar} from './Components/Navbar/NavBar';
 import UsersContainer from './Components/Users/UsersContainer';
@@ -27,13 +27,9 @@ class App extends Component<AppContainerPropsType> {
             return <Preloader/>
         }
 
-        // if(this.props.error !== null) {
-        //     return  <CatchErrors />
-        // }
-
         return (
             <>
-                {this.props.error !== null && <CatchErrors />}
+                {this.props.error && <CatchErrors/>}
 
                 <div className={app.container}>
                     <HeaderContainer/>
@@ -60,9 +56,9 @@ class App extends Component<AppContainerPropsType> {
                                         <DialogContainer/>
                                     </Suspense>)}/>
 
-                                <Route path="news" element={<div>news</div>}/>
-                                <Route path="music" element={<div>music</div>}/>
-                                <Route path="settings" element={<div>settings</div>}/>
+                                <Route path="news" element={<div className={app.style}>news...</div>}/>
+                                <Route path="music" element={<div className={app.style}>music...</div>}/>
+                                <Route path="settings" element={<div className={app.style}>settings...</div>}/>
                                 <Route path="users" element={<UsersContainer/>}/>
                                 <Route path="login" element={<Login/>}/>
 
@@ -91,11 +87,13 @@ const AppContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {initializedAppTC}))(App)
 
 const SamuraiJSApp = () => {
-    return <Provider store={store}>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+    return <HashRouter>
+        <Provider store={store}>
+            {/*<BrowserRouter basename={process.env.PUBLIC_URL}>*/}
             <AppContainer/>
-        </BrowserRouter>
-    </Provider>
+            {/*</BrowserRouter>*/}
+        </Provider>
+    </HashRouter>
 }
 export default SamuraiJSApp
 
