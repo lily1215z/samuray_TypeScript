@@ -1,14 +1,20 @@
 import navbar from './NavBar.module.scss'
-import {NavLink} from "react-router-dom";
+import {NavLink} from 'react-router-dom';
 import app from '../../App.module.scss';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 export function NavBar() {
-    const [showBar, setShowBar] = useState( false);
+    const [showBar, setShowBar] = useState(true);
 
     const isNavbarOpen = () => {
-            setShowBar(!showBar)
+        setShowBar(!showBar)
     }
+
+    useEffect(() => {
+        if (window.innerWidth < 700) {
+            setShowBar(false)
+        }
+    }, [])
 
     const closePopUp = () => {
         setShowBar(false)
@@ -20,25 +26,34 @@ export function NavBar() {
 
             {
                 showBar &&
-                    <ul className={navbar.items}>
-                        <li className={navbar.item}>
-                            <NavLink to='/profile' onClick={closePopUp} className={({ isActive }) =>(isActive ? `${app.active_nav}` : "")}>Profile</NavLink></li>
+                <ul className={navbar.items}>
+                    <li className={navbar.item}>
+                        <NavLink to="/profile" onClick={closePopUp}
+                                 className={({isActive}) => (isActive ? `${app.active_nav}` : '')}>Profile</NavLink>
+                    </li>
 
-                        <li className={navbar.item}>
-                            <NavLink to='/users' onClick={closePopUp}  className={({ isActive }) =>(isActive ? `${app.active_nav}` : "")}>Users</NavLink></li>
+                    <li className={navbar.item}>
+                        <NavLink to="/users" onClick={closePopUp}
+                                 className={({isActive}) => (isActive ? `${app.active_nav}` : '')}>Users</NavLink></li>
 
-                        <li className={navbar.item}>
-                            <NavLink to='/dialogs' onClick={closePopUp}  className={({ isActive }) =>(isActive ? `${app.active_nav}` : "")}>Messages</NavLink></li>
+                    <li className={navbar.item}>
+                        <NavLink to="/dialogs" onClick={closePopUp}
+                                 className={({isActive}) => (isActive ? `${app.active_nav}` : '')}>Messages</NavLink>
+                    </li>
 
-                        <li className={navbar.item}>
-                            <NavLink to='/news' onClick={closePopUp}  className={({ isActive }) =>(isActive ? `${app.active_nav}` : "")}>News</NavLink></li>
+                    <li className={navbar.item}>
+                        <NavLink to="/news" onClick={closePopUp}
+                                 className={({isActive}) => (isActive ? `${app.active_nav}` : '')}>News</NavLink></li>
 
-                        <li className={navbar.item}>
-                            <NavLink to='/music' onClick={closePopUp}  className={({ isActive }) =>(isActive ? `${app.active_nav}` : "")}>Music</NavLink></li>
+                    <li className={navbar.item}>
+                        <NavLink to="/music" onClick={closePopUp}
+                                 className={({isActive}) => (isActive ? `${app.active_nav}` : '')}>Music</NavLink></li>
 
-                        <li className={navbar.item}>
-                            <NavLink to='/settings' onClick={closePopUp}  className={({ isActive }) =>(isActive ? `${app.active_nav}` : "")}>Settings</NavLink></li>
-                    </ul>
+                    <li className={navbar.item}>
+                        <NavLink to="/settings" onClick={closePopUp}
+                                 className={({isActive}) => (isActive ? `${app.active_nav}` : '')}>Settings</NavLink>
+                    </li>
+                </ul>
             }
 
         </nav>
