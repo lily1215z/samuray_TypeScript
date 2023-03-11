@@ -92,6 +92,7 @@ const AddMessageForm = (props: addMessageFormType) => {
                   if (e.key === 'Enter') {
                       formik.handleSubmit();
                   }}}
+              className={profileStyle.form}
         >
                 <textarea
                     className={app.message_textarea}
