@@ -17,7 +17,7 @@ export function NavBar() {
     }, [])
 
     const closePopUp = () => {
-        // setShowBar(false)
+        setShowBar(false)
     }
     return (
         <nav className={navbar.navbar}>
