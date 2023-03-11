@@ -32,6 +32,7 @@ export function Header(props: HeaderPropsType) {
                     height="200"
                     alt="logo-bg"/>
             </header>
+
             <div className={header.panel_info}>
                 <div className={header.panel_log}>{props.isAuth ? props.login :
                     <NavLink to={'/login'} className={header.login}>LogIn</NavLink>}</div>
