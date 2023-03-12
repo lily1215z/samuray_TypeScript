@@ -17,7 +17,9 @@ export function NavBar() {
     }, [])
 
     const closePopUp = () => {
-        setShowBar(false)
+        if (window.innerWidth <= 700) {
+            setShowBar(false)
+        }
     }
     return (
         <nav className={navbar.navbar}>
