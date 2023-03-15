@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/samuray_TypeScript/static/css/main.c4a87c1b.css",
+    "main.css": "/samuray_TypeScript/static/css/main.e205e190.css",
     "main.js": "/samuray_TypeScript/static/js/main.83ac3540.js",
     "static/css/473.0b636b1b.chunk.css": "/samuray_TypeScript/static/css/473.0b636b1b.chunk.css",
     "static/js/473.63151565.chunk.js": "/samuray_TypeScript/static/js/473.63151565.chunk.js",
@@ -19,7 +19,7 @@
     "static/media/icon-user.png": "/samuray_TypeScript/static/media/icon-user.f7dcf2bae9f017a39a5a.png",
     "static/media/404.png": "/samuray_TypeScript/static/media/404.8c0045c0c0da783e4bff.png",
     "index.html": "/samuray_TypeScript/index.html",
-    "main.c4a87c1b.css.map": "/samuray_TypeScript/static/css/main.c4a87c1b.css.map",
+    "main.e205e190.css.map": "/samuray_TypeScript/static/css/main.e205e190.css.map",
     "main.83ac3540.js.map": "/samuray_TypeScript/static/js/main.83ac3540.js.map",
     "473.0b636b1b.chunk.css.map": "/samuray_TypeScript/static/css/473.0b636b1b.chunk.css.map",
     "473.63151565.chunk.js.map": "/samuray_TypeScript/static/js/473.63151565.chunk.js.map",
@@ -28,7 +28,7 @@
     "787.a534fa47.chunk.js.map": "/samuray_TypeScript/static/js/787.a534fa47.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c4a87c1b.css",
+    "static/css/main.e205e190.css",
     "static/js/main.83ac3540.js"
   ]
 }
