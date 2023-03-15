@@ -25,6 +25,10 @@
   &_title {
     margin-bottom: 20px;
     color: $bgDark700;
+
+    @media screen and (max-width: 370px) {
+      font-size: 20px;
+    }
   }
 
   //form_subtitle
@@ -33,6 +37,11 @@
     color: $bgDark700;
     font-weight: 700;
     font-size: 18px;
+
+    @media screen and (max-width: 370px) {
+      font-size: 14px;
+      width: 90px;
+    }
   }
 
   //form_block
@@ -56,6 +65,16 @@
     border-radius: 50%;
     padding: 100px;
     background-color: $orange100;
+    position: relative;
+    z-index: 20;
+
+    @media screen and (max-width: 530px) {
+      border-radius: 0;
+      padding: 20px;
+    }
+    @media screen and (max-width: 370px) {
+      padding: 10px;
+    }
   }
 
   //form_btn
